@@ -21,6 +21,8 @@ import java.io.OutputStream;
 import java.io.UncheckedIOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.text.SimpleDateFormat; //Just Add
+import java.util.Date; //Just Add
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Collections;
@@ -32,6 +34,8 @@ import java.util.function.Consumer;
 import com.linecorp.bot.model.action.DatetimePickerAction;
 import com.linecorp.bot.model.message.template.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled; //Just Add
+import org.springframework.stereotype.Component; // Just Add
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.google.common.io.ByteStreams;
@@ -78,6 +82,9 @@ import com.linecorp.bot.spring.boot.annotation.LineMessageHandler;
 import lombok.NonNull;
 import lombok.Value;
 import lombok.extern.slf4j.Slf4j;
+
+import org.slf4j.Logger;       // Just Add
+import org.slf4j.LoggerFactory; // Just Add
 
 @Slf4j
 @LineMessageHandler
@@ -465,5 +472,17 @@ public class KitchenSinkController {
     public static class DownloadedContent {
         Path path;
         String uri;
+    }
+    @Component
+    public class ScheduledTasks {
+
+        private static final Logger log = LoggerFactory.getLogger(ScheduledTasks.class);
+
+        private static final SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
+
+        @Scheduled(fixedRate = 5000)
+        public void reportCurrentTime() {
+            log.info("The time is now {}", dateFormat.format(new Date()));
+        }
     }
 }
