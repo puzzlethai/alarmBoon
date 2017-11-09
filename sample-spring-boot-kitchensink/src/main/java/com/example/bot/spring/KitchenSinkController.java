@@ -89,6 +89,7 @@ import org.slf4j.LoggerFactory; // Just Add
 @Slf4j
 @LineMessageHandler
 public class KitchenSinkController {
+    public static int count = 0;
     @Autowired
     private LineMessagingClient lineMessagingClient;
 
@@ -420,7 +421,7 @@ public class KitchenSinkController {
                 log.info("Returns echo message {}: {}", replyToken, text);
                 this.replyText(
                         replyToken,
-                        text
+                        text+String.valueOf(count)
                 );
                 break;
         }
@@ -482,7 +483,8 @@ public class KitchenSinkController {
 
         @Scheduled(fixedRate = 5000)
         public void reportCurrentTime() {
-            log.info("The time is now {}", dateFormat.format(new Date()));
+           // log.info("The time is now {}", dateFormat.format(new Date()));
+            count = count+1;
         }
     }
 }
