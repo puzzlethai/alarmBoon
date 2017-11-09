@@ -89,7 +89,7 @@ import org.slf4j.LoggerFactory; // Just Add
 @Slf4j
 @LineMessageHandler
 public class KitchenSinkController {
-    public static int count = 0;
+    private static int count = 0;
     @Autowired
     private LineMessagingClient lineMessagingClient;
 
