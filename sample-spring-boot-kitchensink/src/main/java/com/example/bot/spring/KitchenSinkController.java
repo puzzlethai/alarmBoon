@@ -489,6 +489,7 @@ public class KitchenSinkController {
            // Domain obj2;
            // obj2 = domainRepository.findFirstByDomain("mkyong.com");
             // log.info("The time is now {}", dateFormat.format(new Date()));
+            assert domainRepository != null;
             count = domainRepository.updateDomain("2017-11-11", true);
 
         }
