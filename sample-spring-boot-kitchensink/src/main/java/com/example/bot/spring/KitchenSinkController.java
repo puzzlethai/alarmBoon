@@ -86,6 +86,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;       // Just Add
 import org.slf4j.LoggerFactory; // Just Add
 
+// TestMongoDB
+import com.example.bot.spring.Domain;
+import com.example.bot.spring.DomainRepository;
+
 @Slf4j
 @LineMessageHandler
 public class KitchenSinkController {
@@ -464,9 +468,7 @@ public class KitchenSinkController {
         String fileName = LocalDateTime.now().toString() + '-' + UUID.randomUUID().toString() + '.' + ext;
         Path tempFile = KitchenSinkApplication.downloadedContentDir.resolve(fileName);
         tempFile.toFile().deleteOnExit();
-        return new DownloadedContent(
-                tempFile,
-                createUri("/downloaded/" + tempFile.getFileName()));
+        return new DownloadedContent(tempFile, createUri("/downloaded/" + tempFile.getFileName()));
     }
 
     @Value
@@ -483,8 +485,12 @@ public class KitchenSinkController {
 
         @Scheduled(fixedRate = 60000)
         public void reportCurrentTime() {
-           // log.info("The time is now {}", dateFormat.format(new Date()));
-            count = count+1;
+            DomainRepositoryCustom domainRepository = null;
+           // Domain obj2;
+           // obj2 = domainRepository.findFirstByDomain("mkyong.com");
+            // log.info("The time is now {}", dateFormat.format(new Date()));
+            count = domainRepository.updateDomain("2017-11-11", true);
+
         }
     }
 }
