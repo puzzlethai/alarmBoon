@@ -96,6 +96,8 @@ public class KitchenSinkController {
     private static int count = 0;
     @Autowired
     private LineMessagingClient lineMessagingClient;
+    @Autowired
+    private DomainRepository domainRepository;
 
     @EventMapping
     public void handleTextMessageEvent(MessageEvent<TextMessageContent> event) throws Exception {
@@ -485,11 +487,11 @@ public class KitchenSinkController {
 
         @Scheduled(fixedRate = 60000)
         public void reportCurrentTime() {
-            DomainRepositoryCustom domainRepository = null;
+
            // Domain obj2;
            // obj2 = domainRepository.findFirstByDomain("mkyong.com");
             // log.info("The time is now {}", dateFormat.format(new Date()));
-            assert domainRepository != null;
+
             count = domainRepository.updateDomain("2017-11-11", true);
 
         }

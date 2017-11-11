@@ -6,7 +6,7 @@ import org.springframework.data.mongodb.repository.Query;
 import java.util.List;
 
 // No need implementation, just one interface, and you have CRUD, thanks Spring Data
-public interface DomainRepository extends MongoRepository<Domain, Long> {
+public interface DomainRepository extends MongoRepository<Domain, Long>, DomainRepositoryCustom {
 
     Domain findFirstByDomain(String domain);
 
