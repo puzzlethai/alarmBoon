@@ -19,6 +19,13 @@ line.bot:
   channel-secret: 'af50e9c2e87a0e7bf75460e035924621'
   handler.path: /callback
 
+
+spring:
+  data:
+    mongodb:
+      uri: 'mongodb://heroku_mkwz588k:4q4m3s3q7pq7u4o8oal61kkr78@ds259305.mlab.com:59305/heroku_mkwz588k'
+
+
 # To remove Client wire logs. Please comment out following lines.
 # See: https://docs.spring.io/spring-boot/docs/current/reference/html/howto-logging.html
 #
