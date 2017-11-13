@@ -17,19 +17,20 @@
 package com.example.bot.spring;
 
 import java.io.IOException;
+import java.net.UnknownHostException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
+import com.mongodb.MongoClientURI;
+import com.mongodb.MongoException;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.data.mongodb.MongoDbFactory;
 import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.data.mongodb.core.convert.DefaultDbRefResolver;
-import org.springframework.data.mongodb.core.convert.DefaultMongoTypeMapper;
-import org.springframework.data.mongodb.core.convert.MappingMongoConverter;
-import org.springframework.data.mongodb.core.mapping.MongoMappingContext;
+import org.springframework.data.mongodb.core.SimpleMongoDbFactory;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 @SpringBootApplication
 @EnableScheduling
@@ -40,19 +41,16 @@ public class KitchenSinkApplication {
         downloadedContentDir = Files.createTempDirectory("line-bot");
         SpringApplication.run(KitchenSinkApplication.class, args);
     }
-    @Bean
-    public MongoTemplate mongoTemplate(MongoDbFactory mongoDbFactory,
-                                       MongoMappingContext context) {
+    @Configuration
+    public class MongoLabConfiguration {
 
-        MappingMongoConverter converter =
-                new MappingMongoConverter(new DefaultDbRefResolver(mongoDbFactory), context);
-        converter.setTypeMapper(new DefaultMongoTypeMapper(null));
-
-        MongoTemplate mongoTemplate = new MongoTemplate(mongoDbFactory, converter);
-
-        return mongoTemplate;
-
+        public @Bean
+        MongoDbFactory mongoDbFactory() throws MongoException, UnknownHostException {
+            return new SimpleMongoDbFactory(new MongoClientURI(System.getenv("MONGODB_URI")));
+        }
+        public @Bean
+        MongoTemplate mongoTemplate() throws Exception {
+            return new MongoTemplate(mongoDbFactory());
+        }
     }
-
 }
-
