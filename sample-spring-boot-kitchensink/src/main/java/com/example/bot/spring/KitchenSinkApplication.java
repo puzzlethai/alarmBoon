@@ -17,19 +17,11 @@
 package com.example.bot.spring;
 
 import java.io.IOException;
-import java.net.UnknownHostException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
-import com.mongodb.MongoClientURI;
-import com.mongodb.MongoException;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.data.mongodb.MongoDbFactory;
-import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.data.mongodb.core.SimpleMongoDbFactory;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
 @SpringBootApplication
@@ -41,16 +33,5 @@ public class KitchenSinkApplication {
         downloadedContentDir = Files.createTempDirectory("line-bot");
         SpringApplication.run(KitchenSinkApplication.class, args);
     }
-    @Configuration
-    public class MongoLabConfiguration {
 
-        public @Bean
-        MongoDbFactory mongoDbFactory() throws MongoException, UnknownHostException {
-            return new SimpleMongoDbFactory(new MongoClientURI(System.getenv("MONGODB_URI")));
-        }
-        public @Bean
-        MongoTemplate mongoTemplate() throws Exception {
-            return new MongoTemplate(mongoDbFactory());
-        }
-    }
 }
