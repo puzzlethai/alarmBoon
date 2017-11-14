@@ -488,11 +488,19 @@ public class KitchenSinkController {
         @Scheduled(fixedRate = 60000)
         public void reportCurrentTime() {
 
-           // Domain obj2;
-           // obj2 = domainRepository.findFirstByDomain("mkyong.com");
+            Domain obj2;
+            obj2 = domainRepository.findFirstByDomain("2017-11-11");
+            if (obj2.isDisplayAds()){
+                count = 2;
+                domainRepository.updateDomain(obj2.getDomain(), false);
+            } else {
+                count = 3;
+                domainRepository.updateDomain(obj2.getDomain(), true);
+            }
+            
             // log.info("The time is now {}", dateFormat.format(new Date()));
 
-            count = domainRepository.updateDomain("2017-11-11", true);
+            //count = domainRepository.updateDomain("2017-11-11", true);
 
         }
     }
