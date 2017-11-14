@@ -8,7 +8,7 @@ import java.util.List;
 // No need implementation, just one interface, and you have CRUD, thanks Spring Data
 public interface DomainRepository extends MongoRepository<Domain, Long>, DomainRepositoryCustom {
 
-    Domain findFirstByDomain(String domain);
+    Domain findByDomain(String domain);
 
     Domain findByDomainAndDisplayAds(String domain, boolean displayAds);
 
