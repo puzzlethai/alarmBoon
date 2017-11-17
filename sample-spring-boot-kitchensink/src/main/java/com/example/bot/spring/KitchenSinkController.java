@@ -22,6 +22,9 @@ import java.io.UncheckedIOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.text.SimpleDateFormat; //Just Add
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.Date; //Just Add
 import java.time.LocalDateTime;
 import java.util.Arrays;
@@ -93,7 +96,7 @@ import com.example.bot.spring.DomainRepository;
 @Slf4j
 @LineMessageHandler
 public class KitchenSinkController {
-    private static int count = 0;
+    private static String count = "Start";
     @Autowired
     private LineMessagingClient lineMessagingClient;
     @Autowired
@@ -427,7 +430,7 @@ public class KitchenSinkController {
                 log.info("Returns echo message {}: {}", replyToken, text);
                 this.replyText(
                         replyToken,
-                        text+String.valueOf(count)
+                        text+count
                 );
                 break;
         }
@@ -487,17 +490,27 @@ public class KitchenSinkController {
 
         @Scheduled(fixedRate = 60000)
         public void reportCurrentTime() {
+            LocalDate today = LocalDate.now(ZoneId.of("Asia/Bangkok"));
+            LocalDate tomorrow = today.plusDays(1);
+            DateTimeFormatter patternFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
             Domain obj2;
-            obj2 = domainRepository.findByDomain("2017-11-11");
-            if (obj2.isDisplayAds()){
-                count = 2;
-                domainRepository.updateDomain(obj2.getDomain(), false);
+            obj2 = domainRepository.findByDomain(patternFormatter.format(tomorrow));
+            if (obj2 == null) {
+                count = "NULL";
             } else {
-                count = 3;
-                domainRepository.updateDomain(obj2.getDomain(), true);
+                count = obj2.getDomain();
             }
 
+            /*
+            if (obj2.isDisplayAds()){
+                count = "TRUE";
+                domainRepository.updateDomain(obj2.getDomain(), false);
+            } else {
+                count = "FALSE";
+                domainRepository.updateDomain(obj2.getDomain(), true);
+            }
+*/
             // log.info("The time is now {}", dateFormat.format(new Date()));
 
             //count = domainRepository.updateDomain("2017-11-11", true);
