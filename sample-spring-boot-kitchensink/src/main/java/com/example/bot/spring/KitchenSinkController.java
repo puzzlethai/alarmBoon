@@ -18,7 +18,11 @@ package com.example.bot.spring;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.io.PrintWriter;
 import java.io.UncheckedIOException;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLEncoder;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.text.SimpleDateFormat; //Just Add
@@ -33,6 +37,7 @@ import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.ExecutionException;
 import java.util.function.Consumer;
+import java.util.regex.Pattern;
 
 import com.linecorp.bot.model.action.DatetimePickerAction;
 import com.linecorp.bot.model.message.template.*;
@@ -487,6 +492,48 @@ public class KitchenSinkController {
         private final Logger log = LoggerFactory.getLogger(ScheduledTasks.class);
 
         private final SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
+        private static final String strEndpoint = "https://notify-api.line.me/api/notify";
+
+        public boolean callEvent(String token, String message) {
+            boolean result = false;
+            try {
+                message = replaceProcess(message);
+                message = URLEncoder.encode(message, "UTF-8");
+                String strUrl = strEndpoint;
+                URL url = new URL( strUrl );
+                HttpURLConnection connection = (HttpURLConnection)url.openConnection();
+                connection.addRequestProperty("Authorization",  "Bearer " + token);
+                connection.setRequestMethod( "POST" );
+                connection.addRequestProperty( "Content-Type", "application/x-www-form-urlencoded" );
+                connection.setDoOutput( true );
+                String parameterString = new String("message=" + message);
+                PrintWriter printWriter = new PrintWriter(connection.getOutputStream());
+                printWriter.print(parameterString);
+                printWriter.close();
+                connection.connect();
+
+                int statusCode = connection.getResponseCode();
+                if ( statusCode == 200 ) {
+                    result = true;
+                } else {
+                    throw new Exception( "Error:(StatusCode)" + statusCode + ", " + connection.getResponseMessage() );
+                }
+                connection.disconnect();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            return result;
+        }
+        private String replaceProcess(String txt){
+            txt = replaceAllRegex(txt, "\\\\", "￥");		// \
+            return txt;
+        }
+        private String replaceAllRegex(String value, String regex, String replacement) {
+            if ( value == null || value.length() == 0 || regex == null || regex.length() == 0 || replacement == null )
+                return "";
+            return Pattern.compile(regex).matcher(value).replaceAll(replacement);
+        }
 
         @Scheduled(fixedRate = 60000)
         public void reportCurrentTime() {
