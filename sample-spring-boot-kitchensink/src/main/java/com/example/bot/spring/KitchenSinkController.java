@@ -497,10 +497,9 @@ public class KitchenSinkController {
         public boolean callEvent(String token, String message) {
             boolean result = false;
             try {
-                message = replaceProcess(message);
+                // message = replaceProcess(message);
                 message = URLEncoder.encode(message, "UTF-8");
-                String strUrl = strEndpoint;
-                URL url = new URL( strUrl );
+                URL url = new URL(strEndpoint);
                 HttpURLConnection connection = (HttpURLConnection)url.openConnection();
                 connection.addRequestProperty("Authorization",  "Bearer " + token);
                 connection.setRequestMethod( "POST" );
@@ -525,6 +524,7 @@ public class KitchenSinkController {
 
             return result;
         }
+        /*
         private String replaceProcess(String txt){
             txt = replaceAllRegex(txt, "\\\\", "￥");		// \
             return txt;
@@ -533,7 +533,7 @@ public class KitchenSinkController {
             if ( value == null || value.length() == 0 || regex == null || regex.length() == 0 || replacement == null )
                 return "";
             return Pattern.compile(regex).matcher(value).replaceAll(replacement);
-        }
+        } */
 
         @Scheduled(fixedRate = 60000)
         public void reportCurrentTime() {
