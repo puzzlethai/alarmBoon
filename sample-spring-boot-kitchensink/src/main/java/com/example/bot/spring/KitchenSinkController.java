@@ -500,7 +500,7 @@ public class KitchenSinkController {
                 count = "NULL";
             } else {
                 count = obj2.getDomain();
-                final String USER_TOKEN = "AX5dArSRT3QI1ujMSph8oQCaQd5UuwqxI877fuuSzfl";
+                final String USER_TOKEN = "4UaYqQCCIQi7tWIhYwkhOWwCBaNCJDNOmcDdsIFEdxq";
                 LineNotify ln = new LineNotify(USER_TOKEN);
                 try{
                     ln.notifyMe("Tomorrow is วันพระ");
