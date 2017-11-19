@@ -293,6 +293,7 @@ public class KitchenSinkController {
                 } else {
                     this.replyText(replyToken, "Bot can't use profile API without user ID");
                 }
+                this.pushText(userId,"test pushText");
                 break;
             }
             case "bye": {
