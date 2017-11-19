@@ -34,6 +34,7 @@ import java.util.UUID;
 import java.util.concurrent.ExecutionException;
 import java.util.function.Consumer;
 
+import com.linecorp.bot.model.PushMessage;
 import com.linecorp.bot.model.action.DatetimePickerAction;
 import com.linecorp.bot.model.message.template.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -219,7 +220,21 @@ public class KitchenSinkController {
             throw new RuntimeException(e);
         }
     }
-
+     private void pushText(@NonNull String userId, @NonNull String messages)  {
+       TextMessage textMessage = new TextMessage(messages);
+        PushMessage pushMessage = new PushMessage(
+                                        userId,
+                                        textMessage
+                                        );
+        try {
+            BotApiResponse apiResponse = lineMessagingClient
+                                        .pushMessage(pushMessage)
+                                        .get();
+            log.info("Sent messages: {}", apiResponse);
+        } catch (InterruptedException | ExecutionException e) {
+            throw new RuntimeException(e);
+        }
+    }
     private void replyText(@NonNull String replyToken, @NonNull String message) {
         if (replyToken.isEmpty()) {
             throw new IllegalArgumentException("replyToken must not be empty");
