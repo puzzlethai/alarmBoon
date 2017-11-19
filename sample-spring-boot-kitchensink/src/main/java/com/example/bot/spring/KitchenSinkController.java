@@ -488,12 +488,14 @@ public class KitchenSinkController {
 
         private final SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
 
-        @Scheduled(fixedRate = 60000)
+        @Scheduled(initialDelay = 70000)
         public void reportCurrentTime() {
             LocalDate today = LocalDate.now(ZoneId.of("Asia/Bangkok"));
             LocalDate tomorrow = today.plusDays(1);
             DateTimeFormatter patternFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
+            count = patternFormatter.format(tomorrow);
+            /*
             Domain obj2;
             obj2 = domainRepository.findByDomain(patternFormatter.format(tomorrow));
             if (obj2 == null) {
@@ -501,6 +503,7 @@ public class KitchenSinkController {
             } else {
                 count = obj2.getDomain();
             }
+            */
 
             /*
             if (obj2.isDisplayAds()){
