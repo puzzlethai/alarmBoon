@@ -488,7 +488,7 @@ public class KitchenSinkController {
 
         private final SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
 
-        @Scheduled(initialDelay = 70000)
+        @Scheduled(initialDelay=60000, fixedRate=300000)
         public void reportCurrentTime() {
             LocalDate today = LocalDate.now(ZoneId.of("Asia/Bangkok"));
             LocalDate tomorrow = today.plusDays(1);
