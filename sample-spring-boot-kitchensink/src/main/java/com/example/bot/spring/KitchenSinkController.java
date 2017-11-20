@@ -300,11 +300,12 @@ public class KitchenSinkController {
                                 );
 
                             });
+                    this.pushText(userId,"I am sure,it works.");
                 } else {
                     this.replyText(replyToken, "Bot can't use profile API without user ID");
                 }
-               this.pushT(userId,(new TextMessage(content.getText())));
-               // this.pushText(userId,userId);
+
+
                 break;
             }
             case "bye": {
