@@ -210,6 +210,21 @@ public class KitchenSinkController {
         reply(replyToken, Collections.singletonList(message));
     }
 
+    private void pushT(@NonNull String userId, @NonNull Message message) {
+        pushT(userId, Collections.singletonList(message));
+    }
+
+    private void pushT(@NonNull String userId, @NonNull List<Message> messages) {
+        try {
+            BotApiResponse apiResponse = lineMessagingClient
+                    .pushMessage(new PushMessage(userId, messages))
+                    .get();
+            log.info("Sent messages: {}", apiResponse);
+        } catch (InterruptedException | ExecutionException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     private void reply(@NonNull String replyToken, @NonNull List<Message> messages) {
         try {
             BotApiResponse apiResponse = lineMessagingClient
@@ -220,20 +235,15 @@ public class KitchenSinkController {
             throw new RuntimeException(e);
         }
     }
-     private void pushText(@NonNull String userId, @NonNull String messages)  {
-       TextMessage textMessage = new TextMessage(messages);
-        PushMessage pushMessage = new PushMessage(
-                                        userId,
-                                        textMessage
-                                        );
-        try {
-            BotApiResponse apiResponse = lineMessagingClient
-                                        .pushMessage(pushMessage)
-                                        .get();
-            log.info("Sent messages: {}", apiResponse);
-        } catch (InterruptedException | ExecutionException e) {
-            throw new RuntimeException(e);
-        }
+     private void pushText(@NonNull String userId, @NonNull String message)  {
+         if (userId.isEmpty()) {
+             throw new IllegalArgumentException("userId must not be empty");
+         }
+         if (message.length() > 1000) {
+             message = message.substring(0, 1000 - 2) + "……";
+         }
+         this.pushT(userId, new TextMessage(message));
+
     }
     private void replyText(@NonNull String replyToken, @NonNull String message) {
         if (replyToken.isEmpty()) {
@@ -293,7 +303,7 @@ public class KitchenSinkController {
                 } else {
                     this.replyText(replyToken, "Bot can't use profile API without user ID");
                 }
-                this.pushText(userId,"test pushText to "+userId);
+                this.pushText(userId,"test pushText to ");
                 break;
             }
             case "bye": {
