@@ -21,7 +21,6 @@ public class DomainRepositoryImpl implements DomainRepositoryCustom {
         update.set("displayAds", displayAds);
 
         WriteResult result = mongoTemplate.updateFirst(query, update, Domain.class);
-
         if(result!=null)
             return result.getN();
         else
