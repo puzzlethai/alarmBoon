@@ -300,7 +300,10 @@ public class KitchenSinkController {
                                 );
 
                             });
-                    this.pushText(userId,"I am sure,it works.");
+                    List<Domain> customers = domainRepository.findAll();
+                    for (Domain customer : customers)
+                    this.pushText(userId,"Hello tomorrow is :"+customer.getDomain());
+                    
                 } else {
                     this.replyText(replyToken, "Bot can't use profile API without user ID");
                 }

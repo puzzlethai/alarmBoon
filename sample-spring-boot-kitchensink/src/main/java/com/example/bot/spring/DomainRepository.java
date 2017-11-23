@@ -14,7 +14,7 @@ public interface DomainRepository extends MongoRepository<Domain, Long>, DomainR
 
     @Override
     List<Domain> findAll();
-    
+
     //Supports native JSON query string
     @Query("{domain:'?0'}")
     Domain findCustomByDomain(String domain);
