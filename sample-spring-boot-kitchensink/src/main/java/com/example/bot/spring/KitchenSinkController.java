@@ -93,6 +93,8 @@ import org.slf4j.LoggerFactory; // Just Add
 // TestMongoDB
 import com.example.bot.spring.Domain;
 import com.example.bot.spring.DomainRepository;
+import com.example.bot.spring.Customer;
+import com.example.bot.spring.CustomerRepository;
 
 @Slf4j
 @LineMessageHandler
@@ -102,6 +104,8 @@ public class KitchenSinkController {
     private LineMessagingClient lineMessagingClient;
     @Autowired
     private DomainRepository domainRepository;
+    @Autowired
+    private CustomerRepository customerRepository;
 
     @EventMapping
     public void handleTextMessageEvent(MessageEvent<TextMessageContent> event) throws Exception {
@@ -300,9 +304,11 @@ public class KitchenSinkController {
                                 );
 
                             });
-                    List<Domain> customers = domainRepository.findAll();
-                    for (Domain customer : customers)
-                    this.pushText(userId,"Hello tomorrow is :"+customer.getDomain());
+                    Customer peter = new Customer("Peter",Boolean.TRUE);
+                    customerRepository.save(peter);
+                    List<Domain> users = domainRepository.findAll();
+                    for (Domain user : users)
+                    this.pushText(userId,"Hello tomorrow is :"+user.getDomain());
 
                 } else {
                     this.replyText(replyToken, "Bot can't use profile API without user ID");

@@ -6,9 +6,10 @@ import org.springframework.data.mongodb.repository.Query;
 
 import java.util.List;
 
-public interface CustomerRepository extends MongoRepository<Domain, Long> {
+public interface CustomerRepository extends MongoRepository<Customer, Long> {
 
     Customer findByCustomer(String userId);
 
     List<Customer> findAllCustomer();
+
 }
