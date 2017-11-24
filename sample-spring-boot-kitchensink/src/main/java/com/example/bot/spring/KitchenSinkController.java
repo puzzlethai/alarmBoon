@@ -190,6 +190,21 @@ public class KitchenSinkController {
     @EventMapping
     public void handleJoinEvent(JoinEvent event) {
         String replyToken = event.getReplyToken();
+        String userId = event.getSource().getUserId();
+        if (userId != null) {
+            Customer temp_user;
+            temp_user = customerRepository.findByUserId(userId);
+            if (temp_user == null) {
+                try {
+                    Customer customer = new Customer();
+                    customer.setUserId(userId);
+                    customer.setMonkDay(Boolean.TRUE);
+                    customerRepository.save(customer);
+                } catch  (Exception e) {
+                    log.info("duplicate key", e);
+                }
+            }
+        }
         this.replyText(replyToken, "Joined " + event.getSource());
     }
 
@@ -304,18 +319,7 @@ public class KitchenSinkController {
                                 );
 
                             });
-                    Customer temp_user;
-                    temp_user = customerRepository.findByUserId(userId);
-                    if (temp_user == null) {
-                        try {
-                            Customer customer = new Customer();
-                            customer.setUserId(userId);
-                            customer.setMonkDay(Boolean.TRUE);
-                            customerRepository.save(customer);
-                        } catch  (Exception e) {
-                            log.info("duplicate key", e);
-                        }
-                    }
+
 
                     List<Domain> users = domainRepository.findAll();
                     for (Domain user : users)
