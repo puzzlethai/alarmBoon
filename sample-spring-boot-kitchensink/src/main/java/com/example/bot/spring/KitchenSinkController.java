@@ -304,11 +304,11 @@ public class KitchenSinkController {
                                 );
 
                             });
-                    //  if work  move to  handle join event  by add String userId = event.getSource().getUserId();
-                    Customer customer;
-                    customer = customerRepository.findByUserId(userId);
-                    if (customer == null) {
+                    Customer temp_user;
+                    temp_user = customerRepository.findByUserId(userId);
+                    if (temp_user == null) {
                         try {
+                            Customer customer = new Customer();
                             customer.setUserId(userId);
                             customer.setMonkDay(Boolean.TRUE);
                             customerRepository.save(customer);
@@ -316,7 +316,7 @@ public class KitchenSinkController {
                             log.info("duplicate key", e);
                         }
                     }
-                    //  
+
                     List<Domain> users = domainRepository.findAll();
                     for (Domain user : users)
                     this.pushText(userId,"Hello tomorrow is :"+user.getDomain());
