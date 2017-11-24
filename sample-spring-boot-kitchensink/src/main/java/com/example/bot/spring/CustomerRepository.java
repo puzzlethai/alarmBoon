@@ -12,5 +12,6 @@ public interface CustomerRepository extends MongoRepository<Customer, Long> {
 
     //List<Customer> findAllCustomer();
 
-
+    @Override
+    List<Customer> findAll();
 }
