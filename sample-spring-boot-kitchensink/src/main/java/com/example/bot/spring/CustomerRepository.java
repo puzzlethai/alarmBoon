@@ -12,6 +12,5 @@ public interface CustomerRepository extends MongoRepository<Customer, Long> {
 
     //List<Customer> findAllCustomer();
 
-    Void Save(Customer customer);
 
 }
