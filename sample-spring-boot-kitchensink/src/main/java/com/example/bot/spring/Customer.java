@@ -16,10 +16,6 @@ public class Customer {
     private String userId;
 
     private boolean monkDay;
-    public Customer(String userId, boolean monkDay){
-        this.userId = userId;
-        this.monkDay = monkDay;
-    }
 
     public BigInteger getId() {
         return id;

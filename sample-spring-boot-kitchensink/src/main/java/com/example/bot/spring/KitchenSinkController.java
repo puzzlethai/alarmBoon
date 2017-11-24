@@ -304,8 +304,10 @@ public class KitchenSinkController {
                                 );
 
                             });
-                    Customer peter = new Customer("Peter",Boolean.TRUE);
-                    customerRepository.save(peter);
+                    Customer customer = new Customer();
+                    customer.setUserId(userId);
+                    customer.setMonkDay(Boolean.TRUE);
+                    customerRepository.save(customer);
                     List<Domain> users = domainRepository.findAll();
                     for (Domain user : users)
                     this.pushText(userId,"Hello tomorrow is :"+user.getDomain());
