@@ -304,14 +304,19 @@ public class KitchenSinkController {
                                 );
 
                             });
-                    try {
-                        Customer customer = new Customer();
-                        customer.setUserId(userId);
-                        customer.setMonkDay(Boolean.TRUE);
-                        customerRepository.save(customer);
-                    } catch  (Exception e) {
-                        log.info("duplicate key", e);
+                    //  if work  move to  handle join event  by add String userId = event.getSource().getUserId();
+                    Customer customer;
+                    customer = customerRepository.findByUserId(userId);
+                    if (customer == null) {
+                        try {
+                            customer.setUserId(userId);
+                            customer.setMonkDay(Boolean.TRUE);
+                            customerRepository.save(customer);
+                        } catch  (Exception e) {
+                            log.info("duplicate key", e);
+                        }
                     }
+                    //  
                     List<Domain> users = domainRepository.findAll();
                     for (Domain user : users)
                     this.pushText(userId,"Hello tomorrow is :"+user.getDomain());
