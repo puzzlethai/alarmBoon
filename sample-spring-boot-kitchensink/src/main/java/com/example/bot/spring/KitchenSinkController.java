@@ -185,11 +185,6 @@ public class KitchenSinkController {
     public void handleFollowEvent(FollowEvent event) {
         String replyToken = event.getReplyToken();
         this.replyText(replyToken, "Got followed event");
-    }
-
-    @EventMapping
-    public void handleJoinEvent(JoinEvent event) {
-        String replyToken = event.getReplyToken();
         String userId = event.getSource().getUserId();
         if (userId != null) {
             Customer temp_user;
@@ -200,11 +195,19 @@ public class KitchenSinkController {
                     customer.setUserId(userId);
                     customer.setMonkDay(Boolean.TRUE);
                     customerRepository.save(customer);
+                    this.replyText(replyToken, "Add to DB successful");
                 } catch  (Exception e) {
+                    this.replyText(replyToken, "can't Add to DB");
                     log.info("duplicate key", e);
                 }
             }
         }
+
+    }
+
+    @EventMapping
+    public void handleJoinEvent(JoinEvent event) {
+        String replyToken = event.getReplyToken();
         this.replyText(replyToken, "Joined " + event.getSource());
     }
 
