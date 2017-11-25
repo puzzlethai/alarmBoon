@@ -14,4 +14,7 @@ public interface CustomerRepository extends MongoRepository<Customer, Long> {
 
     @Override
     List<Customer> findAll();
+
+    @Override
+    void delete(Customer entity);
 }

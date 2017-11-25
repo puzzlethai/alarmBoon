@@ -179,6 +179,14 @@ public class KitchenSinkController {
     @EventMapping
     public void handleUnfollowEvent(UnfollowEvent event) {
         log.info("unfollowed this bot: {}", event);
+        String userId = event.getSource().getUserId();
+        if (userId != null) {
+            Customer temp_user;
+            temp_user = customerRepository.findByUserId(userId);
+            if (temp_user != null) {
+                customerRepository.delete(temp_user);
+            }
+        }
     }
 
     @EventMapping
