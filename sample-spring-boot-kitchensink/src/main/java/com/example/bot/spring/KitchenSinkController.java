@@ -195,9 +195,9 @@ public class KitchenSinkController {
                     customer.setUserId(userId);
                     customer.setMonkDay(Boolean.TRUE);
                     customerRepository.save(customer);
-                    this.replyText(replyToken, "Add to DB successful");
+                    this.pushText(userId,"Add to DB successful");
                 } catch  (Exception e) {
-                    this.replyText(replyToken, "can't Add to DB");
+                    this.pushText(userId,"can't Add to DB");
                     log.info("duplicate key", e);
                 }
             }
