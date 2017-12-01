@@ -551,6 +551,30 @@ public class KitchenSinkController {
 
         private final SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
 
+        private void pushT(@NonNull String userId, @NonNull Message message) {
+            pushT(userId, Collections.singletonList(message));
+        }
+
+        private void pushT(@NonNull String userId, @NonNull List<Message> messages) {
+            try {
+                BotApiResponse apiResponse = lineMessagingClient
+                        .pushMessage(new PushMessage(userId, messages))
+                        .get();
+                log.info("Sent messages: {}", apiResponse);
+            } catch (InterruptedException | ExecutionException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        private void pushText(@NonNull String userId, @NonNull String message)  {
+            if (userId.isEmpty()) {
+                throw new IllegalArgumentException("userId must not be empty");
+            }
+            if (message.length() > 1000) {
+                message = message.substring(0, 1000 - 2) + "……";
+            }
+            this.pushT(userId, new TextMessage(message));
+
+        }
         @Scheduled(initialDelay=60000, fixedRate=300000)
         public void reportCurrentTime() {
             LocalDate today = LocalDate.now(ZoneId.of("Asia/Bangkok"));
@@ -558,6 +582,18 @@ public class KitchenSinkController {
             DateTimeFormatter patternFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
             count = patternFormatter.format(tomorrow);
+            Domain monkDay;
+            monkDay = domainRepository.findByDomain(count);
+            if (monkDay != null){ // tomorrow is monkDay
+                if (!monkDay.isDisplayAds()) { // not notify monkday
+                    List<Customer> customers = customerRepository.findAll();
+                    for (Customer customer : customers) {
+                        if(customer.getUserId()!= null)
+                        this.pushText(customer.getUserId(), "พรุ่งนี้เป็นวันพระ");
+                    }
+                }
+
+            }
             /*
             Domain obj2;
             obj2 = domainRepository.findByDomain(patternFormatter.format(tomorrow));
