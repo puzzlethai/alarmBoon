@@ -591,6 +591,7 @@ public class KitchenSinkController {
                         if(customer.getUserId()!= null)
                         this.pushText(customer.getUserId(), "พรุ่งนี้เป็นวันพระ");
                     }
+                    domainRepository.updateDomain(monkDay.getDomain(), true);
                 }
 
             }
