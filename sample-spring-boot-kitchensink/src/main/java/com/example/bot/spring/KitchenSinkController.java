@@ -617,7 +617,7 @@ public class KitchenSinkController {
                             if (customer.getUserId() != null)
                                 setUserId.add(customer.getUserId());
                         }
-                        multipushT(setUserId,"วันนี้วันพระ");
+                        multipushT(setUserId,new TextMessage("วันนี้วันพระ"));
 
                     } else { // more than one muticast
                         int i = 0;
@@ -626,13 +626,13 @@ public class KitchenSinkController {
                             if (customer.getUserId() != null)
                                 setUserId.add(customer.getUserId());
                             if (i%150 == 0){
-                                multipushT(setUserId,"วันนี้วันพระ");
+                                multipushT(setUserId,new TextMessage("วันนี้วันพระ"));
                                 i=0;
                                 setUserId.clear();
                             }
                         }
                         if (setUserId.size()!=0){  // last batch of userID
-                            multipushT(setUserId,"วันนี้วันพระ");
+                            multipushT(setUserId,new TextMessage("วันนี้วันพระ"));
                             setUserId.clear();
                         }
                     }
