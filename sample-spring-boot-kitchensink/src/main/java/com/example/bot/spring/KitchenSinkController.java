@@ -566,7 +566,7 @@ public class KitchenSinkController {
                 throw new RuntimeException(e);
             }
         }
-        private void multipushT(@NonNull Set<String> userId, @NonNull String messages) {
+        private void multipushT(@NonNull Set<String> userId, @NonNull Message messages) {
             try {
                 BotApiResponse apiResponse = lineMessagingClient
                         .multicast(new Multicast(userId,messages))
