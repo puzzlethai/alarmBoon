@@ -551,9 +551,11 @@ public class KitchenSinkController {
         private void pushT(@NonNull String userId, @NonNull Message message) {
             pushT(userId, Collections.singletonList(message));
         }
+        /*
         private void multipushT(@NonNull String userId, @NonNull Message message) {
             multipushT((Set<String>) Collections.singletonList(userId), Collections.singletonList(message));
         }
+        */
         private void pushT(@NonNull String userId, @NonNull List<Message> messages) {
             try {
                 BotApiResponse apiResponse = lineMessagingClient
@@ -564,7 +566,7 @@ public class KitchenSinkController {
                 throw new RuntimeException(e);
             }
         }
-        private void multipushT(@NonNull Set<String> userId, @NonNull List<Message> messages) {
+        private void multipushT(@NonNull Set<String> userId, @NonNull String messages) {
             try {
                 BotApiResponse apiResponse = lineMessagingClient
                         .multicast(new Multicast(userId,messages))
@@ -584,6 +586,7 @@ public class KitchenSinkController {
             this.pushT(userId, new TextMessage(message));
 
         }
+        /*
         private void multipushText(@NonNull String userId, @NonNull String message)  {
             if (userId.isEmpty()) {
                 throw new IllegalArgumentException("userId must not be empty");
@@ -594,6 +597,7 @@ public class KitchenSinkController {
             this.multipushT(userId, new TextMessage(message));
 
         }
+        */
         @Scheduled(initialDelay=60000, fixedRate=300000)
         public void reportCurrentTime() {
             LocalDate today = LocalDate.now(ZoneId.of("Asia/Bangkok"));
@@ -603,7 +607,41 @@ public class KitchenSinkController {
             count = patternFormatter.format(tomorrow);
             Domain monkDay;
             monkDay = domainRepository.findByDomain(count);
+
             if (monkDay != null){ // tomorrow is monkDay
+                if (!monkDay.isDisplayAds()) { // not notify monkday
+                    List<Customer> customers = customerRepository.findAll();
+                    Set<String> setUserId = new HashSet<String>();
+                    if (customers.size() < 150) { // only one multicast
+                        for (Customer customer : customers) {
+                            if (customer.getUserId() != null)
+                                setUserId.add(customer.getUserId());
+                        }
+                        multipushT(setUserId,"วันนี้วันพระ");
+
+                    } else { // more than one muticast
+                        int i = 0;
+                        for (Customer customer : customers) {
+                            i=i+1;
+                            if (customer.getUserId() != null)
+                                setUserId.add(customer.getUserId());
+                            if (i%150 == 0){
+                                multipushT(setUserId,"วันนี้วันพระ");
+                                i=0;
+                                setUserId.clear();
+                            }
+                        }
+                        if (setUserId.size()!=0){  // last batch of userID
+                            multipushT(setUserId,"วันนี้วันพระ");
+                            setUserId.clear();
+                        }
+                    }
+                    domainRepository.updateDomain(monkDay.getDomain(), true);
+                }
+
+            }
+
+            /*if (monkDay != null){ // tomorrow is monkDay
                 if (!monkDay.isDisplayAds()) { // not notify monkday
                     List<Customer> customers = customerRepository.findAll();
                     for (Customer customer : customers) {
@@ -613,7 +651,8 @@ public class KitchenSinkController {
                     domainRepository.updateDomain(monkDay.getDomain(), true);
                 }
 
-            }
+            } */
+
             /*
             Domain obj2;
             obj2 = domainRepository.findByDomain(patternFormatter.format(tomorrow));
