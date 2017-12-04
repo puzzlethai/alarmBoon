@@ -34,6 +34,7 @@ import java.util.UUID;
 import java.util.concurrent.ExecutionException;
 import java.util.function.Consumer;
 
+import com.linecorp.bot.model.Multicast;
 import com.linecorp.bot.model.PushMessage;
 import com.linecorp.bot.model.action.DatetimePickerAction;
 import com.linecorp.bot.model.message.template.*;
@@ -570,7 +571,7 @@ public class KitchenSinkController {
         private void multipushT(@NonNull List<String> userId, @NonNull List<Message> messages) {
             try {
                 BotApiResponse apiResponse = lineMessagingClient
-                        .multicast(new PushMessage(userId,messages))
+                        .multicast(new Multicast(userId,messages))
                         .get();
                 log.info("Sent messages: {}", apiResponse);
             } catch (InterruptedException | ExecutionException e) {
