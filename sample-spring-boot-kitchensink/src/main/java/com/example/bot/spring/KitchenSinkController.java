@@ -554,8 +554,20 @@ public class KitchenSinkController {
         private void pushT(@NonNull String userId, @NonNull Message message) {
             pushT(userId, Collections.singletonList(message));
         }
-
+        private void multipushT(@NonNull String userId, @NonNull Message message) {
+            multipushT(Collections.singletonList(userId), Collections.singletonList(message));
+        }
         private void pushT(@NonNull String userId, @NonNull List<Message> messages) {
+            try {
+                BotApiResponse apiResponse = lineMessagingClient
+                        .pushMessage(new PushMessage(userId, messages))
+                        .get();
+                log.info("Sent messages: {}", apiResponse);
+            } catch (InterruptedException | ExecutionException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        private void multipushT(@NonNull List<String> userId, @NonNull List<Message> messages) {
             try {
                 BotApiResponse apiResponse = lineMessagingClient
                         .pushMessage(new PushMessage(userId, messages))
@@ -573,6 +585,16 @@ public class KitchenSinkController {
                 message = message.substring(0, 1000 - 2) + "……";
             }
             this.pushT(userId, new TextMessage(message));
+
+        }
+        private void multipushText(@NonNull String userId, @NonNull String message)  {
+            if (userId.isEmpty()) {
+                throw new IllegalArgumentException("userId must not be empty");
+            }
+            if (message.length() > 1000) {
+                message = message.substring(0, 1000 - 2) + "……";
+            }
+            this.multipushT(userId, new TextMessage(message));
 
         }
         @Scheduled(initialDelay=60000, fixedRate=300000)
