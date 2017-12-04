@@ -25,12 +25,8 @@ import java.text.SimpleDateFormat; //Just Add
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
-import java.util.Date; //Just Add
+import java.util.*;
 import java.time.LocalDateTime;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.UUID;
 import java.util.concurrent.ExecutionException;
 import java.util.function.Consumer;
 
@@ -556,7 +552,7 @@ public class KitchenSinkController {
             pushT(userId, Collections.singletonList(message));
         }
         private void multipushT(@NonNull String userId, @NonNull Message message) {
-            multipushT(Collections.singletonList(userId), Collections.singletonList(message));
+            multipushT((Set<String>) Collections.singletonList(userId), Collections.singletonList(message));
         }
         private void pushT(@NonNull String userId, @NonNull List<Message> messages) {
             try {
@@ -568,7 +564,7 @@ public class KitchenSinkController {
                 throw new RuntimeException(e);
             }
         }
-        private void multipushT(@NonNull List<String> userId, @NonNull List<Message> messages) {
+        private void multipushT(@NonNull Set<String> userId, @NonNull List<Message> messages) {
             try {
                 BotApiResponse apiResponse = lineMessagingClient
                         .multicast(new Multicast(userId,messages))
