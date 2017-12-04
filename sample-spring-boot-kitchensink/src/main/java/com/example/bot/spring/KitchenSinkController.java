@@ -570,7 +570,7 @@ public class KitchenSinkController {
         private void multipushT(@NonNull List<String> userId, @NonNull List<Message> messages) {
             try {
                 BotApiResponse apiResponse = lineMessagingClient
-                        .pushMessage(new PushMessage(userId, messages))
+                        .multicast(new PushMessage(userId,messages))
                         .get();
                 log.info("Sent messages: {}", apiResponse);
             } catch (InterruptedException | ExecutionException e) {
