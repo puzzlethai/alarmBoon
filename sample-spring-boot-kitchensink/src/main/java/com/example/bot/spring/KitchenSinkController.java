@@ -626,13 +626,13 @@ public class KitchenSinkController {
                             if (customer.getUserId() != null)
                                 setUserId.add(customer.getUserId());
                             if (i%150 == 0){
-                                multipushT(setUserId,new TextMessage("\\uD83D\\uDE4F พรุ่งนี้วันพระ \\uD83D\\uDE4F"));
+                                multipushT(setUserId,new TextMessage("\uDBC0\uDC7F พรุ่งนี้วันพระ \uDBC0\uDC7F"));
                                 i=0;
                                 setUserId.clear();
                             }
                         }
                         if (setUserId.size()!=0){  // last batch of userID
-                            multipushT(setUserId,new TextMessage("\\uD83D\\uDE4F พรุ่งนี้วันพระ \\uD83D\\uDE4F"));
+                            multipushT(setUserId,new TextMessage("\uDBC0\uDC7F พรุ่งนี้วันพระ \uDBC0\uDC7F"));
                             setUserId.clear();
                         }
                     }
