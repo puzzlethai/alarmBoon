@@ -609,7 +609,7 @@ public class KitchenSinkController {
             monkDay = domainRepository.findByDomain(count);
 
             if (monkDay != null){ // tomorrow is monkDay
-                if (!monkDay.isDisplayAds()) { // not notify monkday
+                if (!monkDay.isDisplayAds()) { // not notify monkday yet
                     List<Customer> customers = customerRepository.findAll();
                     Set<String> setUserId = new HashSet<String>();
                     if (customers.size() < 150) { // only one multicast
@@ -626,13 +626,15 @@ public class KitchenSinkController {
                             if (customer.getUserId() != null)
                                 setUserId.add(customer.getUserId());
                             if (i%150 == 0){
-                                multipushT(setUserId,new TextMessage("\uDBC0\uDC7F พรุ่งนี้วันพระ \uDBC0\uDC7F"));
+                                multipushT(setUserId,new TextMessage("พรุ่งนี้วันพระ"));
+                                // don't forget little delay
                                 i=0;
                                 setUserId.clear();
+
                             }
                         }
                         if (setUserId.size()!=0){  // last batch of userID
-                            multipushT(setUserId,new TextMessage("\uDBC0\uDC7F พรุ่งนี้วันพระ \uDBC0\uDC7F"));
+                            multipushT(setUserId,new TextMessage("พรุ่งนี้วันพระ"));
                             setUserId.clear();
                         }
                     }
