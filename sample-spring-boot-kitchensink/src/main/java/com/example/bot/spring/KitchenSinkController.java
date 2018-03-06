@@ -16,6 +16,7 @@
 
 package com.example.bot.spring;
 
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.UncheckedIOException;
@@ -96,7 +97,7 @@ import com.example.bot.spring.CustomerRepository;
 @Slf4j
 @LineMessageHandler
 public class KitchenSinkController {
-    private static String count = "Start";
+    private static String tomorrow_fm = "Start";
     @Autowired
     private LineMessagingClient lineMessagingClient;
     @Autowired
@@ -300,7 +301,16 @@ public class KitchenSinkController {
                 content.getPackageId(), content.getStickerId())
         );
     }
-
+    private void multipushT(@NonNull Set<String> userId, @NonNull Message messages) {  //6-3-61
+        try {
+            BotApiResponse apiResponse = lineMessagingClient
+                    .multicast(new Multicast(userId,messages))
+                    .get();
+            log.info("Sent messages: {}", apiResponse);
+        } catch (InterruptedException | ExecutionException e) {
+            throw new RuntimeException(e);
+        }
+    }
     private void handleTextContent(String replyToken, Event event, TextMessageContent content)
             throws Exception {
         String text = content.getText();
@@ -453,6 +463,15 @@ public class KitchenSinkController {
                 this.reply(replyToken, templateMessage);
                 break;
             }
+            case "test": { //6-3-61
+                String userId = event.getSource().getUserId();
+                String imageUrl = createUri("/static/buttons/1040.jpg");
+                DownloadedContent previewImg = createTempFile("jpg");
+                pushT(userId,new ImageMessage(imageUrl, previewImg.getUri()));
+
+                this.reply(replyToken, new TextMessage(text));
+                break;
+            }
             case "imagemap":
                 this.reply(replyToken, new ImagemapMessage(
                         createUri("/static/rich"),
@@ -490,7 +509,7 @@ public class KitchenSinkController {
                 log.info("Returns echo message {}: {}", replyToken, text);
                 this.replyText(
                         replyToken,
-                        text+count
+                        text+tomorrow_fm
                 );
                 break;
         }
@@ -604,10 +623,21 @@ public class KitchenSinkController {
             LocalDate tomorrow = today.plusDays(1);
             DateTimeFormatter patternFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
-            count = patternFormatter.format(tomorrow);
+            tomorrow_fm = patternFormatter.format(tomorrow);
             Domain monkDay;
-            monkDay = domainRepository.findByDomain(count);
-
+            monkDay = domainRepository.findByDomain(tomorrow_fm);
+            BufferedImage ire;
+        ire = WebImage.create("<!DOCTYPE html>\n" +
+                "<html lang=\"en\">\n" +
+                "<head>\n" +
+                "    <meta charset=\"UTF-8\">\n" +
+                "    <title>Title</title>\n" +
+                "</head>\n" +
+                "<body>\n" +
+                "    <H1> I LOVE U</H1>\n" +
+                "</body>\n" +
+                "</html>", 800, 600);
+  อาจต้องลอง เขียนลง file ชั่วคราวแล้ว เลียนแบบ creatUri ทำเป็น link ให้ Imagemessage
             if (monkDay != null){ // tomorrow is monkDay
                 if (!monkDay.isDisplayAds()) { // not notify monkday yet
                     List<Customer> customers = customerRepository.findAll();
@@ -659,24 +689,24 @@ public class KitchenSinkController {
             Domain obj2;
             obj2 = domainRepository.findByDomain(patternFormatter.format(tomorrow));
             if (obj2 == null) {
-                count = "NULL";
+                tomorrow_fm = "NULL";
             } else {
-                count = obj2.getDomain();
+                tomorrow_fm = obj2.getDomain();
             }
             */
 
             /*
             if (obj2.isDisplayAds()){
-                count = "TRUE";
+                tomorrow_fm = "TRUE";
                 domainRepository.updateDomain(obj2.getDomain(), false);
             } else {
-                count = "FALSE";
+                tomorrow_fm = "FALSE";
                 domainRepository.updateDomain(obj2.getDomain(), true);
             }
 */
             // log.info("The time is now {}", dateFormat.format(new Date()));
 
-            //count = domainRepository.updateDomain("2017-11-11", true);
+            //tomorrow_fm = domainRepository.updateDomain("2017-11-11", true);
 
         }
     }
