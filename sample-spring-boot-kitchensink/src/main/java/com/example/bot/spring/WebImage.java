@@ -9,7 +9,7 @@ import javax.swing.text.html.*;
 
 public abstract class WebImage
 {
-    
+
     static class Kit extends HTMLEditorKit
     {
         private static final long serialVersionUID = 1L;
@@ -41,7 +41,7 @@ public abstract class WebImage
                     (g, pane, c, 0, 0, width, height);
             g.dispose();
         } catch (Exception e) {
-            System.out.println(e);
+           // System.out.println(e);
         }
         return image;
     }
