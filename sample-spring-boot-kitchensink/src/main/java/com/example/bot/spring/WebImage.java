@@ -9,6 +9,7 @@ import javax.swing.text.html.*;
 
 public abstract class WebImage
 {
+    @SuppressWarnings("serial")
     static class Kit extends HTMLEditorKit
     {
         public Document createDefaultDocument() {
