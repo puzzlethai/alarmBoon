@@ -9,7 +9,7 @@ import javax.swing.text.html.*;
 
 public abstract class WebImage
 {
-    @SuppressWarnings("serial")
+    
     static class Kit extends HTMLEditorKit
     {
         private static final long serialVersionUID = 1L;
