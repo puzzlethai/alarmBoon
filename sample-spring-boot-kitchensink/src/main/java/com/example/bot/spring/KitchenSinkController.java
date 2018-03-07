@@ -18,6 +18,7 @@ package com.example.bot.spring;
 
 import java.awt.image.BufferedImage;
 import java.io.*;
+import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.text.SimpleDateFormat; //Just Add
@@ -93,6 +94,8 @@ import com.example.bot.spring.Customer;
 import com.example.bot.spring.CustomerRepository;
 
 import javax.imageio.ImageIO;
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.Unmarshaller;
 
 @Slf4j
 @LineMessageHandler
@@ -469,7 +472,7 @@ public class KitchenSinkController {
                 DownloadedContent previewImg = createTempFile("jpg");
                 pushT(userId,new ImageMessage(imageUrl, previewImg.getUri()));*/
                 BufferedImage ire;
-                ire = WebImage.create("<!DOCTYPE html>\n" +
+/*                ire = WebImage.create("<!DOCTYPE html>\n" +
                 "<html lang=\"en\">\n" +
                 "<head>\n" +
                 "    <meta charset=\"UTF-8\">\n" +
@@ -478,16 +481,35 @@ public class KitchenSinkController {
                 "<body>\n" +
                 "    <H1> I LOVE U</H1>\n" +
                 "</body>\n" +
-                "</html>", 533, 740);
-                            DownloadedContent jpg = saveImage("jpg", ire);
-                            DownloadedContent previewImg = createTempFile("jpg");
-                            system(
-                                    "convert",
-                                    "-resize", "240x",
-                                    jpg.path.toString(),
-                                    previewImg.path.toString());
-                            reply(((MessageEvent) event).getReplyToken(),
-                                    new ImageMessage(jpg.getUri(), jpg.getUri()));
+                "</html>", 533, 740);*/
+                InputStream inputStream = null;
+                try {
+                    inputStream = new URL("https://crmmobile.bangchak.co.th/webservice/oil_price.aspx").openStream();
+                } catch (IOException e){
+                    e.printStackTrace();
+                }
+                try {
+                    JAXBContext jaxbContext = JAXBContext.newInstance(Header.class);
+                    Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
+
+                    Header oilprice = (Header) unmarshaller.unmarshal(inputStream);
+
+                    ire = WebImage.create(oilprice.showHTML(), 533, 740);
+//You can convert the BufferedImage to any format that you wish, jpg I thought was the best format
+
+                    DownloadedContent jpg = saveImage("jpg", ire);
+                    DownloadedContent previewImg = createTempFile("jpg");
+                    system(
+                            "convert",
+                            "-resize", "240x",
+                            jpg.path.toString(),
+                            previewImg.path.toString());
+                    reply(((MessageEvent) event).getReplyToken(),
+                            new ImageMessage(jpg.getUri(), jpg.getUri()));
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
 
 
 
