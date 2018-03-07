@@ -57,7 +57,7 @@ public class Header {
         System.out.println("size :"+this.items.size());
     }
 
-    @Override
+/*    @Override
     public String toString() {
 
         List<Item> items = this.items;
@@ -67,7 +67,7 @@ public class Header {
             temp = temp+ item.toString()+String.valueOf(i++);
         }
         return temp;
-    }
+    }*/
 
     public Boolean isSame() {
         List<Item> items = this.items;
