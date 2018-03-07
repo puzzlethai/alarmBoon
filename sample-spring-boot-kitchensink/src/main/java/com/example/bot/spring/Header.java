@@ -56,6 +56,7 @@ public class Header {
         }
         System.out.println("size :"+this.items.size());
     }
+
     @Override
     public String toString() {
 
@@ -79,6 +80,7 @@ public class Header {
     }
 
 
+
     public String showHTML(){
         List<Item> items = this.items;
         Locale lc = new Locale("th","TH");
@@ -94,27 +96,28 @@ public class Header {
                 "    }</style></head>" +
                 "<body style=\"font-family: tahoma;font-size: large\">"+ //MS Sans Serif,DB ThaiTextFixed
                 "<table cellspacing=\"0\" >"+
-                "<tr bgcolor=#57b33e ><td colspan=\"4\" style=\"padding: 10px;color:white\"><h2>�Ҥҹ���ѹ by AlarmBoon</h2></td></tr>"+
+                "<tr bgcolor=#57b33e ><td colspan=\"4\" style=\"padding: 10px;color:white\"><h2>ราคาน้ำมัน by AlarmBoon</h2></td></tr>"+
                 "<tr style=\"color:blue\">" +
                 "<th>"+todayStr+"</th>" +
-                "<th>�ѹ���</th>" +
-                "<th>���觹��</th>" +
-                "<th>��ǹ��ҧ</th>" +
-                "</tr><tr bgcolor=\"orange\"><th>��Դ����ѹ</th>" +
-                "<th>�ҷ/�Ե�</th>" +
-                "<th>�ҷ/�Ե�</th>" +
-                "<th>�ҷ</th></tr>";
+                "<th>วันนี้</th>" +
+                "<th>พรุ่งนี้</th>" +
+                "<th>ส่วนต่าง</th>" +
+                "</tr><tr bgcolor=\"orange\"><th>ชนิดน้ำมัน</th>" +
+                "<th>บาท/ลิตร</th>" +
+                "<th>บาท/ลิตร</th>" +
+                "<th>บาท</th></tr>";
 
         for (Item item : items) {
             if (item.getoilType().equals("NGV")){
-                tempStr = tempStr + "</tr><tr bgcolor=\"orange\"><th>��Դ����ѹ</th>" +
-                        "<th>�ҷ/��.</th>" +
-                        "<th>�ҷ/��.</th>" +
-                        "<th>�ҷ</th></tr>";
+                tempStr = tempStr + "</tr><tr bgcolor=\"orange\"><th>ชนิดน้ำมัน</th>" +
+                        "<th>บาท/กก.</th>" +
+                        "<th>บาท/กก.</th>" +
+                        "<th>บาท</th></tr>";
             }
             String colorStr = "";
             String boldBegin = "";
             String boldEnd = "";
+            item.setChange();
             switch (item.getChange().substring(0,1)){
                 case "+": colorStr = "style=\"color:red\"";
                     boldBegin = "<b>";
@@ -124,9 +127,7 @@ public class Header {
                     boldBegin = "<b>";
                     boldEnd = "</b>";
                     break;
-                /*default: colorStr = "style=\"color:blue\"";
-                    boldBegin = "<b>";
-                    boldEnd = "</b>";*/
+                default: colorStr = "style=\"color:black\"";
             }
 
             tempStr = tempStr + "<tr><td>"+item.getoilType()+"</td>"+
@@ -136,8 +137,8 @@ public class Header {
         }
 
         tempStr = tempStr + "<tr style=\"border-bottom: 0px;\"><th colspan=\"4\" style=\"padding: 10px;border-bottom: 0px;\">" +
-                "��͹�Ҥҹ���ѹ����� Add LINE &nbsp <span class=\"blue\">@hpd8343b</span></th></tr>"+
-                "<td colspan=\"4\" style=\"padding: 0px;border-bottom: 0px;\"><h6>�ͺ�س�����Ũҡ �ҧ�ҡ</h6>"+
+                "เตือนราคาน้ำมันฟรีแค่ Add LINE &nbsp <span class=\"blue\">@hpd8343b</span></th></tr>"+
+                "<td colspan=\"4\" style=\"padding: 0px;border-bottom: 0px;\"><h6>ขอบคุณข้อมูลจาก บางจาก</h6>"+
                 "</table></body></html>";
         return tempStr;
     }
