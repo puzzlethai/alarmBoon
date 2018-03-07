@@ -74,7 +74,9 @@ public class Item {
     public void setimage(String image) {
         this.image = image;
     }
-
+    public String getimage2() {
+        return image2;
+    }
     public void setimage2(String image2) {
         this.image = image2;
     }
