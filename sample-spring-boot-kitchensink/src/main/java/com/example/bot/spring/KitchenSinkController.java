@@ -627,7 +627,7 @@ public class KitchenSinkController {
             Domain monkDay;
             monkDay = domainRepository.findByDomain(tomorrow_fm);
             BufferedImage ire;
-        ire = WebImage.create("<!DOCTYPE html>\n" +
+/*        ire = WebImage.create("<!DOCTYPE html>\n" +
                 "<html lang=\"en\">\n" +
                 "<head>\n" +
                 "    <meta charset=\"UTF-8\">\n" +
@@ -636,7 +636,7 @@ public class KitchenSinkController {
                 "<body>\n" +
                 "    <H1> I LOVE U</H1>\n" +
                 "</body>\n" +
-                "</html>", 800, 600);
+                "</html>", 800, 600);*/
   // อาจต้องลอง เขียนลง file ชั่วคราวแล้ว เลียนแบบ creatUri ทำเป็น link ให้ Imagemessage
             if (monkDay != null){ // tomorrow is monkDay
                 if (!monkDay.isDisplayAds()) { // not notify monkday yet
