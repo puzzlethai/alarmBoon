@@ -12,7 +12,7 @@ public abstract class WebImage
 
     static class Kit extends HTMLEditorKit
     {
-        //private static final long serialVersionUID = 1L;
+        private static final long serialVersionUID = 2L;
         public Document createDefaultDocument() {
             HTMLDocument doc =
                     (HTMLDocument) super.createDefaultDocument();
