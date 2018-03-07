@@ -17,9 +17,7 @@
 package com.example.bot.spring;
 
 import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.io.UncheckedIOException;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.text.SimpleDateFormat; //Just Add
@@ -93,6 +91,8 @@ import com.example.bot.spring.Domain;
 import com.example.bot.spring.DomainRepository;
 import com.example.bot.spring.Customer;
 import com.example.bot.spring.CustomerRepository;
+
+import javax.imageio.ImageIO;
 
 @Slf4j
 @LineMessageHandler
@@ -465,11 +465,33 @@ public class KitchenSinkController {
             }
             case "test": { //6-3-61
                 String userId = event.getSource().getUserId();
-                String imageUrl = createUri("/static/buttons/1040.jpg");
+/*                String imageUrl = createUri("/static/buttons/1040.jpg");
                 DownloadedContent previewImg = createTempFile("jpg");
-                pushT(userId,new ImageMessage(imageUrl, previewImg.getUri()));
+                pushT(userId,new ImageMessage(imageUrl, previewImg.getUri()));*/
+                BufferedImage ire;
+                ire = WebImage.create("<!DOCTYPE html>\n" +
+                "<html lang=\"en\">\n" +
+                "<head>\n" +
+                "    <meta charset=\"UTF-8\">\n" +
+                "    <title>Title</title>\n" +
+                "</head>\n" +
+                "<body>\n" +
+                "    <H1> I LOVE U</H1>\n" +
+                "</body>\n" +
+                "</html>", 533, 740);
+                            DownloadedContent jpg = saveImage("jpg", ire);
+                            DownloadedContent previewImg = createTempFile("jpg");
+                            system(
+                                    "convert",
+                                    "-resize", "240x",
+                                    jpg.path.toString(),
+                                    previewImg.path.toString());
+                            reply(((MessageEvent) event).getReplyToken(),
+                                    new ImageMessage(jpg.getUri(), jpg.getUri()));
 
-                this.reply(replyToken, new TextMessage(text));
+
+
+//                this.reply(replyToken, new TextMessage(text));
                 break;
             }
             case "imagemap":
@@ -547,7 +569,21 @@ public class KitchenSinkController {
             throw new UncheckedIOException(e);
         }
     }
+    private static DownloadedContent saveImage(String ext, BufferedImage bfimage) {
 
+
+        DownloadedContent tempFile = createTempFile(ext);
+        try (OutputStream outputStream = Files.newOutputStream(tempFile.path)) {
+            ByteArrayOutputStream os = new ByteArrayOutputStream();
+            ImageIO.write(bfimage, ext, os);
+            InputStream is = new ByteArrayInputStream(os.toByteArray());
+            ByteStreams.copy(is, outputStream);
+            log.info("Saved {}: {}", ext, tempFile);
+            return tempFile;
+        } catch (IOException e) {
+            throw new UncheckedIOException(e);
+        }
+    }
     private static DownloadedContent createTempFile(String ext) {
         String fileName = LocalDateTime.now().toString() + '-' + UUID.randomUUID().toString() + '.' + ext;
         Path tempFile = KitchenSinkApplication.downloadedContentDir.resolve(fileName);
