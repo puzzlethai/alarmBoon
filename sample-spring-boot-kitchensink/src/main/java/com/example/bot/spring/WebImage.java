@@ -32,7 +32,7 @@ public abstract class WebImage
         pane.setMargin(new Insets(0,0,0,0));
         try {
             //pane.setPage(src);
-
+            pane.putClientProperty(JEditorPane.HONOR_DISPLAY_PROPERTIES, Boolean.TRUE);
             pane.setFont(fontT);
             pane.setText(src);
             image = new BufferedImage

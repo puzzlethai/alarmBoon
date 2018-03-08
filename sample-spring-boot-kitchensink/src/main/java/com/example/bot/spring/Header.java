@@ -88,13 +88,15 @@ public class Header {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d MMM uuuu",lc);
 
         String todayStr = now.format(formatter);
-        String tempStr =  "<!DOCTYPE html><html lang=\"th\"><head><meta charset=\"UTF-8\"><style type=\"text/css\">th {border-bottom: 1px solid #ddd;padding: 15px;text-align: center;}"+
+        String tempStr =  "<!DOCTYPE html><html lang=\"th\"><head><meta charset=\"UTF-8\"><link href=\"https://fonts.googleapis.com/css?family=Sriracha\" rel=\"stylesheet\" type='text/css'><style type=\"text/css\">th {border-bottom: 1px solid #ddd;padding: 15px;text-align: center;}"+
                 "td {color:black; border-bottom: 1px solid #9cff8b;padding: 15px;text-align: center;}"+
                 "table {} .blue{\n" +
                 "        color:blue;\n" +
                 "        background: none;\n" +
-                "    }</style></head>" +
-                "<body style=\"font-family: Tahoma;font-size: large\">"+ //MS Sans Serif,DB ThaiTextFixed
+                "    }body {\n" +
+                "\t\t  font-family: 'Sriracha', sans-serif;\n" +
+                "\t\t}</style></head>" +
+                "<body >"+ //tahoma, MS Sans Serif,DB ThaiTextFixed style="font-family: Sans-serif;font-size: large"
                 "<table cellspacing=\"0\" >"+
                 "<tr bgcolor=#57b33e ><td colspan=\"4\" style=\"padding: 10px;color:white\"><h2>ราคาน้ำมัน by AlarmBoon</h2></td></tr>"+
                 "<tr style=\"color:blue\">" +
