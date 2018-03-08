@@ -32,6 +32,7 @@ public abstract class WebImage
         pane.setMargin(new Insets(0,0,0,0));
         try {
             //pane.setPage(src);
+
             pane.setFont(fontT);
             pane.setText(src);
             image = new BufferedImage
