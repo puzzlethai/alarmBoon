@@ -96,7 +96,7 @@ public class Header {
                 "    }body {\n" +
                 "\t\t  font-family: 'Sriracha', sans-serif;\n" +
                 "\t\t}</style></head>" +
-                "<body >"+ //tahoma, MS Sans Serif,DB ThaiTextFixed style="font-family: Sans-serif;font-size: large"
+                "<body style=\"font-family: Sans-serif, Sriracha;font-size: large\" >"+ //tahoma, MS Sans Serif,DB ThaiTextFixed style="font-family: Sans-serif;font-size: large"
                 "<table cellspacing=\"0\" >"+
                 "<tr bgcolor=#57b33e ><td colspan=\"4\" style=\"padding: 10px;color:white\"><h2>ราคาน้ำมัน by AlarmBoon</h2></td></tr>"+
                 "<tr style=\"color:blue\">" +
