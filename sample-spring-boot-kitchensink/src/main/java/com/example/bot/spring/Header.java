@@ -88,7 +88,7 @@ public class Header {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d MMM uuuu",lc);
 
         String todayStr = now.format(formatter);
-        String tempStr =  "<!DOCTYPE html><html lang=\"th\"><head><meta charset=\"UTF-8\"><style type=\"text/css\">th {border-bottom: 1px solid #ddd;padding: 15px;text-align: center;}"+
+        String tempStr = "<!DOCTYPE html><html lang=\"th\"><head><meta charset=\"UTF-8\"><style type=\"text/css\">th {border-bottom: 1px solid #ddd;padding: 15px;text-align: center;}"+
                 "td {color:black; border-bottom: 1px solid #9cff8b;padding: 15px;text-align: center;}"+
                 "table {} .blue{\n" +
                 "        color:blue;\n" +
