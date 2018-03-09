@@ -89,19 +89,19 @@ public class Header {
 
         String todayStr = now.format(formatter);
         StringBuilder tempStr = new StringBuilder("<!DOCTYPE html><html lang=\"th\" ><head><meta charset=\"UTF-8\">\n" +
-                "    <link href=\"https://fonts.googleapis.com/css?family=Sriracha\" rel=\"stylesheet\" type='text/css'>\n" +
-                "    <style type=\"text/css\">th { border-bottom: 1px solid #2cff1a;padding: 15px;text-align: center;}\n" +
+               // "    <link href=\"https://fonts.googleapis.com/css?family=Sriracha\" rel=\"stylesheet\" type='text/css'>\n" +
+/*                "    <style type=\"text/css\">th { border-bottom: 1px solid #2cff1a;padding: 15px;text-align: center;}\n" +
                 "    @font-face {\n" +
                 "        font-family: 'Sriracha';\n" +
                 "        unicode-range: U+0E00-0E7F;\n" +
-                "    }\n" +
+                "    }\n" +*/
                 "td {color:black; border-bottom: 1px solid #9cff8b; padding: 15px; text-align: center;}\n" +
                 "table {}\n" +
                 "    .blue{\n" +
                 "        color:blue;\n" +
                 "        background: none;\n" +
                 "    }</style>\n" +
-                "</head><body style=\"font-family: 'Waree'; font-size: medium\"><table cellspacing=\"0\" >\n" +
+                "</head><body style=\"font-family: Waree,Tahoma, Lucida Grande, Loma, sans-serif; font-size: medium\"><table cellspacing=\"0\" >\n" +
                 "    <tr bgcolor=\"#57b33e\">\n" +
                 "        <td colspan=\"4\" style=\"padding: 0px;color:white\"><h3>ราคาน้ำมัน</h3></td></tr>\n" +
                 "    <tr style=\"color:blue\"><th>"+todayStr+"</th><th>วันนี้</th><th>พรุ่งนี้</th><th>ส่วนต่าง</th></tr>\n" +
