@@ -101,7 +101,7 @@ public class Header {
                 "        color:blue;\n" +
                 "        background: none;\n" +
                 "    }</style>\n" +
-                "</head><body><table cellspacing=\"0\" >\n" +
+                "</head><body style=\"font-family: 'Lucida Grande', sans-serif; font-size: medium\"><table cellspacing=\"0\" >\n" +
                 "    <tr bgcolor=\"#57b33e\">\n" + //  style="font-family: 'Lucida Sans Unicode', 'Lucida Grande', sans-serif; font-size: medium"
                 "        <td colspan=\"4\" style=\"padding: 0px;color:white\"><h3>ราคาน้ำมัน</h3></td></tr>\n" +
                 "    <tr style=\"color:blue\"><th>"+todayStr+"</th><th>วันนี้</th><th>พรุ่งนี้</th><th>ส่วนต่าง</th></tr>\n" +

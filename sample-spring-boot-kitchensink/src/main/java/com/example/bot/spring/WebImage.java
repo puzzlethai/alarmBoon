@@ -25,7 +25,7 @@ public abstract class WebImage
             (String src, int width, int height) {
         BufferedImage image = null;
         JEditorPane pane = new JEditorPane();
-        Font fontT = new Font("Waree",Font.PLAIN,10);
+        Font fontT = new Font("Loma",Font.PLAIN,10);
         Kit kit = new Kit();
         pane.setEditorKit(kit);
         pane.setEditable(false);
