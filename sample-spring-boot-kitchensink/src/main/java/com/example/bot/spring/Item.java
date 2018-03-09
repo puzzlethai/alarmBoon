@@ -3,7 +3,7 @@ package com.example.bot.spring;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
+// import javax.xml.bind.annotation.XmlRootElement;
 
 // Controls whether fields or Javabean properties are serialized by default.
 // By default all public members will be searialized,
