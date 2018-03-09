@@ -34,6 +34,7 @@ public abstract class WebImage
             //pane.setPage(src);
            // pane.putClientProperty(JEditorPane.HONOR_DISPLAY_PROPERTIES, Boolean.TRUE);
             //pane.setFont(fontT);
+            pane.setContentType("text/html");
             pane.setText(src);
             image = new BufferedImage
                     (width, height, BufferedImage.TYPE_INT_RGB);
