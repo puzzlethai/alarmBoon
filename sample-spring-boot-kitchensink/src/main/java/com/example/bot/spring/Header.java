@@ -99,22 +99,22 @@ public class Header {
                 "    <style type=\"text/css\">th { border-bottom: 1px solid #2cff1a;padding: 15px;text-align: center;}\n" +
                 "    @font-face {\n" +
                 "        font-family: 'th_krubregular';\n" +
-                "        src: url('th_krub-webfont.eot');\n" +
-                "        src: url('th_krub-webfont.eot?#iefix') format('embedded-opentype'),\n" +
-                "        url('th_krub-webfont.woff2') format('woff2'),\n" +
-                "        url('th_krub-webfont.woff') format('woff'),\n" +
-                "        url('th_krub-webfont.svg#th_krubregular') format('svg');\n" +
+                "        src: url('/static/buttons/th_krub-webfont.eot');\n" +
+                "        src: url('/static/buttons/th_krub-webfont.eot?#iefix') format('embedded-opentype'),\n" +
+                "        url('/static/buttons/th_krub-webfont.woff2') format('woff2'),\n" +
+                "        url('/static/buttons/th_krub-webfont.woff') format('woff'),\n" +
+                "        url('/static/buttons/th_krub-webfont.svg#th_krubregular') format('svg');\n" +
                 "        font-weight: normal;\n" +
                 "        font-style: normal;\n" +
                 "\n" +
                 "    }\n" +
                 "    @font-face {\n" +
                 "        font-family: 'th_krubbold';\n" +
-                "        src: url('th_krub_bold-webfont.eot');\n" +
-                "        src: url('th_krub_bold-webfont.eot?#iefix') format('embedded-opentype'),\n" +
-                "        url('th_krub_bold-webfont.woff2') format('woff2'),\n" +
-                "        url('th_krub_bold-webfont.woff') format('woff'),\n" +
-                "        url('th_krub_bold-webfont.svg#th_krubbold') format('svg');\n" +
+                "        src: url('/static/buttons/th_krub_bold-webfont.eot');\n" +
+                "        src: url('/static/buttons/th_krub_bold-webfont.eot?#iefix') format('embedded-opentype'),\n" +
+                "        url('/static/buttons/th_krub_bold-webfont.woff2') format('woff2'),\n" +
+                "        url('/static/buttons/th_krub_bold-webfont.woff') format('woff'),\n" +
+                "        url('/static/buttons/th_krub_bold-webfont.svg#th_krubbold') format('svg');\n" +
                 "        font-weight: normal;\n" +
                 "        font-style: normal;\n" +
                 "\n" +
@@ -126,7 +126,7 @@ public class Header {
                 "        color:blue;\n" +
                 "        background: none;\n" +
                 "    }</style>\n" +
-                "</head><body style=\"font-family: 'th_krubregular'; font-size: large\"><table cellspacing=\"0\" >\n" +
+                "</head><body style=\"font-family: 'th_krubregular'; font-size: medium \"><table cellspacing=\"0\" >\n" +
                 "    <tr bgcolor=\"#57b33e\">\n" +
                 "        <td colspan=\"4\" style=\"padding: 0px;color:white\"><h3>ราคาน้ำมัน</h3></td></tr>\n" +
                 "    <tr style=\"color:blue\"><th>"+todayStr+"</th><th>วันนี้</th><th>พรุ่งนี้</th><th>ส่วนต่าง</th></tr>\n" +
