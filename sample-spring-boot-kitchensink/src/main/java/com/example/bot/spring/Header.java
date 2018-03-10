@@ -83,10 +83,10 @@ public class Header {
 
     public String showHTML(){
         List<Item> items = this.items;
-        Locale lc = new Locale("th","TH");
+        //Locale lc = new Locale("th","TH");
         LocalDateTime now = LocalDateTime.now();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d MMM uuuu",lc);
-
+        //DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d MMM uuuu",lc);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d MMM uuuu");
         String todayStr = now.format(formatter);
         // "    <link href=\"https://fonts.googleapis.com/css?family=Sriracha\" rel=\"stylesheet\" type='text/css'>\n" +
 /*                "    <style type=\"text/css\">th { border-bottom: 1px solid #2cff1a;padding: 15px;text-align: center;}\n" +
@@ -128,13 +128,13 @@ public class Header {
                 "    }</style>\n" +
                 "</head><body style=\"font-family: 'Lucida Sans Unicode'; font-size: medium \"><table cellspacing=\"0\" >\n" +
                 "    <tr bgcolor=\"#57b33e\">\n" +
-                "        <td colspan=\"4\" style=\"font-family:'Ubuntu'; font-size: xx-large; padding: 0px;color:white\">ราคาน้ำมัน</td></tr>\n" +
-                "    <tr style=\"color:blue\"><th>"+todayStr+"</th><th>วันนี้</th><th>พรุ่งนี้</th><th>ส่วนต่าง</th></tr>\n" +
-                "    <tr bgcolor=\"orange\" ><th>ชนิดน้ำมัน</th><th>บาท/ลิตร</th><th>บาท/ลิตร</th><th>บาท</th></tr>");
+                "        <td colspan=\"4\" style=\"font-family:'Ubuntu'; font-size: x-large; padding: 0px;color:white\">OilPrice</td></tr>\n" +
+                "    <tr style=\"color:blue\"><th>"+todayStr+"</th><th>Today</th><th>Tomorrow</th><th>Diff.</th></tr>\n" +
+                "    <tr bgcolor=\"orange\" ><th>OilType</th><th>Baht/l.</th><th>Baht/l.</th><th>Baht</th></tr>");
 
         for (Item item : items) {
             if (item.getoilType().equals("NGV")){
-                tempStr.append("</tr><tr bgcolor=\"orange\"><th>ชนิดน้ำมัน</th>" + "<th>บาท/กก.</th>" + "<th>บาท/กก.</th>" + "<th>บาท</th></tr>");
+                tempStr.append("</tr><tr bgcolor=\"orange\"><th>OilType</th>" + "<th>Baht/kg.</th>" + "<th>Baht/kg.</th>" + "<th>Bath</th></tr>");
             }
             String colorStr = "";
             String boldBegin = "";
