@@ -130,7 +130,7 @@ public class CallbackRequestTest {
             assertThat(message).isInstanceOf(LocationMessageContent.class);
             if (message instanceof LocationMessageContent) {
                 assertThat(((LocationMessageContent) message).getAddress())
-                        .isEqualTo("〒150-0002 東京都渋谷区渋谷２丁目２１−１");
+                        .isEqualTo("87/26");
             }
         });
     }
