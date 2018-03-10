@@ -36,7 +36,7 @@ public class BeaconContent {
         if (deviceMessage == null) {
             return null;
         }
-        return deviceMessage.clone(); 
+        return deviceMessage.clone();
     }
 
 
