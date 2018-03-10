@@ -126,9 +126,9 @@ public class Header {
                 "        color:blue;\n" +
                 "        background: none;\n" +
                 "    }</style>\n" +
-                "</head><body style=\"font-family: 'Lucida Sans Unicode'; font-size: medium \"><table cellspacing=\"0\" >\n" +
+                "</head><body style=\"font-family: 'Lucida Sans Unicode'; font-size: large \"><table cellspacing=\"0\" >\n" +
                 "    <tr bgcolor=\"#57b33e\">\n" +
-                "        <td colspan=\"4\" style=\"font-family:'Ubuntu'; font-size: x-large; padding: 0px;color:white\">OilPrice</td></tr>\n" +
+                "        <td colspan=\"4\" style=\"font-family:'Ubuntu'; font-size: x-large; padding: 15px;color:white\">Oil Price Change</td></tr>\n" +
                 "    <tr style=\"color:blue\"><th>"+todayStr+"</th><th>Today</th><th>Tomorrow</th><th>Diff.</th></tr>\n" +
                 "    <tr bgcolor=\"orange\" ><th>OilType</th><th>Baht/l.</th><th>Baht/l.</th><th>Baht</th></tr>");
 
@@ -155,7 +155,7 @@ public class Header {
             tempStr.append("<tr><td>").append(item.getoilType()).append("</td>").append("<td>").append(item.gettoday()).append("</td>").append("<td ").append(colorStr).append(">").append(boldBegin).append(item.gettomorrow()).append(boldEnd).append("</td>").append("<td ").append(colorStr).append(">").append(boldBegin).append(item.getChange()).append(boldEnd).append("</td></tr>");
         }
 
-        tempStr.append("<tr style=\"border-bottom: 0px;\"><th colspan=\"4\" style=\"padding: 10px;border-bottom: 0px;\">" + "เตือนราคาน้ำมันฟรีแค่ Add LINE &nbsp <span class=\"blue\">@hpd8343b</span></th></tr>" + "<td colspan=\"4\" style=\"padding: 0px;border-bottom: 0px;\"><h6>ขอบคุณข้อมูลจาก บางจาก</h6>" + "</table></body></html>");
+        tempStr.append("<tr style=\"border-bottom: 0px;\"><th colspan=\"4\" style=\"padding: 10px;border-bottom: 0px;\">" + "Free oil price alarm just Add LINE &nbsp <span class=\"blue\">@hpd8343b</span></th></tr>" + "<td colspan=\"4\" style=\"padding: 0px;border-bottom: 0px;\"><h6>Thanks for the info from Bangchak</h6>" + "</table></body></html>");
         return tempStr.toString();
     }
 }
