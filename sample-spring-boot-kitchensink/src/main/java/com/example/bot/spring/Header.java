@@ -126,7 +126,7 @@ public class Header {
                 "        color:blue;\n" +
                 "        background: none;\n" +
                 "    }</style>\n" +
-                "</head><body style=\"font-family: 'Lucida Sans Unicode'; font-size: large \"><table cellspacing=\"0\" >\n" +
+                "</head><body style=\"font-family: 'Ubuntu'; font-size: large \"><table cellspacing=\"0\" >\n" +
                 "    <tr bgcolor=\"#57b33e\">\n" +
                 "        <td colspan=\"4\" style=\"font-family:'Ubuntu'; font-size: x-large; padding: 15px;color:white\">Oil Price Change</td></tr>\n" +
                 "    <tr style=\"color:blue\"><th>"+todayStr+"</th><th>Today</th><th>Tomorrow</th><th>Diff.</th></tr>\n" +

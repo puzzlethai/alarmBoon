@@ -497,8 +497,8 @@ public class KitchenSinkController {
                     ire = WebImage.create(oilprice.showHTML(), 533, 740);
 //You can convert the BufferedImage to any format that you wish, jpg I thought was the best format
 
-                    DownloadedContent jpg = saveImage("jpg", ire);
-                    DownloadedContent previewImg = createTempFile("jpg");
+                    DownloadedContent jpg = saveImage("png", ire);
+                    DownloadedContent previewImg = createTempFile("png");
                     system(
                             "convert",
                             "-resize", "240x",
