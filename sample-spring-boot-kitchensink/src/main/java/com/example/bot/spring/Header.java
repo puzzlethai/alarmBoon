@@ -88,21 +88,46 @@ public class Header {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d MMM uuuu",lc);
 
         String todayStr = now.format(formatter);
-        StringBuilder tempStr = new StringBuilder("<!DOCTYPE html><html lang=\"th\" ><head><meta charset=\"UTF-8\">\n" +
-               // "    <link href=\"https://fonts.googleapis.com/css?family=Sriracha\" rel=\"stylesheet\" type='text/css'>\n" +
+        // "    <link href=\"https://fonts.googleapis.com/css?family=Sriracha\" rel=\"stylesheet\" type='text/css'>\n" +
 /*                "    <style type=\"text/css\">th { border-bottom: 1px solid #2cff1a;padding: 15px;text-align: center;}\n" +
                 "    @font-face {\n" +
                 "        font-family: 'Sriracha';\n" +
                 "        unicode-range: U+0E00-0E7F;\n" +
-                "    }\n" +*/
+                "    }\n" +*/  //"+todayStr+"
+        StringBuilder tempStr = new StringBuilder("<!DOCTYPE html><html lang=\"th\" ><head><meta charset=\"UTF-8\">\n" +
+                // "    <link href=\"https://fonts.googleapis.com/css?family=Sriracha\" rel=\"stylesheet\" type='text/css'>\n" +
+                "    <style type=\"text/css\">th { border-bottom: 1px solid #2cff1a;padding: 15px;text-align: center;}\n" +
+                "    @font-face {\n" +
+                "        font-family: 'th_krubregular';\n" +
+                "        src: url('th_krub-webfont.eot');\n" +
+                "        src: url('th_krub-webfont.eot?#iefix') format('embedded-opentype'),\n" +
+                "        url('th_krub-webfont.woff2') format('woff2'),\n" +
+                "        url('th_krub-webfont.woff') format('woff'),\n" +
+                "        url('th_krub-webfont.svg#th_krubregular') format('svg');\n" +
+                "        font-weight: normal;\n" +
+                "        font-style: normal;\n" +
+                "\n" +
+                "    }\n" +
+                "    @font-face {\n" +
+                "        font-family: 'th_krubbold';\n" +
+                "        src: url('th_krub_bold-webfont.eot');\n" +
+                "        src: url('th_krub_bold-webfont.eot?#iefix') format('embedded-opentype'),\n" +
+                "        url('th_krub_bold-webfont.woff2') format('woff2'),\n" +
+                "        url('th_krub_bold-webfont.woff') format('woff'),\n" +
+                "        url('th_krub_bold-webfont.svg#th_krubbold') format('svg');\n" +
+                "        font-weight: normal;\n" +
+                "        font-style: normal;\n" +
+                "\n" +
+                "    }" +
+
                 "td {color:black; border-bottom: 1px solid #9cff8b; padding: 15px; text-align: center;}\n" +
                 "table {}\n" +
                 "    .blue{\n" +
                 "        color:blue;\n" +
                 "        background: none;\n" +
                 "    }</style>\n" +
-                "</head><body style=\"font-family: 'Lucida Grande', sans-serif; font-size: medium\"><table cellspacing=\"0\" >\n" +
-                "    <tr bgcolor=\"#57b33e\">\n" + //  style="font-family: 'Lucida Sans Unicode', 'Lucida Grande', sans-serif; font-size: medium"
+                "</head><body style=\"font-family: 'th_krubregular'; font-size: large\"><table cellspacing=\"0\" >\n" +
+                "    <tr bgcolor=\"#57b33e\">\n" +
                 "        <td colspan=\"4\" style=\"padding: 0px;color:white\"><h3>ราคาน้ำมัน</h3></td></tr>\n" +
                 "    <tr style=\"color:blue\"><th>"+todayStr+"</th><th>วันนี้</th><th>พรุ่งนี้</th><th>ส่วนต่าง</th></tr>\n" +
                 "    <tr bgcolor=\"orange\" ><th>ชนิดน้ำมัน</th><th>บาท/ลิตร</th><th>บาท/ลิตร</th><th>บาท</th></tr>");

@@ -25,15 +25,15 @@ public abstract class WebImage
             (String src, int width, int height) {
         BufferedImage image = null;
         JEditorPane pane = new JEditorPane();
-        Font fontT = new Font("Loma",Font.PLAIN,10);
+        // Font fontT = new Font("Loma",Font.PLAIN,10);
         Kit kit = new Kit();
         pane.setEditorKit(kit);
         pane.setEditable(false);
         pane.setMargin(new Insets(0,0,0,0));
         try {
             //pane.setPage(src);
-            pane.putClientProperty(JEditorPane.HONOR_DISPLAY_PROPERTIES, Boolean.TRUE);
-            pane.setFont(fontT);
+            //pane.putClientProperty(JEditorPane.HONOR_DISPLAY_PROPERTIES, Boolean.TRUE);
+           // pane.setFont(fontT);
             pane.setContentType("text/html; charset=UTF-8"); //new
             pane.setText(src);
             image = new BufferedImage
