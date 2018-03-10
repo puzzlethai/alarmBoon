@@ -128,7 +128,7 @@ public class Header {
                 "    }</style>\n" +
                 "</head><body style=\"font-family: 'Lucida Sans Unicode'; font-size: medium \"><table cellspacing=\"0\" >\n" +
                 "    <tr bgcolor=\"#57b33e\">\n" +
-                "        <td colspan=\"4\" style=\"font-family:'Lucida Sans'; font-size: xx-large; padding: 0px;color:white\">ราคาน้ำมัน</td></tr>\n" +
+                "        <td colspan=\"4\" style=\"font-family:'Ubuntu'; font-size: xx-large; padding: 0px;color:white\">ราคาน้ำมัน</td></tr>\n" +
                 "    <tr style=\"color:blue\"><th>"+todayStr+"</th><th>วันนี้</th><th>พรุ่งนี้</th><th>ส่วนต่าง</th></tr>\n" +
                 "    <tr bgcolor=\"orange\" ><th>ชนิดน้ำมัน</th><th>บาท/ลิตร</th><th>บาท/ลิตร</th><th>บาท</th></tr>");
 
