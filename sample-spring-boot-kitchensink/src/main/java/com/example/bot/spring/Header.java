@@ -97,7 +97,7 @@ public class Header {
         StringBuilder tempStr = new StringBuilder("<!DOCTYPE html><html lang=\"th\" ><head><meta charset=\"UTF-8\">\n" +
                 // "    <link href=\"https://fonts.googleapis.com/css?family=Sriracha\" rel=\"stylesheet\" type='text/css'>\n" +
                 "    <style type=\"text/css\">th { border-bottom: 1px solid #2cff1a;padding: 15px;text-align: center;}\n" +
-                "    @font-face {\n" +
+/*                "    @font-face {\n" +
                 "        font-family: 'th_krubregular';\n" +
                 "        src: url('/static/buttons/th_krub-webfont.eot');\n" +
                 "        src: url('/static/buttons/th_krub-webfont.eot?#iefix') format('embedded-opentype'),\n" +
@@ -118,7 +118,7 @@ public class Header {
                 "        font-weight: normal;\n" +
                 "        font-style: normal;\n" +
                 "\n" +
-                "    }" +
+                "    }" +*/
 
                 "td {color:black; border-bottom: 1px solid #9cff8b; padding: 15px; text-align: center;}\n" +
                 "table {}\n" +
@@ -126,7 +126,7 @@ public class Header {
                 "        color:blue;\n" +
                 "        background: none;\n" +
                 "    }</style>\n" +
-                "</head><body style=\"font-family: 'th_krubregular'; font-size: medium \"><table cellspacing=\"0\" >\n" +
+                "</head><body style=\"font-family: 'Lucida Sans Unicode'; font-size: medium \"><table cellspacing=\"0\" >\n" +
                 "    <tr bgcolor=\"#57b33e\">\n" +
                 "        <td colspan=\"4\" style=\"padding: 0px;color:white\"><h3>ราคาน้ำมัน</h3></td></tr>\n" +
                 "    <tr style=\"color:blue\"><th>"+todayStr+"</th><th>วันนี้</th><th>พรุ่งนี้</th><th>ส่วนต่าง</th></tr>\n" +
