@@ -504,7 +504,7 @@ public class KitchenSinkController {
                             "-resize", "240x",
                             jpg.path.toString(),
                             previewImg.path.toString());
-                    reply(((MessageEvent) event).getReplyToken(),
+                    pushT(userId,
                             new ImageMessage(jpg.getUri(), jpg.getUri()));
 
                 } catch (Exception e) {
