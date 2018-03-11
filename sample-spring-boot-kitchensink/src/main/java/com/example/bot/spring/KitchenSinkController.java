@@ -513,7 +513,7 @@ public class KitchenSinkController {
 
 
 
-//                this.reply(replyToken, new TextMessage(text));
+                this.reply(replyToken, new TextMessage(tomorrow_fm));
                 break;
             }
             case "imagemap":
@@ -675,7 +675,13 @@ public class KitchenSinkController {
 
         }
         */
-        @Scheduled(initialDelay=60000, fixedRate=300000)
+        @Scheduled(cron = @reboot )
+        public void runatstart(){
+            tomorrow_fm = "runatreboot";
+        }
+
+
+/*        @Scheduled(initialDelay=60000, fixedRate=300000)
         public void reportCurrentTime() {
             LocalDate today = LocalDate.now(ZoneId.of("Asia/Bangkok"));
             LocalDate tomorrow = today.plusDays(1);
@@ -684,18 +690,7 @@ public class KitchenSinkController {
             tomorrow_fm = patternFormatter.format(tomorrow);
             Domain monkDay;
             monkDay = domainRepository.findByDomain(tomorrow_fm);
-            BufferedImage ire;
-/*        ire = WebImage.create("<!DOCTYPE html>\n" +
-                "<html lang=\"en\">\n" +
-                "<head>\n" +
-                "    <meta charset=\"UTF-8\">\n" +
-                "    <title>Title</title>\n" +
-                "</head>\n" +
-                "<body>\n" +
-                "    <H1> I LOVE U</H1>\n" +
-                "</body>\n" +
-                "</html>", 800, 600);*/
-  // อาจต้องลอง เขียนลง file ชั่วคราวแล้ว เลียนแบบ creatUri ทำเป็น link ให้ Imagemessage
+
             if (monkDay != null){ // tomorrow is monkDay
                 if (!monkDay.isDisplayAds()) { // not notify monkday yet
                     List<Customer> customers = customerRepository.findAll();
@@ -730,42 +725,6 @@ public class KitchenSinkController {
                 }
 
             }
-
-            /*if (monkDay != null){ // tomorrow is monkDay
-                if (!monkDay.isDisplayAds()) { // not notify monkday
-                    List<Customer> customers = customerRepository.findAll();
-                    for (Customer customer : customers) {
-                        if(customer.getUserId()!= null)
-                        this.pushText(customer.getUserId(), "พรุ่งนี้เป็นวันพระ");
-                    }
-                    domainRepository.updateDomain(monkDay.getDomain(), true);
-                }
-
-            } */
-
-            /*
-            Domain obj2;
-            obj2 = domainRepository.findByDomain(patternFormatter.format(tomorrow));
-            if (obj2 == null) {
-                tomorrow_fm = "NULL";
-            } else {
-                tomorrow_fm = obj2.getDomain();
-            }
-            */
-
-            /*
-            if (obj2.isDisplayAds()){
-                tomorrow_fm = "TRUE";
-                domainRepository.updateDomain(obj2.getDomain(), false);
-            } else {
-                tomorrow_fm = "FALSE";
-                domainRepository.updateDomain(obj2.getDomain(), true);
-            }
-*/
-            // log.info("The time is now {}", dateFormat.format(new Date()));
-
-            //tomorrow_fm = domainRepository.updateDomain("2017-11-11", true);
-
-        }
+        }*/
     }
 }

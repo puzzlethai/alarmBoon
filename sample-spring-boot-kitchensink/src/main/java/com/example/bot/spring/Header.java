@@ -128,7 +128,7 @@ public class Header {
                 "    }</style>\n" +
                 "</head><body style=\"font-family: 'Ubuntu'; font-size: large \"><table cellspacing=\"0\" >\n" +
                 "    <tr bgcolor=\"#57b33e\">\n" +
-                "        <td colspan=\"4\" style=\"font-family:'Ubuntu'; font-size: x-large; padding: 15px;color:white\">Oil Price Change</td></tr>\n" +
+                "        <td colspan=\"4\" style=\"font-family:'Ubuntu'; font-size: x-large; padding: 15px;color:white\">Oil Price Change<h5>thanks Bangchak Web</td></tr>\n" +
                 "    <tr style=\"color:blue\"><th>"+todayStr+"</th><th>Today</th><th>Tomorrow</th><th>Diff.</th></tr>\n" +
                 "    <tr bgcolor=\"orange\" ><th>OilType</th><th>Baht/l.</th><th>Baht/l.</th><th>Baht</th></tr>");
 
