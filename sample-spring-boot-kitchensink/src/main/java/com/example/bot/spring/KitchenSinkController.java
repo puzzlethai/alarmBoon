@@ -675,13 +675,9 @@ public class KitchenSinkController {
 
         }
         */
-        @Scheduled(cron = "@reboot" )
-        public void runatstart(){
-            tomorrow_fm = "runatreboot";
-        }
 
 
-/*        @Scheduled(initialDelay=60000, fixedRate=300000)
+        @Scheduled(initialDelay=60000, fixedRate=3600000)
         public void reportCurrentTime() {
             LocalDate today = LocalDate.now(ZoneId.of("Asia/Bangkok"));
             LocalDate tomorrow = today.plusDays(1);
@@ -725,6 +721,6 @@ public class KitchenSinkController {
                 }
 
             }
-        }*/
+        }
     }
 }
