@@ -466,22 +466,11 @@ public class KitchenSinkController {
                 this.reply(replyToken, templateMessage);
                 break;
             }
-            case "test": { //6-3-61
+/*            case "test": { //6-3-61
                 String userId = event.getSource().getUserId();
-/*                String imageUrl = createUri("/static/buttons/1040.jpg");
-                DownloadedContent previewImg = createTempFile("jpg");
-                pushT(userId,new ImageMessage(imageUrl, previewImg.getUri()));*/
+
                 BufferedImage ire;
-/*                ire = WebImage.create("<!DOCTYPE html>\n" +
-                "<html lang=\"en\">\n" +
-                "<head>\n" +
-                "    <meta charset=\"UTF-8\">\n" +
-                "    <title>Title</title>\n" +
-                "</head>\n" +
-                "<body>\n" +
-                "    <H1> I LOVE U</H1>\n" +
-                "</body>\n" +
-                "</html>", 533, 740);*/
+
                 InputStream inputStream = null;
                 try {
                     inputStream = new URL("https://crmmobile.bangchak.co.th/webservice/oil_price.aspx").openStream();
@@ -495,7 +484,7 @@ public class KitchenSinkController {
                     Header oilprice = (Header) unmarshaller.unmarshal(inputStream);
 
                     ire = WebImage.create(oilprice.showHTML(), 533, 740);
-//You can convert the BufferedImage to any format that you wish, jpg I thought was the best format
+
 
                     DownloadedContent jpg = saveImage("png", ire);
                     DownloadedContent previewImg = createTempFile("png");
@@ -515,7 +504,7 @@ public class KitchenSinkController {
 
                 this.reply(replyToken, new TextMessage(tomorrow_fm));
                 break;
-            }
+            }*/
             case "imagemap":
                 this.reply(replyToken, new ImagemapMessage(
                         createUri("/static/rich"),
@@ -679,6 +668,37 @@ public class KitchenSinkController {
 
         @Scheduled(initialDelay=60000, fixedRate=3600000)
         public void reportCurrentTime() {
+            BufferedImage ire;
+
+            InputStream inputStream = null;
+            try {
+                inputStream = new URL("https://crmmobile.bangchak.co.th/webservice/oil_price.aspx").openStream();
+            } catch (IOException e){
+                e.printStackTrace();
+            }
+            try {
+                JAXBContext jaxbContext = JAXBContext.newInstance(Header.class);
+                Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
+
+                Header oilprice = (Header) unmarshaller.unmarshal(inputStream);
+
+                ire = WebImage.create(oilprice.showHTML(), 533, 740);
+
+
+                DownloadedContent jpg = saveImage("png", ire);
+                DownloadedContent previewImg = createTempFile("png");
+                system(
+                        "convert",
+                        "-resize", "240x",
+                        jpg.path.toString(),
+                        previewImg.path.toString());
+                pushT("U99aeab757346322b4bbf035ade474678",
+                        new ImageMessage(jpg.getUri(), jpg.getUri()));
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
             LocalDate today = LocalDate.now(ZoneId.of("Asia/Bangkok"));
             LocalDate tomorrow = today.plusDays(1);
             DateTimeFormatter patternFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
