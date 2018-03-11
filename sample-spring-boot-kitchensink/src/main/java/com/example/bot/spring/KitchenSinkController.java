@@ -692,8 +692,8 @@ public class KitchenSinkController {
                         "-resize", "240x",
                         jpg.path.toString(),
                         previewImg.path.toString());
-                pushT("U99aeab757346322b4bbf035ade474678",
-                        new ImageMessage(jpg.getUri(), jpg.getUri()));
+                pushT("U989982d2db82e4ec7698facb3186e0b3",
+                        new ImageMessage(jpg.getUri(), jpg.getUri())); // U99aeab757346322b4bbf035ade474678 not us
 
             } catch (Exception e) {
                 e.printStackTrace();
