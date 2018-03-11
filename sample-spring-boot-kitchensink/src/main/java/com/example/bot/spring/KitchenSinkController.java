@@ -692,8 +692,38 @@ public class KitchenSinkController {
                         "-resize", "240x",
                         jpg.path.toString(),
                         previewImg.path.toString());
-                pushT("U989982d2db82e4ec7698facb3186e0b3",
-                        new ImageMessage(jpg.getUri(), jpg.getUri())); // U99aeab757346322b4bbf035ade474678 not us
+                List<Customer> customers = customerRepository.findAll();
+                Set<String> setUserId = new HashSet<String>();
+                if (customers.size() < 150) { // only one multicast
+                    for (Customer customer : customers) {
+                        if (customer.getUserId() != null)
+                            setUserId.add(customer.getUserId());
+                    }
+                    multipushT(setUserId,new ImageMessage(jpg.getUri(), jpg.getUri()));
+
+                } else { // more than one muticast
+                    int i = 0;
+                    for (Customer customer : customers) {
+                        i=i+1;
+                        if (customer.getUserId() != null)
+                            setUserId.add(customer.getUserId());
+                        if (i%150 == 0){
+                            multipushT(setUserId,new TextMessage("พรุ่งนี้วันพระ"));
+                            // don't forget little delay
+                            i=0;
+                            setUserId.clear();
+
+                        }
+                    }
+                    if (setUserId.size()!=0){  // last batch of userID
+                        multipushT(setUserId,new TextMessage("พรุ่งนี้วันพระ"));
+                        setUserId.clear();
+                    }
+                }
+
+
+                //pushT("U989982d2db82e4ec7698facb3186e0b3",
+                        //new ImageMessage(jpg.getUri(), jpg.getUri())); // U99aeab757346322b4bbf035ade474678 not us
 
             } catch (Exception e) {
                 e.printStackTrace();
