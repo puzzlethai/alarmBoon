@@ -675,7 +675,7 @@ public class KitchenSinkController {
 
         }
         */
-        @Scheduled(cron = @reboot )
+        @Scheduled(cron = "@reboot" )
         public void runatstart(){
             tomorrow_fm = "runatreboot";
         }
