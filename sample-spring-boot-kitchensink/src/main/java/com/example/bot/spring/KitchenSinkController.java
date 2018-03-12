@@ -262,7 +262,7 @@ public class KitchenSinkController {
                     .replyMessage(new ReplyMessage(replyToken, messages))
                     .get();
             log.info("Sent messages: {}", apiResponse);
-            this.pushText("U99aeab757346322b4bbf035ade474678","ทดสอบครับ ขออภัย"+apiResponse);
+            this.pushText("U989982d2db82e4ec7698facb3186e0b3","ทดสอบครับ ขออภัย"+apiResponse);
         } catch (InterruptedException | ExecutionException e) {
             throw new RuntimeException(e);
         }
@@ -786,7 +786,7 @@ public class KitchenSinkController {
 
 
                 //pushT("U989982d2db82e4ec7698facb3186e0b3",
-                //new ImageMessage(jpg.getUri(), jpg.getUri())); // U99aeab757346322b4bbf035ade474678 not us
+                //new ImageMessage(jpg.getUri(), jpg.getUri())); // U99aeab757346322b4bbf035ade474678 BEE
 
             } catch (Exception e) {
                 e.printStackTrace();
