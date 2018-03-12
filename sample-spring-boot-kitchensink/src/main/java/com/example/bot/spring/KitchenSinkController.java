@@ -21,7 +21,7 @@ import java.io.*;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.text.SimpleDateFormat; //Just Add
+// import java.text.SimpleDateFormat; //Just Add
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
@@ -304,7 +304,7 @@ public class KitchenSinkController {
                 content.getPackageId(), content.getStickerId())
         );
     }
-    private void multipushT(@NonNull Set<String> userId, @NonNull Message messages) {  //6-3-61
+    private void multipushImage(@NonNull Set<String> userId, @NonNull Message messages) {  //6-3-61
         try {
             BotApiResponse apiResponse = lineMessagingClient
                     .multicast(new Multicast(userId,messages))
@@ -501,7 +501,7 @@ public class KitchenSinkController {
                             if (customer.getUserId() != null)
                                 setUserId.add(customer.getUserId());
                         }
-                        multipushT(setUserId,oilPriceImg);
+                        multipushImage(setUserId,oilPriceImg);
 
                     } else { // more than one muticast
                         int i = 0;
@@ -510,7 +510,7 @@ public class KitchenSinkController {
                             if (customer.getUserId() != null)
                                 setUserId.add(customer.getUserId());
                             if (i%150 == 0){
-                                multipushT(setUserId,oilPriceImg);
+                                multipushImage(setUserId,oilPriceImg);
                                 // don't forget little delay
                                 i=0;
                                 setUserId.clear();
@@ -518,7 +518,7 @@ public class KitchenSinkController {
                             }
                         }
                         if (setUserId.size()!=0){  // last batch of userID
-                            multipushT(setUserId,oilPriceImg);
+                            multipushImage(setUserId,oilPriceImg);
                             setUserId.clear();
                         }
                     }
@@ -640,9 +640,9 @@ public class KitchenSinkController {
 
        // private final SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
 
-        private void pushT(@NonNull String userId, @NonNull Message message) {
+/*        private void pushT(@NonNull String userId, @NonNull Message message) {
             pushT(userId, Collections.singletonList(message));
-        }
+        }*/
         /*
         private void multipushT(@NonNull String userId, @NonNull Message message) {
             multipushT((Set<String>) Collections.singletonList(userId), Collections.singletonList(message));
