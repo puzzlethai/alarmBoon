@@ -467,7 +467,7 @@ public class KitchenSinkController {
                 break;
             }
             case "test": { //6-3-61
-                String userId = event.getSource().getUserId();
+                // String userId = event.getSource().getUserId();
 
                 BufferedImage ire;
 
@@ -487,20 +487,46 @@ public class KitchenSinkController {
 
 
                     DownloadedContent jpg = saveImage("png", ire);
-                    DownloadedContent previewImg = createTempFile("png");
+                    DownloadedContent previewImg = createTempFile("png"); //
+                    ImageMessage oilPriceImg = new ImageMessage(jpg.getUri(), jpg.getUri());
                     system(
                             "convert",
                             "-resize", "240x",
                             jpg.path.toString(),
                             previewImg.path.toString());
-                    pushT(userId,
-                            new ImageMessage(jpg.getUri(), jpg.getUri()));
+                    List<Customer> customers = customerRepository.findAll();
+                    Set<String> setUserId = new HashSet<String>();
+                    if (customers.size() < 150) { // only one multicast
+                        for (Customer customer : customers) {
+                            if (customer.getUserId() != null)
+                                setUserId.add(customer.getUserId());
+                        }
+                        multipushT(setUserId,oilPriceImg);
+
+                    } else { // more than one muticast
+                        int i = 0;
+                        for (Customer customer : customers) {
+                            i=i+1;
+                            if (customer.getUserId() != null)
+                                setUserId.add(customer.getUserId());
+                            if (i%150 == 0){
+                                multipushT(setUserId,oilPriceImg);
+                                // don't forget little delay
+                                i=0;
+                                setUserId.clear();
+
+                            }
+                        }
+                        if (setUserId.size()!=0){  // last batch of userID
+                            multipushT(setUserId,oilPriceImg);
+                            setUserId.clear();
+                        }
+                    }
+
 
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-
-
 
                 this.reply(replyToken, new TextMessage(tomorrow_fm));
                 break;
@@ -642,16 +668,7 @@ public class KitchenSinkController {
                 throw new RuntimeException(e);
             }
         }
-        private void pushText(@NonNull String userId, @NonNull String message)  {
-            if (userId.isEmpty()) {
-                throw new IllegalArgumentException("userId must not be empty");
-            }
-            if (message.length() > 1000) {
-                message = message.substring(0, 1000 - 2) + "……";
-            }
-            this.pushT(userId, new TextMessage(message));
 
-        }
         /*
         private void multipushText(@NonNull String userId, @NonNull String message)  {
             if (userId.isEmpty()) {
