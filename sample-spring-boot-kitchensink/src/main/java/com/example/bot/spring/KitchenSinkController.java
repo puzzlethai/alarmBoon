@@ -638,7 +638,7 @@ public class KitchenSinkController {
 
         private final Logger log = LoggerFactory.getLogger(ScheduledTasks.class);
 
-        private final SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
+       // private final SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
 
         private void pushT(@NonNull String userId, @NonNull Message message) {
             pushT(userId, Collections.singletonList(message));
