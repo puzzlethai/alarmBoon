@@ -466,7 +466,7 @@ public class KitchenSinkController {
                 this.reply(replyToken, templateMessage);
                 break;
             }
-/*            case "test": { //6-3-61
+            case "test": { //6-3-61
                 String userId = event.getSource().getUserId();
 
                 BufferedImage ire;
@@ -504,7 +504,7 @@ public class KitchenSinkController {
 
                 this.reply(replyToken, new TextMessage(tomorrow_fm));
                 break;
-            }*/
+            }
             case "imagemap":
                 this.reply(replyToken, new ImagemapMessage(
                         createUri("/static/rich"),
@@ -668,7 +668,51 @@ public class KitchenSinkController {
 
         @Scheduled(initialDelay=60000, fixedRate=3600000)
         public void reportCurrentTime() {
-            BufferedImage ire;
+
+
+            LocalDate today = LocalDate.now(ZoneId.of("Asia/Bangkok"));
+            LocalDate tomorrow = today.plusDays(1);
+            DateTimeFormatter patternFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+            tomorrow_fm = patternFormatter.format(tomorrow);
+            Domain monkDay;
+            monkDay = domainRepository.findByDomain(tomorrow_fm);
+
+            if (monkDay != null){ // tomorrow is monkDay
+                if (!monkDay.isDisplayAds()) { // not notify monkday yet
+                    List<Customer> customers = customerRepository.findAll();
+                    Set<String> setUserId = new HashSet<String>();
+                    if (customers.size() < 150) { // only one multicast
+                        for (Customer customer : customers) {
+                            if (customer.getUserId() != null)
+                                setUserId.add(customer.getUserId());
+                        }
+                        multipushT(setUserId,new TextMessage("พรุ่งนี้วันพระ"));
+
+                    } else { // more than one muticast
+                        int i = 0;
+                        for (Customer customer : customers) {
+                            i=i+1;
+                            if (customer.getUserId() != null)
+                                setUserId.add(customer.getUserId());
+                            if (i%150 == 0){
+                                multipushT(setUserId,new TextMessage("พรุ่งนี้วันพระ"));
+                                // don't forget little delay
+                                i=0;
+                                setUserId.clear();
+
+                            }
+                        }
+                        if (setUserId.size()!=0){  // last batch of userID
+                            multipushT(setUserId,new TextMessage("พรุ่งนี้วันพระ"));
+                            setUserId.clear();
+                        }
+                    }
+                    domainRepository.updateDomain(monkDay.getDomain(), true);
+                }
+
+            }
+/*            BufferedImage ire;
 
             InputStream inputStream = null;
             try {
@@ -723,54 +767,11 @@ public class KitchenSinkController {
 
 
                 //pushT("U989982d2db82e4ec7698facb3186e0b3",
-                        //new ImageMessage(jpg.getUri(), jpg.getUri())); // U99aeab757346322b4bbf035ade474678 not us
+                //new ImageMessage(jpg.getUri(), jpg.getUri())); // U99aeab757346322b4bbf035ade474678 not us
 
             } catch (Exception e) {
                 e.printStackTrace();
-            }
-
-            LocalDate today = LocalDate.now(ZoneId.of("Asia/Bangkok"));
-            LocalDate tomorrow = today.plusDays(1);
-            DateTimeFormatter patternFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-
-            tomorrow_fm = patternFormatter.format(tomorrow);
-            Domain monkDay;
-            monkDay = domainRepository.findByDomain(tomorrow_fm);
-
-            if (monkDay != null){ // tomorrow is monkDay
-                if (!monkDay.isDisplayAds()) { // not notify monkday yet
-                    List<Customer> customers = customerRepository.findAll();
-                    Set<String> setUserId = new HashSet<String>();
-                    if (customers.size() < 150) { // only one multicast
-                        for (Customer customer : customers) {
-                            if (customer.getUserId() != null)
-                                setUserId.add(customer.getUserId());
-                        }
-                        multipushT(setUserId,new TextMessage("พรุ่งนี้วันพระ"));
-
-                    } else { // more than one muticast
-                        int i = 0;
-                        for (Customer customer : customers) {
-                            i=i+1;
-                            if (customer.getUserId() != null)
-                                setUserId.add(customer.getUserId());
-                            if (i%150 == 0){
-                                multipushT(setUserId,new TextMessage("พรุ่งนี้วันพระ"));
-                                // don't forget little delay
-                                i=0;
-                                setUserId.clear();
-
-                            }
-                        }
-                        if (setUserId.size()!=0){  // last batch of userID
-                            multipushT(setUserId,new TextMessage("พรุ่งนี้วันพระ"));
-                            setUserId.clear();
-                        }
-                    }
-                    domainRepository.updateDomain(monkDay.getDomain(), true);
-                }
-
-            }
+            }*/
         }
     }
 }
