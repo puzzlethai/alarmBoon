@@ -262,6 +262,7 @@ public class KitchenSinkController {
                     .replyMessage(new ReplyMessage(replyToken, messages))
                     .get();
             log.info("Sent messages: {}", apiResponse);
+            this.pushText("U99aeab757346322b4bbf035ade474678","ทดสอบครับ ขออภัย"+apiResponse);
         } catch (InterruptedException | ExecutionException e) {
             throw new RuntimeException(e);
         }
@@ -469,7 +470,7 @@ public class KitchenSinkController {
             case "test": { //6-3-61
                 // String userId = event.getSource().getUserId();
 
-                BufferedImage ire;
+/*                BufferedImage ire;
 
                 InputStream inputStream = null;
                 try {
@@ -526,9 +527,10 @@ public class KitchenSinkController {
 
                 } catch (Exception e) {
                     e.printStackTrace();
-                }
+                }*/
 
                 this.reply(replyToken, new TextMessage(tomorrow_fm));
+
                 break;
             }
             case "imagemap":
