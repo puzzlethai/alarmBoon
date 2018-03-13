@@ -8,20 +8,19 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 
 //Impl postfix of the name on it compared to the core repository interface
-public class DomainRepositoryImpl implements DomainRepositoryCustom {
+public class OilchangeRepositoryImpl implements OilchangeRepositoryCustom {
 
     @Autowired
     MongoTemplate mongoTemplate;
 
     @Override
-    public int updateDomain(String domain, boolean displayAds) {
+    public int updateOilchange(String oldoilchange,String newoilchange) {
 
-        Query query = new Query(Criteria.where("domain").is(domain));
-
+        Query query = new Query(Criteria.where("oilchange").is(oldoilchange));
         Update update = new Update();
-        update.set("displayAds", displayAds);
+        update.set("oilchange", newoilchange);
 
-        WriteResult result = mongoTemplate.updateFirst(query, update, Domain.class);
+        WriteResult result = mongoTemplate.updateFirst(query, update, Oilchange.class);
         if(result!=null)
             return result.getN();
         else
@@ -29,3 +28,4 @@ public class DomainRepositoryImpl implements DomainRepositoryCustom {
 
     }
 }
+
