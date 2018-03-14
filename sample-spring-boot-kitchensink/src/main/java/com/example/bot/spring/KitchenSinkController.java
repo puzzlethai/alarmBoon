@@ -101,12 +101,15 @@ import javax.xml.bind.Unmarshaller;
 @LineMessageHandler
 public class KitchenSinkController {
     private static String tomorrow_fm = "Start";
+    private static String today_fm = "begin";
     @Autowired
     private LineMessagingClient lineMessagingClient;
     @Autowired
     private DomainRepository domainRepository;
     @Autowired
     private CustomerRepository customerRepository;
+    @Autowired
+    private OilchangeRepository oilchangeRepository;
 
     @EventMapping
     public void handleTextMessageEvent(MessageEvent<TextMessageContent> event) throws Exception {
@@ -679,6 +682,19 @@ public class KitchenSinkController {
 
             }
 
+            today_fm = patternFormatter.format(today);
+            List<Oilchange> oilchangeDate;
+            oilchangeDate = oilchangeRepository.findAll();
+            String lastChangeDate = oilchangeDate.get(0).getOilchange();
+
+            if (lastChangeDate != today_fm ) { // don't send yet
+            // check Bangchak
+                // if price change then send image , delete lastChangeDate , add today_fm
+                // oilchangeRepository.delete(oilchangeDate);
+            } else {  // today send already
+
+            }
+
             BufferedImage ire;
 
             InputStream inputStream = null;
@@ -686,6 +702,7 @@ public class KitchenSinkController {
                 inputStream = new URL("https://crmmobile.bangchak.co.th/webservice/oil_price.aspx").openStream();
             } catch (IOException e){
                 e.printStackTrace();
+                this.pushText("U989982d2db82e4ec7698facb3186e0b3","error with DB");
             }
             try {
                 JAXBContext jaxbContext = JAXBContext.newInstance(Header.class);
@@ -734,9 +751,16 @@ public class KitchenSinkController {
                             setUserId.clear();
                         }
                     }
+                    this.pushText("U989982d2db82e4ec7698facb3186e0b3","ราคาน้ำมันเปลี่ยน");
+                    oilchangeRepository.delete(oilchangeDate);
 
+                    Oilchange newOilChange = new Oilchange();
+                    newOilChange.setOilchange(today_fm);
+                    oilchangeRepository.save(newOilChange);
+                    this.pushText("U989982d2db82e4ec7698facb3186e0b3","change DB with "+today_fm);
                 }
                 } catch(Exception e){
+                this.pushText("U989982d2db82e4ec7698facb3186e0b3","error with DB");
                     e.printStackTrace();
                 }
 
