@@ -470,7 +470,7 @@ public class KitchenSinkController {
 
 
                 this.reply(replyToken, new TextMessage(today_fm));
-
+/*
                 List<Oilchange> oilchangeDate;
                 oilchangeDate = oilchangeRepository.findAll();
                 String lastChangeDate = oilchangeDate.get(0).getOilchange();
@@ -485,7 +485,7 @@ public class KitchenSinkController {
 
                 } else {  // today send already
                     this.pushText("U989982d2db82e4ec7698facb3186e0b3","equal ");
-                }
+                }*/
 
                 break;
             }
@@ -663,7 +663,7 @@ public class KitchenSinkController {
             Domain monkDay;
             monkDay = domainRepository.findByDomain(tomorrow_fm);
 
-            if (monkDay != null){ // tomorrow is monkDay
+            if (monkDay != null) { // tomorrow is monkDay
                 if (!monkDay.isDisplayAds()) { // not notify monkday yet
                     List<Customer> customers = customerRepository.findAll();
                     Set<String> setUserId = new HashSet<String>();
@@ -672,24 +672,24 @@ public class KitchenSinkController {
                             if (customer.getUserId() != null)
                                 setUserId.add(customer.getUserId());
                         }
-                        multipushT(setUserId,new TextMessage("พรุ่งนี้วันพระ"));
+                        multipushT(setUserId, new TextMessage("พรุ่งนี้วันพระ"));
 
                     } else { // more than one muticast
                         int i = 0;
                         for (Customer customer : customers) {
-                            i=i+1;
+                            i = i + 1;
                             if (customer.getUserId() != null)
                                 setUserId.add(customer.getUserId());
-                            if (i%150 == 0){
-                                multipushT(setUserId,new TextMessage("พรุ่งนี้วันพระ"));
+                            if (i % 150 == 0) {
+                                multipushT(setUserId, new TextMessage("พรุ่งนี้วันพระ"));
                                 // don't forget little delay
-                                i=0;
+                                i = 0;
                                 setUserId.clear();
 
                             }
                         }
-                        if (setUserId.size()!=0){  // last batch of userID
-                            multipushT(setUserId,new TextMessage("พรุ่งนี้วันพระ"));
+                        if (setUserId.size() != 0) {  // last batch of userID
+                            multipushT(setUserId, new TextMessage("พรุ่งนี้วันพระ"));
                             setUserId.clear();
                         }
                     }
@@ -703,80 +703,77 @@ public class KitchenSinkController {
             oilchangeDate = oilchangeRepository.findAll();
             String lastChangeDate = oilchangeDate.get(0).getOilchange();
 
-            if (lastChangeDate != today_fm ) { // don't send yet
-            // check Bangchak
+            if (!today_fm.equals(lastChangeDate)) { // don't send yet
+                // check Bangchak
                 // if price change then send image , delete lastChangeDate , add today_fm
                 // oilchangeRepository.delete(oilchangeDate);
-            } else {  // today send already
 
-            }
+                BufferedImage ire;
 
-            BufferedImage ire;
+                InputStream inputStream = null;
+                try {
+                    inputStream = new URL("https://crmmobile.bangchak.co.th/webservice/oil_price.aspx").openStream();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    this.pushText("U989982d2db82e4ec7698facb3186e0b3", "error with webservice Bangchak");
+                }
+                try {
+                    JAXBContext jaxbContext = JAXBContext.newInstance(Header.class);
+                    Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
 
-            InputStream inputStream = null;
-            try {
-                inputStream = new URL("https://crmmobile.bangchak.co.th/webservice/oil_price.aspx").openStream();
-            } catch (IOException e){
-                e.printStackTrace();
-                this.pushText("U989982d2db82e4ec7698facb3186e0b3","error with webservice Bangchak");
-            }
-            try {
-                JAXBContext jaxbContext = JAXBContext.newInstance(Header.class);
-                Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
-
-                Header oilprice = (Header) unmarshaller.unmarshal(inputStream);
-                if (oilprice.isSame()) {
-                    this.pushText("U989982d2db82e4ec7698facb3186e0b3","ราคาน้ำมันเท่าเดิม");
-                } else{
-                    ire = WebImage.create(oilprice.showHTML(), 533, 740);
+                    Header oilprice = (Header) unmarshaller.unmarshal(inputStream);
+                    if (oilprice.isSame()) {
+                        this.pushText("U989982d2db82e4ec7698facb3186e0b3", "ราคาน้ำมันเท่าเดิม");
+                    } else {
+                        ire = WebImage.create(oilprice.showHTML(), 533, 740);
 
 
-                    DownloadedContent jpg = saveImage("png", ire);
-                    DownloadedContent previewImg = createTempFile("png"); //
-                    ImageMessage oilPriceImg = new ImageMessage(jpg.getUri(), jpg.getUri());
-                    system(
-                            "convert",
-                            "-resize", "240x",
-                            jpg.path.toString(),
-                            previewImg.path.toString());
-                    List<Customer> customers = customerRepository.findAll();
-                    Set<String> setUserId = new HashSet<String>();
-                    if (customers.size() < 150) { // only one multicast
-                        for (Customer customer : customers) {
-                            if (customer.getUserId() != null)
-                                setUserId.add(customer.getUserId());
-                        }
-                        multipushImage(setUserId, oilPriceImg);
+                        DownloadedContent jpg = saveImage("png", ire);
+                        DownloadedContent previewImg = createTempFile("png"); //
+                        ImageMessage oilPriceImg = new ImageMessage(jpg.getUri(), jpg.getUri());
+                        system(
+                                "convert",
+                                "-resize", "240x",
+                                jpg.path.toString(),
+                                previewImg.path.toString());
+                        List<Customer> customers = customerRepository.findAll();
+                        Set<String> setUserId = new HashSet<String>();
+                        if (customers.size() < 150) { // only one multicast
+                            for (Customer customer : customers) {
+                                if (customer.getUserId() != null)
+                                    setUserId.add(customer.getUserId());
+                            }
+                            multipushImage(setUserId, oilPriceImg);
 
-                    } else { // more than one muticast
-                        int i = 0;
-                        for (Customer customer : customers) {
-                            i = i + 1;
-                            if (customer.getUserId() != null)
-                                setUserId.add(customer.getUserId());
-                            if (i % 150 == 0) {
+                        } else { // more than one muticast
+                            int i = 0;
+                            for (Customer customer : customers) {
+                                i = i + 1;
+                                if (customer.getUserId() != null)
+                                    setUserId.add(customer.getUserId());
+                                if (i % 150 == 0) {
+                                    multipushImage(setUserId, oilPriceImg);
+                                    // don't forget little delay
+                                    i = 0;
+                                    setUserId.clear();
+
+                                }
+                            }
+                            if (setUserId.size() != 0) {  // last batch of userID
                                 multipushImage(setUserId, oilPriceImg);
-                                // don't forget little delay
-                                i = 0;
                                 setUserId.clear();
-
                             }
                         }
-                        if (setUserId.size() != 0) {  // last batch of userID
-                            multipushImage(setUserId, oilPriceImg);
-                            setUserId.clear();
-                        }
-                    }
-                    this.pushText("U989982d2db82e4ec7698facb3186e0b3","ราคาน้ำมันเปลี่ยน");
-                    oilchangeRepository.delete(oilchangeDate.get(0));
+                        this.pushText("U989982d2db82e4ec7698facb3186e0b3", "ราคาน้ำมันเปลี่ยน");
+                        oilchangeRepository.delete(oilchangeDate.get(0));
 
-                    Oilchange newOilChange = new Oilchange();
-                    newOilChange.setOilchange(today_fm);
-                    oilchangeRepository.save(newOilChange);
-                    this.pushText("U989982d2db82e4ec7698facb3186e0b3","change DB with "+today_fm);
-                }
-                } catch(Exception e){
-                this.pushText("U989982d2db82e4ec7698facb3186e0b3","error with DB");
+                        Oilchange newOilChange = new Oilchange();
+                        newOilChange.setOilchange(today_fm);
+                        oilchangeRepository.save(newOilChange);
+                        this.pushText("U989982d2db82e4ec7698facb3186e0b3", "change DB with " + today_fm);
+                    }
+                } catch (Exception e) {
+                    this.pushText("U989982d2db82e4ec7698facb3186e0b3", "error with DB");
                     e.printStackTrace();
                 }
 
@@ -840,6 +837,10 @@ public class KitchenSinkController {
             } catch (Exception e) {
                 e.printStackTrace();
             }*/
+            } else {  // today send already
+                this.pushText("U989982d2db82e4ec7698facb3186e0b3", "today already send ");
+            }
+
         }
     }
 }
