@@ -469,7 +469,25 @@ public class KitchenSinkController {
                 // String userId = event.getSource().getUserId();
 
 
-                this.reply(replyToken, new TextMessage(tomorrow_fm));
+                this.reply(replyToken, new TextMessage(today_fm));
+
+                List<Oilchange> oilchangeDate;
+                oilchangeDate = oilchangeRepository.findAll();
+                String lastChangeDate = oilchangeDate.get(0).getOilchange();
+                this.pushText("U989982d2db82e4ec7698facb3186e0b3","last Change Date = "+lastChangeDate);
+                if (!lastChangeDate.equals(today_fm) ) { // don't send yet
+                    // oilchangeRepository.delete(oilchangeDate);
+
+                    Oilchange newOilChange = new Oilchange();
+                    newOilChange.setOilchange(today_fm);
+                    oilchangeRepository.save(newOilChange);
+                    this.pushText("U989982d2db82e4ec7698facb3186e0b3","change DB with "+today_fm);
+                    //check Bangchak
+                    // if price change then send image , delete lastChangeDate , add today_fm
+                    // oilchangeRepository.delete(oilchangeDate);
+                } else {  // today send already
+                    this.pushText("U989982d2db82e4ec7698facb3186e0b3","equal ");
+                }
 
                 break;
             }
@@ -702,7 +720,7 @@ public class KitchenSinkController {
                 inputStream = new URL("https://crmmobile.bangchak.co.th/webservice/oil_price.aspx").openStream();
             } catch (IOException e){
                 e.printStackTrace();
-                this.pushText("U989982d2db82e4ec7698facb3186e0b3","error with DB");
+                this.pushText("U989982d2db82e4ec7698facb3186e0b3","error with webservice Bangchak");
             }
             try {
                 JAXBContext jaxbContext = JAXBContext.newInstance(Header.class);
