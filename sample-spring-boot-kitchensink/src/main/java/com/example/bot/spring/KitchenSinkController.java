@@ -476,7 +476,7 @@ public class KitchenSinkController {
                 String lastChangeDate = oilchangeDate.get(0).getOilchange();
                 this.pushText("U989982d2db82e4ec7698facb3186e0b3","last Change Date = "+lastChangeDate);
                 if (!lastChangeDate.equals(today_fm) ) { // don't send yet
-                    // oilchangeRepository.delete(oilchangeDate);
+                    oilchangeRepository.delete(oilchangeDate.get(0));
 
                     Oilchange newOilChange = new Oilchange();
                     newOilChange.setOilchange(today_fm);
