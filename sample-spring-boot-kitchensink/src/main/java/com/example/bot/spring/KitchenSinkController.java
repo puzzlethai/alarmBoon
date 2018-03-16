@@ -475,16 +475,14 @@ public class KitchenSinkController {
                 oilchangeDate = oilchangeRepository.findAll();
                 String lastChangeDate = oilchangeDate.get(0).getOilchange();
                 this.pushText("U989982d2db82e4ec7698facb3186e0b3","last Change Date = "+lastChangeDate);
-                if (!lastChangeDate.equals(today_fm) ) { // don't send yet
+                if (!today_fm.equals(lastChangeDate)) { // don't send yet
                     oilchangeRepository.delete(oilchangeDate.get(0));
 
                     Oilchange newOilChange = new Oilchange();
                     newOilChange.setOilchange(today_fm);
                     oilchangeRepository.save(newOilChange);
                     this.pushText("U989982d2db82e4ec7698facb3186e0b3","change DB with "+today_fm);
-                    //check Bangchak
-                    // if price change then send image , delete lastChangeDate , add today_fm
-                    // oilchangeRepository.delete(oilchangeDate);
+
                 } else {  // today send already
                     this.pushText("U989982d2db82e4ec7698facb3186e0b3","equal ");
                 }
@@ -770,7 +768,7 @@ public class KitchenSinkController {
                         }
                     }
                     this.pushText("U989982d2db82e4ec7698facb3186e0b3","ราคาน้ำมันเปลี่ยน");
-                    oilchangeRepository.delete(oilchangeDate);
+                    oilchangeRepository.delete(oilchangeDate.get(0));
 
                     Oilchange newOilChange = new Oilchange();
                     newOilChange.setOilchange(today_fm);
