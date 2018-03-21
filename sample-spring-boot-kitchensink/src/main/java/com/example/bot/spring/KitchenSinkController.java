@@ -790,12 +790,8 @@ public class KitchenSinkController {
             oilchangeDate = oilchangeRepository.findAll();
             String lastChangeDate = oilchangeDate.get(0).getOilchange();
 
-            if (!today_fm.equals(lastChangeDate)) { // don't send yet
-                // check Bangchak
-                // if price change then send image , delete lastChangeDate , add today_fm
-                // oilchangeRepository.delete(oilchangeDate);
-
-                BufferedImage ire;
+            if (!today_fm.equals(lastChangeDate)) {
+                BufferedImage ire = null;
 
                 InputStream inputStream = null;
                 ImageMessage oilPriceImg = null;
@@ -817,19 +813,19 @@ public class KitchenSinkController {
                             ire = WebImage.create(oilprice.showHTML(), 533, 740);
 
 
-                            DownloadedContent jpg = saveImage("png", ire);
-                           // DownloadedContent previewImg = createTempFile("png"); //
-                            oilPriceImg = new ImageMessage(jpg.getUri(), jpg.getUri());
-/*                            system(
-                                    "convert",
-                                    "-resize", "240x",
-                                    jpg.path.toString(),
-                                    previewImg.path.toString());*/
-                        }
-                        catch (Exception e) {
+
+                        } catch (Exception e) {
                             this.pushText("U989982d2db82e4ec7698facb3186e0b3", "error with create img"+e.getMessage());
                             e.printStackTrace();
                         }
+                        DownloadedContent jpg = saveImage("png", ire);
+                        //           DownloadedContent previewImg = createTempFile("png"); //
+                        oilPriceImg = new ImageMessage(jpg.getUri(), jpg.getUri());
+/*                                system(
+                                        "convert",
+                                        "-resize", "240x",
+                                        jpg.path.toString(),
+                                        previewImg.path.toString());*/
                         try {
                             List<Customer> customers = customerRepository.findAll();
                             Set<String> setUserId = new HashSet<String>();
@@ -860,8 +856,7 @@ public class KitchenSinkController {
                                 }
                             }
 
-                        }
-                        catch (Exception e) {
+                        } catch (Exception e) {
                             this.pushText("U989982d2db82e4ec7698facb3186e0b3", "error with customer DB");
                             e.printStackTrace();
                         }
@@ -878,6 +873,7 @@ public class KitchenSinkController {
                     this.pushText("U989982d2db82e4ec7698facb3186e0b3", "error with DB");
                     e.printStackTrace();
                 }
+
 
 /*            BufferedImage ire;
 
