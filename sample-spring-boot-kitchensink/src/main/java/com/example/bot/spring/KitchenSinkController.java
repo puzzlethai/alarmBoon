@@ -725,46 +725,60 @@ public class KitchenSinkController {
                     if (oilprice.isSame()) {
                         this.pushText("U989982d2db82e4ec7698facb3186e0b3", "ราคาน้ำมันเท่าเดิม");
                     } else {
-                        ire = WebImage.create(oilprice.showHTML(), 533, 740);
+                        try {
+                            ire = WebImage.create(oilprice.showHTML(), 533, 740);
 
 
-                        DownloadedContent jpg = saveImage("png", ire);
-                        DownloadedContent previewImg = createTempFile("png"); //
-                        ImageMessage oilPriceImg = new ImageMessage(jpg.getUri(), jpg.getUri());
-                        system(
-                                "convert",
-                                "-resize", "240x",
-                                jpg.path.toString(),
-                                previewImg.path.toString());
-                        List<Customer> customers = customerRepository.findAll();
-                        Set<String> setUserId = new HashSet<String>();
-                        if (customers.size() < 150) { // only one multicast
-                            for (Customer customer : customers) {
-                                if (customer.getUserId() != null)
-                                    setUserId.add(customer.getUserId());
-                            }
-                            multipushImage(setUserId, oilPriceImg);
+                            DownloadedContent jpg = saveImage("png", ire);
+                            DownloadedContent previewImg = createTempFile("png"); //
+                            ImageMessage oilPriceImg = new ImageMessage(jpg.getUri(), jpg.getUri());
+                            system(
+                                    "convert",
+                                    "-resize", "240x",
+                                    jpg.path.toString(),
+                                    previewImg.path.toString());
+                        }
+                        catch (Exception e) {
+                            this.pushText("U989982d2db82e4ec7698facb3186e0b3", "error with create img");
+                            e.printStackTrace();
+                        }
+                        try {
+                            List<Customer> customers = customerRepository.findAll();
+                            Set<String> setUserId = new HashSet<String>();
+                            if (customers.size() < 150) { // only one multicast
+                                for (Customer customer : customers) {
+                                    if (customer.getUserId() != null)
+                                        setUserId.add(customer.getUserId());
+                                }
+                                multipushImage(setUserId, oilPriceImg);
 
-                        } else { // more than one muticast
-                            int i = 0;
-                            for (Customer customer : customers) {
-                                i = i + 1;
-                                if (customer.getUserId() != null)
-                                    setUserId.add(customer.getUserId());
-                                if (i % 150 == 0) {
+                            } else { // more than one muticast
+                                int i = 0;
+                                for (Customer customer : customers) {
+                                    i = i + 1;
+                                    if (customer.getUserId() != null)
+                                        setUserId.add(customer.getUserId());
+                                    if (i % 150 == 0) {
+                                        multipushImage(setUserId, oilPriceImg);
+                                        // don't forget little delay
+                                        i = 0;
+                                        setUserId.clear();
+
+                                    }
+                                }
+                                if (setUserId.size() != 0) {  // last batch of userID
                                     multipushImage(setUserId, oilPriceImg);
-                                    // don't forget little delay
-                                    i = 0;
                                     setUserId.clear();
-
                                 }
                             }
-                            if (setUserId.size() != 0) {  // last batch of userID
-                                multipushImage(setUserId, oilPriceImg);
-                                setUserId.clear();
-                            }
+
+                        }
+                        catch (Exception e) {
+                            this.pushText("U989982d2db82e4ec7698facb3186e0b3", "error with customer DB");
+                            e.printStackTrace();
                         }
                         this.pushText("U989982d2db82e4ec7698facb3186e0b3", "ราคาน้ำมันเปลี่ยน");
+
                         oilchangeRepository.delete(oilchangeDate.get(0));
 
                         Oilchange newOilChange = new Oilchange();
