@@ -711,6 +711,7 @@ public class KitchenSinkController {
                 BufferedImage ire;
 
                 InputStream inputStream = null;
+                ImageMessage oilPriceImg = null;
                 try {
                     inputStream = new URL("https://crmmobile.bangchak.co.th/webservice/oil_price.aspx").openStream();
                 } catch (IOException e) {
@@ -731,7 +732,7 @@ public class KitchenSinkController {
 
                             DownloadedContent jpg = saveImage("png", ire);
                             DownloadedContent previewImg = createTempFile("png"); //
-                            ImageMessage oilPriceImg = new ImageMessage(jpg.getUri(), jpg.getUri());
+                            oilPriceImg = new ImageMessage(jpg.getUri(), jpg.getUri());
                             system(
                                     "convert",
                                     "-resize", "240x",
