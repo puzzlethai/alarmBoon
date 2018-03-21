@@ -496,15 +496,15 @@ public class KitchenSinkController {
 
 
                                 DownloadedContent jpg = saveImage("png", ire);
-                                DownloadedContent previewImg = createTempFile("png"); //
+                     //           DownloadedContent previewImg = createTempFile("png"); //
                                 oilPriceImg = new ImageMessage(jpg.getUri(), jpg.getUri());
-                                system(
+/*                                system(
                                         "convert",
                                         "-resize", "240x",
                                         jpg.path.toString(),
-                                        previewImg.path.toString());
+                                        previewImg.path.toString());*/
                             } catch (Exception e) {
-                                this.pushText("U989982d2db82e4ec7698facb3186e0b3", "error with create img");
+                                this.pushText("U989982d2db82e4ec7698facb3186e0b3", "error with create img"+e.getMessage());
                                 e.printStackTrace();
                             }
                             try {
@@ -817,16 +817,16 @@ public class KitchenSinkController {
 
 
                             DownloadedContent jpg = saveImage("png", ire);
-                            DownloadedContent previewImg = createTempFile("png"); //
+                           // DownloadedContent previewImg = createTempFile("png"); //
                             oilPriceImg = new ImageMessage(jpg.getUri(), jpg.getUri());
-                            system(
+/*                            system(
                                     "convert",
                                     "-resize", "240x",
                                     jpg.path.toString(),
-                                    previewImg.path.toString());
+                                    previewImg.path.toString());*/
                         }
                         catch (Exception e) {
-                            this.pushText("U989982d2db82e4ec7698facb3186e0b3", "error with create img");
+                            this.pushText("U989982d2db82e4ec7698facb3186e0b3", "error with create img"+e.getMessage());
                             e.printStackTrace();
                         }
                         try {
