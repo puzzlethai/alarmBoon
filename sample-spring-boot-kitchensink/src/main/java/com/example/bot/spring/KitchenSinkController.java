@@ -477,7 +477,6 @@ public class KitchenSinkController {
 
                     InputStream inputStream = null;
                     ImageMessage oilPriceImg = null;
-                    DownloadedContent jpg = null;
                     try {
                         inputStream = new URL("https://crmmobile.bangchak.co.th/webservice/oil_price.aspx").openStream();
                     } catch (IOException e) {
@@ -494,14 +493,14 @@ public class KitchenSinkController {
                         } else {
                             try {
                                 ire = WebImage.create(oilprice.showHTML(), 533, 740);
-                                jpg = saveImage("png", ire);
+
 
 
                             } catch (Exception e) {
                                 this.pushText("U989982d2db82e4ec7698facb3186e0b3", "error with create img"+e.getMessage());
                                 e.printStackTrace();
                             }
-
+                            DownloadedContent jpg = saveImage("png", ire);
                             //           DownloadedContent previewImg = createTempFile("png"); //
                             oilPriceImg = new ImageMessage(jpg.getUri(), jpg.getUri());
 /*                                system(
@@ -796,7 +795,6 @@ public class KitchenSinkController {
 
                 InputStream inputStream = null;
                 ImageMessage oilPriceImg = null;
-                DownloadedContent jpg = null;
                 try {
                     inputStream = new URL("https://crmmobile.bangchak.co.th/webservice/oil_price.aspx").openStream();
                 } catch (IOException e) {
@@ -814,13 +812,13 @@ public class KitchenSinkController {
                         try {
                             ire = WebImage.create(oilprice.showHTML(), 533, 740);
 
-                            jpg = saveImage("png", ire);
+
 
                         } catch (Exception e) {
                             this.pushText("U989982d2db82e4ec7698facb3186e0b3", "error with create img"+e.getMessage());
                             e.printStackTrace();
                         }
-
+                        DownloadedContent jpg = saveImage("png", ire);
                         //           DownloadedContent previewImg = createTempFile("png"); //
                         oilPriceImg = new ImageMessage(jpg.getUri(), jpg.getUri());
 /*                                system(
