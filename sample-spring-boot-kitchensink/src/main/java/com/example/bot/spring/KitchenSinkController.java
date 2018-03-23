@@ -836,9 +836,9 @@ public class KitchenSinkController {
                                         jpg.path.toString(),
                                         previewImg.path.toString());*/
                         String imageUrl = createUri("/static/buttons/tt.png");
-                        Path imagePath =  KitchenSinkApplication.downloadedContentDir.resolve(imageUrl);
+                        //Path imagePath =  KitchenSinkApplication.downloadedContentDir.resolve(imageUrl);
                         //oilPriceImg = new ImageMessage(jpg.getUri(), jpg.getUri());
-                        oilPriceImg = new ImageMessage(imagePath, imageUrl);
+                        oilPriceImg = new ImageMessage(imageUrl, imageUrl);
                         this.pushText("U989982d2db82e4ec7698facb3186e0b3", "ImageMessage work");
                         try {
                             List<Customer> customers = customerRepository.findAll();
