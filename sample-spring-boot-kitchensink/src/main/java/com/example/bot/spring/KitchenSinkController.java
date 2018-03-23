@@ -822,8 +822,8 @@ public class KitchenSinkController {
                         }
                         DownloadedContent jpg = saveImage("png", ire);
                         this.pushText("U989982d2db82e4ec7698facb3186e0b3", "saveImage work");
-                        DownloadedContent previewImg = createTempFile("png"); //
-                        this.pushText("U989982d2db82e4ec7698facb3186e0b3", "createTemp work");
+                       // DownloadedContent previewImg = createTempFile("png"); //
+
 /*                                system(
                                         "convert",
                                         "-resize", "240x",
