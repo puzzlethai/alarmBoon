@@ -501,7 +501,7 @@ public class KitchenSinkController {
                                 e.printStackTrace();
                             }
                             DownloadedContent jpg = saveImage("png", ire);
-                            DownloadedContent previewImg = createTempFile("png"); //
+                            DownloadedContent previewImg = createTempFile("png"); // String imageUrl = createUri("/static/buttons/tt.png");
 
                                 system(
                                         "convert",
@@ -814,6 +814,12 @@ public class KitchenSinkController {
                         try {
                             ire = WebImage.create(oilprice.showHTML(), 533, 740);
 
+                            try {
+                                ImageIO.write(ire,"png", new File("/static/buttons/tt.png"));
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                                this.pushText("U989982d2db82e4ec7698facb3186e0b3", "IO write "+e.getMessage());
+                            }
 
 
                         } catch (Exception e) {
@@ -822,14 +828,17 @@ public class KitchenSinkController {
                         }
                         DownloadedContent jpg = saveImage("png", ire);
                         this.pushText("U989982d2db82e4ec7698facb3186e0b3", "saveImage work");
-                       // DownloadedContent previewImg = createTempFile("png"); //
+                       // DownloadedContent previewImg = createTempFile("png"); // String imageUrl = createUri("/static/buttons/tt.png");
 
 /*                                system(
                                         "convert",
                                         "-resize", "240x",
                                         jpg.path.toString(),
                                         previewImg.path.toString());*/
-                        oilPriceImg = new ImageMessage(jpg.getUri(), jpg.getUri());
+                        String imageUrl = createUri("/static/buttons/tt.png");
+                        Path imagePath =  KitchenSinkApplication.downloadedContentDir.resolve(imageUrl);
+                        //oilPriceImg = new ImageMessage(jpg.getUri(), jpg.getUri());
+                        oilPriceImg = new ImageMessage(imagePath, imageUrl);
                         this.pushText("U989982d2db82e4ec7698facb3186e0b3", "ImageMessage work");
                         try {
                             List<Customer> customers = customerRepository.findAll();
