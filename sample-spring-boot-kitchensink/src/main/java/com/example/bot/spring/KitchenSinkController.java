@@ -807,6 +807,7 @@ public class KitchenSinkController {
                     Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
 
                     Header oilprice = (Header) unmarshaller.unmarshal(inputStream);
+                    this.pushText("U989982d2db82e4ec7698facb3186e0b3", "unmarshall work");
                     if (oilprice.isSame()) {
                         this.pushText("U989982d2db82e4ec7698facb3186e0b3", "ราคาน้ำมันเท่าเดิม");
                     } else {
@@ -820,14 +821,16 @@ public class KitchenSinkController {
                             e.printStackTrace();
                         }
                         DownloadedContent jpg = saveImage("png", ire);
+                        this.pushText("U989982d2db82e4ec7698facb3186e0b3", "saveImage work");
                         DownloadedContent previewImg = createTempFile("png"); //
-
-                                system(
+                        this.pushText("U989982d2db82e4ec7698facb3186e0b3", "createTemp work");
+/*                                system(
                                         "convert",
                                         "-resize", "240x",
                                         jpg.path.toString(),
-                                        previewImg.path.toString());
+                                        previewImg.path.toString());*/
                         oilPriceImg = new ImageMessage(jpg.getUri(), jpg.getUri());
+                        this.pushText("U989982d2db82e4ec7698facb3186e0b3", "ImageMessage work");
                         try {
                             List<Customer> customers = customerRepository.findAll();
                             Set<String> setUserId = new HashSet<String>();
@@ -872,7 +875,7 @@ public class KitchenSinkController {
                         this.pushText("U989982d2db82e4ec7698facb3186e0b3", "change DB with " + today_fm);
                     }
                 } catch (Exception e) {
-                    this.pushText("U989982d2db82e4ec7698facb3186e0b3", "error with DB");
+                    this.pushText("U989982d2db82e4ec7698facb3186e0b3", "error with DB"+e.getMessage());
                     e.printStackTrace();
                 }
 
