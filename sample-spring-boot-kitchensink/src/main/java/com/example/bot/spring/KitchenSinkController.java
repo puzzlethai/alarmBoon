@@ -501,13 +501,14 @@ public class KitchenSinkController {
                                 e.printStackTrace();
                             }
                             DownloadedContent jpg = saveImage("png", ire);
-                            //           DownloadedContent previewImg = createTempFile("png"); //
-                            oilPriceImg = new ImageMessage(jpg.getUri(), jpg.getUri());
-/*                                system(
+                            DownloadedContent previewImg = createTempFile("png"); //
+
+                                system(
                                         "convert",
                                         "-resize", "240x",
                                         jpg.path.toString(),
-                                        previewImg.path.toString());*/
+                                        previewImg.path.toString());
+                            oilPriceImg = new ImageMessage(jpg.getUri(), jpg.getUri());
                             try {
                                 List<Customer> customers = customerRepository.findAll();
                                 Set<String> setUserId = new HashSet<String>();
@@ -552,7 +553,7 @@ public class KitchenSinkController {
                             this.pushText("U989982d2db82e4ec7698facb3186e0b3", "change DB with " + today_fm);
                         }
                     } catch (Exception e) {
-                        this.pushText("U989982d2db82e4ec7698facb3186e0b3", "error with DB");
+                        this.pushText("U989982d2db82e4ec7698facb3186e0b3", "error with DB"+e.getMessage());
                         e.printStackTrace();
                     }
                 }
@@ -819,13 +820,14 @@ public class KitchenSinkController {
                             e.printStackTrace();
                         }
                         DownloadedContent jpg = saveImage("png", ire);
-                        //           DownloadedContent previewImg = createTempFile("png"); //
-                        oilPriceImg = new ImageMessage(jpg.getUri(), jpg.getUri());
-/*                                system(
+                        DownloadedContent previewImg = createTempFile("png"); //
+
+                                system(
                                         "convert",
                                         "-resize", "240x",
                                         jpg.path.toString(),
-                                        previewImg.path.toString());*/
+                                        previewImg.path.toString());
+                        oilPriceImg = new ImageMessage(jpg.getUri(), jpg.getUri());
                         try {
                             List<Customer> customers = customerRepository.findAll();
                             Set<String> setUserId = new HashSet<String>();
@@ -857,7 +859,7 @@ public class KitchenSinkController {
                             }
 
                         } catch (Exception e) {
-                            this.pushText("U989982d2db82e4ec7698facb3186e0b3", "error with customer DB");
+                            this.pushText("U989982d2db82e4ec7698facb3186e0b3", "error with customer DB"+e.getMessage());
                             e.printStackTrace();
                         }
                         this.pushText("U989982d2db82e4ec7698facb3186e0b3", "ราคาน้ำมันเปลี่ยน");
