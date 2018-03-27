@@ -826,7 +826,7 @@ public class KitchenSinkController {
                             this.pushText("U989982d2db82e4ec7698facb3186e0b3", "error with create img"+e.getMessage());
                             e.printStackTrace();
                         }
-                        DownloadedContent jpg = saveImage("png", ire);
+                        //DownloadedContent jpg = saveImage("png", ire);
                         this.pushText("U989982d2db82e4ec7698facb3186e0b3", "saveImage work");
                        // DownloadedContent previewImg = createTempFile("png"); // String imageUrl = createUri("/static/buttons/tt.png");
 
