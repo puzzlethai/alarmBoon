@@ -796,6 +796,7 @@ public class KitchenSinkController {
 
                 InputStream inputStream = null;
                 ImageMessage oilPriceImg = null;
+                String imageUrl = createUri("/static/buttons/tt.png");
                 try {
                     inputStream = new URL("https://crmmobile.bangchak.co.th/webservice/oil_price.aspx").openStream();
                 } catch (IOException e) {
@@ -815,7 +816,7 @@ public class KitchenSinkController {
                             ire = WebImage.create(oilprice.showHTML(), 533, 740);
 
                             try {
-                                ImageIO.write(ire,"png", new File("/static/buttons/tt.png"));
+                                ImageIO.write(ire,"png", new File(imageUrl)); // static/buttons/tt.png
                             } catch (IOException i) {
                                 i.printStackTrace();
                                 this.pushText("U989982d2db82e4ec7698facb3186e0b3", "IO write "+i.getMessage());
@@ -835,7 +836,7 @@ public class KitchenSinkController {
                                         "-resize", "240x",
                                         jpg.path.toString(),
                                         previewImg.path.toString());*/
-                        String imageUrl = createUri("/static/buttons/tt.png");
+
                         //Path imagePath =  KitchenSinkApplication.downloadedContentDir.resolve(imageUrl);
                         //oilPriceImg = new ImageMessage(jpg.getUri(), jpg.getUri());
                         oilPriceImg = new ImageMessage(imageUrl, imageUrl);
