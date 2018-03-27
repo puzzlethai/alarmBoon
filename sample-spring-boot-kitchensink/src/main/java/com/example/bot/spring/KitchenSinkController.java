@@ -476,7 +476,7 @@ public class KitchenSinkController {
                     BufferedImage ire = null;
 
                     InputStream inputStream = null;
-                    ImageMessage oilPriceImg1;
+                    ImageMessage oilPriceImg1 =null;
                     try {
                         inputStream = new URL("https://crmmobile.bangchak.co.th/webservice/oil_price.aspx").openStream();
                     } catch (IOException e) {
@@ -792,10 +792,10 @@ public class KitchenSinkController {
             String lastChangeDate = oilchangeDate.get(0).getOilchange();
 
             if (!today_fm.equals(lastChangeDate)) {
-                BufferedImage ire ;
+                BufferedImage ire = null;
 
                 InputStream inputStream = null;
-                ImageMessage oilPriceImg;
+                ImageMessage oilPriceImg = null;
                 try {
                     inputStream = new URL("https://crmmobile.bangchak.co.th/webservice/oil_price.aspx").openStream();
                 } catch (IOException e) {
@@ -816,9 +816,9 @@ public class KitchenSinkController {
 
                             try {
                                 ImageIO.write(ire,"png", new File("/static/buttons/tt.png"));
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                                this.pushText("U989982d2db82e4ec7698facb3186e0b3", "IO write "+e.getMessage());
+                            } catch (IOException i) {
+                                i.printStackTrace();
+                                this.pushText("U989982d2db82e4ec7698facb3186e0b3", "IO write "+i.getMessage());
                             }
 
 
