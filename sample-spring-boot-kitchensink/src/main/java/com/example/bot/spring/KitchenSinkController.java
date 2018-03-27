@@ -476,7 +476,7 @@ public class KitchenSinkController {
                     BufferedImage ire = null;
 
                     InputStream inputStream = null;
-                    ImageMessage oilPriceImg = null;
+                    ImageMessage oilPriceImg1;
                     try {
                         inputStream = new URL("https://crmmobile.bangchak.co.th/webservice/oil_price.aspx").openStream();
                     } catch (IOException e) {
@@ -508,7 +508,7 @@ public class KitchenSinkController {
                                         "-resize", "240x",
                                         jpg.path.toString(),
                                         previewImg.path.toString());
-                            oilPriceImg = new ImageMessage(jpg.getUri(), jpg.getUri());
+                            oilPriceImg1 = new ImageMessage(jpg.getUri(), jpg.getUri());
                             try {
                                 List<Customer> customers = customerRepository.findAll();
                                 Set<String> setUserId = new HashSet<String>();
@@ -517,7 +517,7 @@ public class KitchenSinkController {
                                         if (customer.getUserId() != null)
                                             setUserId.add(customer.getUserId());
                                     }
-                                    multipushImage(setUserId, oilPriceImg);
+                                    multipushImage(setUserId, oilPriceImg1);
 
                                 } else { // more than one muticast
                                     int i = 0;
@@ -526,7 +526,7 @@ public class KitchenSinkController {
                                         if (customer.getUserId() != null)
                                             setUserId.add(customer.getUserId());
                                         if (i % 150 == 0) {
-                                            multipushImage(setUserId, oilPriceImg);
+                                            multipushImage(setUserId, oilPriceImg1);
                                             // don't forget little delay
                                             i = 0;
                                             setUserId.clear();
@@ -534,7 +534,7 @@ public class KitchenSinkController {
                                         }
                                     }
                                     if (setUserId.size() != 0) {  // last batch of userID
-                                        multipushImage(setUserId, oilPriceImg);
+                                        multipushImage(setUserId, oilPriceImg1);
                                         setUserId.clear();
                                     }
                                 }
@@ -792,10 +792,10 @@ public class KitchenSinkController {
             String lastChangeDate = oilchangeDate.get(0).getOilchange();
 
             if (!today_fm.equals(lastChangeDate)) {
-                BufferedImage ire = null;
+                BufferedImage ire ;
 
                 InputStream inputStream = null;
-                ImageMessage oilPriceImg = null;
+                ImageMessage oilPriceImg;
                 try {
                     inputStream = new URL("https://crmmobile.bangchak.co.th/webservice/oil_price.aspx").openStream();
                 } catch (IOException e) {
