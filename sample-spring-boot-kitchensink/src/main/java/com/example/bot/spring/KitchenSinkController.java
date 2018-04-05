@@ -816,6 +816,7 @@ public class KitchenSinkController {
                             ire = WebImage.create(oilprice.showHTML(), 533, 740);
 
                             try {
+                                this.pushText("U989982d2db82e4ec7698facb3186e0b3", "Url = "+imageUrl);
                                 ImageIO.write(ire,"png", new File(imageUrl)); // static/buttons/tt.png
                             } catch (IOException i) {
                                 i.printStackTrace();
