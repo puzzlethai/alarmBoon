@@ -807,7 +807,6 @@ public class KitchenSinkController {
                     Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
 
                     Header oilprice = (Header) unmarshaller.unmarshal(inputStream);
-                    this.pushText("U989982d2db82e4ec7698facb3186e0b3", "unmarshall work");
                     if (oilprice.isSame()) {
                         this.pushText("U989982d2db82e4ec7698facb3186e0b3", "ราคาน้ำมันเท่าเดิม");
                     } else {
@@ -821,16 +820,14 @@ public class KitchenSinkController {
                             e.printStackTrace();
                         }
                         DownloadedContent jpg = saveImage("png", ire);
-                        this.pushText("U989982d2db82e4ec7698facb3186e0b3", "saveImage work");
-                       // DownloadedContent previewImg = createTempFile("png"); //
+                        DownloadedContent previewImg = createTempFile("png"); //
 
-/*                                system(
-                                        "convert",
-                                        "-resize", "240x",
-                                        jpg.path.toString(),
-                                        previewImg.path.toString());*/
+                        system(
+                                "convert",
+                                "-resize", "240x",
+                                jpg.path.toString(),
+                                previewImg.path.toString());
                         oilPriceImg = new ImageMessage(jpg.getUri(), jpg.getUri());
-                        this.pushText("U989982d2db82e4ec7698facb3186e0b3", "ImageMessage work");
                         try {
                             List<Customer> customers = customerRepository.findAll();
                             Set<String> setUserId = new HashSet<String>();
@@ -862,7 +859,7 @@ public class KitchenSinkController {
                             }
 
                         } catch (Exception e) {
-                            this.pushText("U989982d2db82e4ec7698facb3186e0b3", "error with customer DB"+e.getMessage());
+                            this.pushText("U989982d2db82e4ec7698facb3186e0b3", "error with customer DB");
                             e.printStackTrace();
                         }
                         this.pushText("U989982d2db82e4ec7698facb3186e0b3", "ราคาน้ำมันเปลี่ยน");
@@ -878,68 +875,6 @@ public class KitchenSinkController {
                     this.pushText("U989982d2db82e4ec7698facb3186e0b3", "error with DB"+e.getMessage());
                     e.printStackTrace();
                 }
-
-
-/*            BufferedImage ire;
-
-            InputStream inputStream = null;
-            try {
-                inputStream = new URL("https://crmmobile.bangchak.co.th/webservice/oil_price.aspx").openStream();
-            } catch (IOException e){
-                e.printStackTrace();
-            }
-            try {
-                JAXBContext jaxbContext = JAXBContext.newInstance(Header.class);
-                Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
-
-                Header oilprice = (Header) unmarshaller.unmarshal(inputStream);
-
-                ire = WebImage.create(oilprice.showHTML(), 533, 740);
-
-
-                DownloadedContent jpg = saveImage("png", ire);
-                DownloadedContent previewImg = createTempFile("png");
-                system(
-                        "convert",
-                        "-resize", "240x",
-                        jpg.path.toString(),
-                        previewImg.path.toString());
-                List<Customer> customers = customerRepository.findAll();
-                Set<String> setUserId = new HashSet<String>();
-                if (customers.size() < 150) { // only one multicast
-                    for (Customer customer : customers) {
-                        if (customer.getUserId() != null)
-                            setUserId.add(customer.getUserId());
-                    }
-                    multipushT(setUserId,new ImageMessage(jpg.getUri(), jpg.getUri()));
-
-                } else { // more than one muticast
-                    int i = 0;
-                    for (Customer customer : customers) {
-                        i=i+1;
-                        if (customer.getUserId() != null)
-                            setUserId.add(customer.getUserId());
-                        if (i%150 == 0){
-                            multipushT(setUserId,new TextMessage("พรุ่งนี้วันพระ"));
-                            // don't forget little delay
-                            i=0;
-                            setUserId.clear();
-
-                        }
-                    }
-                    if (setUserId.size()!=0){  // last batch of userID
-                        multipushT(setUserId,new TextMessage("พรุ่งนี้วันพระ"));
-                        setUserId.clear();
-                    }
-                }
-
-
-                //pushT("U989982d2db82e4ec7698facb3186e0b3",  // U989982d2db82e4ec7698facb3186e0b3 ME
-                //new ImageMessage(jpg.getUri(), jpg.getUri())); // U99aeab757346322b4bbf035ade474678 BEE
-
-            } catch (Exception e) {
-                e.printStackTrace();
-            }*/
             } else {  // today send already
                 this.pushText("U989982d2db82e4ec7698facb3186e0b3", "today already send ");
             }
