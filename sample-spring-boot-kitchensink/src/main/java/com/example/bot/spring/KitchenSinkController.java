@@ -686,15 +686,15 @@ public class KitchenSinkController {
 
        // private final SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
 
-        private void pushT(@NonNull String userId, @NonNull Message message) {
+/*        private void pushT(@NonNull String userId, @NonNull Message message) {
             pushT(userId, Collections.singletonList(message));
-        }
+        }*/
         /*
         private void multipushT(@NonNull String userId, @NonNull Message message) {
             multipushT((Set<String>) Collections.singletonList(userId), Collections.singletonList(message));
         }
         */
-        private void pushT(@NonNull String userId, @NonNull List<Message> messages) {
+/*        private void pushT(@NonNull String userId, @NonNull List<Message> messages) {
             try {
                 BotApiResponse apiResponse = lineMessagingClient
                         .pushMessage(new PushMessage(userId, messages))
@@ -703,8 +703,8 @@ public class KitchenSinkController {
             } catch (InterruptedException | ExecutionException e) {
                 throw new RuntimeException(e);
             }
-        }
-        private void pushText(@NonNull String userId, @NonNull String message)  {
+        }*/
+/*        private void pushText(@NonNull String userId, @NonNull String message)  {
             if (userId.isEmpty()) {
                 throw new IllegalArgumentException("userId must not be empty");
             }
@@ -713,7 +713,7 @@ public class KitchenSinkController {
             }
             this.pushT(userId, new TextMessage(message));
 
-        }
+        }*/
         private void multipushT(@NonNull Set<String> userId, @NonNull Message messages) {
             try {
                 BotApiResponse apiResponse = lineMessagingClient
@@ -800,7 +800,7 @@ public class KitchenSinkController {
                     inputStream = new URL("https://crmmobile.bangchak.co.th/webservice/oil_price.aspx").openStream();
                 } catch (IOException e) {
                     e.printStackTrace();
-                    this.pushText("U989982d2db82e4ec7698facb3186e0b3", "error with webservice Bangchak");
+                    pushText("U989982d2db82e4ec7698facb3186e0b3", "error with webservice Bangchak");
                 }
                 try {
                     JAXBContext jaxbContext = JAXBContext.newInstance(Header.class);
@@ -808,7 +808,7 @@ public class KitchenSinkController {
 
                     Header oilprice = (Header) unmarshaller.unmarshal(inputStream);
                     if (oilprice.isSame()) {
-                        this.pushText("U989982d2db82e4ec7698facb3186e0b3", "ราคาน้ำมันเท่าเดิม");
+                        pushText("U989982d2db82e4ec7698facb3186e0b3", "ราคาน้ำมันเท่าเดิม");
                     } else {
                         try {
                             ire = WebImage.create(oilprice.showHTML(), 533, 740);
@@ -816,7 +816,7 @@ public class KitchenSinkController {
 
 
                         } catch (Exception e) {
-                            this.pushText("U989982d2db82e4ec7698facb3186e0b3", "error with create img"+e.getMessage());
+                            pushText("U989982d2db82e4ec7698facb3186e0b3", "error with create img"+e.getMessage());
                             e.printStackTrace();
                         }
                         DownloadedContent jpg = saveImage("png", ire);
@@ -859,24 +859,24 @@ public class KitchenSinkController {
                             }
 
                         } catch (Exception e) {
-                            this.pushText("U989982d2db82e4ec7698facb3186e0b3", "error with customer DB");
+                            pushText("U989982d2db82e4ec7698facb3186e0b3", "error with customer DB");
                             e.printStackTrace();
                         }
-                        this.pushText("U989982d2db82e4ec7698facb3186e0b3", "ราคาน้ำมันเปลี่ยน");
+                        pushText("U989982d2db82e4ec7698facb3186e0b3", "ราคาน้ำมันเปลี่ยน");
 
                         oilchangeRepository.delete(oilchangeDate.get(0));
 
                         Oilchange newOilChange = new Oilchange();
                         newOilChange.setOilchange(today_fm);
                         oilchangeRepository.save(newOilChange);
-                        this.pushText("U989982d2db82e4ec7698facb3186e0b3", "change DB with " + today_fm);
+                        pushText("U989982d2db82e4ec7698facb3186e0b3", "change DB with " + today_fm);
                     }
                 } catch (Exception e) {
-                    this.pushText("U989982d2db82e4ec7698facb3186e0b3", "error with DB"+e.getMessage());
+                    pushText("U989982d2db82e4ec7698facb3186e0b3", "error with DB"+e.getMessage());
                     e.printStackTrace();
                 }
             } else {  // today send already
-                this.pushText("U989982d2db82e4ec7698facb3186e0b3", "today already send ");
+                pushText("U989982d2db82e4ec7698facb3186e0b3", "today already send ");
             }
 
         }
