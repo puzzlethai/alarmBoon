@@ -382,8 +382,8 @@ public class KitchenSinkController {
                         "My button sample",
                         "Hello, my button",
                         Arrays.asList(
-                                new URIAction("Go to line.me",
-                                              "https://line.me"),
+                                new URIAction("share location",
+                                              "line://nv/location"),
                                 new PostbackAction("Say hello1",
                                                    "hello こんにちは"),
                                 new PostbackAction("言 hello2",
