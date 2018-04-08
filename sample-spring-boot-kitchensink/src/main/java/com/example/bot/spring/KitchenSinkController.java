@@ -35,6 +35,8 @@ import com.linecorp.bot.model.PushMessage;
 import com.linecorp.bot.model.action.DatetimePickerAction;
 import com.linecorp.bot.model.message.template.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.event.ApplicationReadyEvent;
+import org.springframework.context.ApplicationListener;
 import org.springframework.scheduling.annotation.Scheduled; //Just Add
 import org.springframework.stereotype.Component; // Just Add
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -110,6 +112,8 @@ public class KitchenSinkController {
     private CustomerRepository customerRepository;
     @Autowired
     private OilchangeRepository oilchangeRepository;
+
+    private final Logger log = LoggerFactory.getLogger(ScheduledTasks.class);
 
     @EventMapping
     public void handleTextMessageEvent(MessageEvent<TextMessageContent> event) throws Exception {
@@ -698,16 +702,17 @@ public class KitchenSinkController {
         Path path;
         String uri;
     }
+
     @Component
-    public class ScheduledTasks {
+    public class ApplicationStartup
+            implements ApplicationListener<ApplicationReadyEvent> {
 
-        private final Logger log = LoggerFactory.getLogger(ScheduledTasks.class);
-
-
-        @Scheduled(initialDelay=60000, fixedRate=3600000)
-        public void reportCurrentTime() {
-
-
+        /**
+         * This event is executed as late as conceivably possible to indicate that
+         * the application is ready to service requests.
+         */
+        @Override
+        public void onApplicationEvent(final ApplicationReadyEvent event) {
             LocalDate today = LocalDate.now(ZoneId.of("Asia/Bangkok"));
             LocalDate tomorrow = today.plusDays(1);
             DateTimeFormatter patternFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
@@ -844,6 +849,9 @@ public class KitchenSinkController {
                 pushText("U989982d2db82e4ec7698facb3186e0b3", "today already send ");
             }
 
+            return;
         }
     }
+
+
 }
