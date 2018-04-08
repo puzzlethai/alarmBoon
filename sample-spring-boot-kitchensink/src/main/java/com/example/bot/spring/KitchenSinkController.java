@@ -113,7 +113,7 @@ public class KitchenSinkController {
     @Autowired
     private OilchangeRepository oilchangeRepository;
 
-    private final Logger log = LoggerFactory.getLogger(ScheduledTasks.class);
+  //  private final Logger log = LoggerFactory.getLogger(ScheduledTasks.class);
 
     @EventMapping
     public void handleTextMessageEvent(MessageEvent<TextMessageContent> event) throws Exception {
