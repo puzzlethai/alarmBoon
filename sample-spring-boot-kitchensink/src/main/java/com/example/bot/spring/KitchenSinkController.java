@@ -310,6 +310,16 @@ public class KitchenSinkController {
         }
         messageConsumer.accept(response);
     }
+    private void multipushT(@NonNull Set<String> userId, @NonNull Message messages) {
+        try {
+            BotApiResponse apiResponse = lineMessagingClient
+                    .multicast(new Multicast(userId,messages))
+                    .get();
+            log.info("Sent messages: {}", apiResponse);
+        } catch (InterruptedException | ExecutionException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     private void handleSticker(String replyToken, StickerMessageContent content) {
         reply(replyToken, new StickerMessage(
@@ -692,60 +702,6 @@ public class KitchenSinkController {
     public class ScheduledTasks {
 
         private final Logger log = LoggerFactory.getLogger(ScheduledTasks.class);
-
-       // private final SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
-
-/*        private void pushT(@NonNull String userId, @NonNull Message message) {
-            pushT(userId, Collections.singletonList(message));
-        }*/
-        /*
-        private void multipushT(@NonNull String userId, @NonNull Message message) {
-            multipushT((Set<String>) Collections.singletonList(userId), Collections.singletonList(message));
-        }
-        */
-/*        private void pushT(@NonNull String userId, @NonNull List<Message> messages) {
-            try {
-                BotApiResponse apiResponse = lineMessagingClient
-                        .pushMessage(new PushMessage(userId, messages))
-                        .get();
-                log.info("Sent messages: {}", apiResponse);
-            } catch (InterruptedException | ExecutionException e) {
-                throw new RuntimeException(e);
-            }
-        }*/
-/*        private void pushText(@NonNull String userId, @NonNull String message)  {
-            if (userId.isEmpty()) {
-                throw new IllegalArgumentException("userId must not be empty");
-            }
-            if (message.length() > 1000) {
-                message = message.substring(0, 1000 - 2) + "……";
-            }
-            this.pushT(userId, new TextMessage(message));
-
-        }*/
-        private void multipushT(@NonNull Set<String> userId, @NonNull Message messages) {
-            try {
-                BotApiResponse apiResponse = lineMessagingClient
-                        .multicast(new Multicast(userId,messages))
-                        .get();
-                log.info("Sent messages: {}", apiResponse);
-            } catch (InterruptedException | ExecutionException e) {
-                throw new RuntimeException(e);
-            }
-        }
-
-        /*
-        private void multipushText(@NonNull String userId, @NonNull String message)  {
-            if (userId.isEmpty()) {
-                throw new IllegalArgumentException("userId must not be empty");
-            }
-            if (message.length() > 1000) {
-                message = message.substring(0, 1000 - 2) + "……";
-            }
-            this.multipushT(userId, new TextMessage(message));
-
-        }
-        */
 
 
         @Scheduled(initialDelay=60000, fixedRate=3600000)
