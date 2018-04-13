@@ -98,7 +98,7 @@ import com.example.bot.spring.CustomerRepository;
 import javax.imageio.ImageIO;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Unmarshaller;
-
+import org.jsoup.Jsoup;
 @Slf4j
 @LineMessageHandler
 public class KitchenSinkController {
@@ -607,8 +607,9 @@ public class KitchenSinkController {
                     BufferedImage aqi = null;
 
                     ImageMessage oilPriceImg = null;
+                String html = Jsoup.connect("https://alarmboon.herokuapp.com/").get().html();
 
-                                aqi = WebImage.create("https://alarmboon.herokuapp.com/", 533, 740);
+                                aqi = WebImage.create(html, 533, 740);
 
 
 
