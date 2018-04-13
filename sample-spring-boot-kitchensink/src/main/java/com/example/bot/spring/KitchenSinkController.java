@@ -600,6 +600,43 @@ public class KitchenSinkController {
 
                 break;
             }
+            case "test2": { //6-3-61
+                // String userId = event.getSource().getUserId();
+
+
+                    BufferedImage aqi = null;
+
+                    ImageMessage oilPriceImg = null;
+
+                                aqi = WebImage.create("https://alarmboon.herokuapp.com/", 533, 740);
+
+
+
+
+                            DownloadedContent jpg = saveImage("png", aqi);
+                            DownloadedContent previewImg = createTempFile("png"); //
+
+                            system(
+                                    "convert",
+                                    "-resize", "240x",
+                                    jpg.path.toString(),
+                                    previewImg.path.toString());
+                            oilPriceImg = new ImageMessage(jpg.getUri(), jpg.getUri());
+
+
+
+
+                            this.pushText("U989982d2db82e4ec7698facb3186e0b3", "ราคาน้ำมันเปลี่ยน");
+
+
+
+
+
+                this.reply(replyToken, oilPriceImg);
+
+
+                break;
+            }
             case "imagemap":
                 this.reply(replyToken, new ImagemapMessage(
                         createUri("/static/rich"),
