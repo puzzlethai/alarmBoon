@@ -38,7 +38,7 @@ public abstract class WebImage
             pane.setFont(fontT);
             pane.setContentType("text/html; charset=tis-620"); //new
             pane.setLocale(locale);
-            pane.setText(src);
+            pane.setText(src);   
             image = new BufferedImage
                     (width, height, BufferedImage.TYPE_INT_RGB);
             Graphics g = image.createGraphics();
