@@ -3,6 +3,7 @@ package com.example.bot.spring;
 //Class that Converts the web page to Image
 import java.awt.*;
 import java.awt.image.*;
+import java.util.Locale;
 import javax.swing.*;
 import javax.swing.text.*;
 import javax.swing.text.html.*;
@@ -24,6 +25,7 @@ public abstract class WebImage
     public static BufferedImage create
             (String src, int width, int height) {
         BufferedImage image = null;
+        Locale locale = new Locale("th", "TH");
         JEditorPane pane = new JEditorPane();
         Font fontT = new Font("Ubuntu",Font.PLAIN,10);
         Kit kit = new Kit();
@@ -35,6 +37,7 @@ public abstract class WebImage
             //pane.putClientProperty(JEditorPane.HONOR_DISPLAY_PROPERTIES, Boolean.TRUE);
             pane.setFont(fontT);
             pane.setContentType("text/html; charset=UTF-8"); //new
+            pane.setLocale(locale);
             pane.setText(src);
             image = new BufferedImage
                     (width, height, BufferedImage.TYPE_INT_RGB);
