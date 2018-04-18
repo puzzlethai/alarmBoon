@@ -604,23 +604,34 @@ public class KitchenSinkController {
                 // String userId = event.getSource().getUserId();
 
 
-                    BufferedImage aqi = null;
 
-                    ImageMessage oilPriceImg = null;
+                BufferedImage aqi = null;
 
-                                aqi = WebImage.create("https://alarmboon.herokuapp.com/", 533, 740);
+                ImageMessage oilPriceImg = null;
+                StringBuilder tempStr = new StringBuilder("<!DOCTYPE html>\n" +
+                        "<html lang=\"en\">\n" +
+                        "<head>\n" +
+                        "    <meta charset=\"UTF-8\">\n" +
+                        "    <title>Test alarmboon</title>\n" +
+                        "</head>\n" +
+                        "<body>\n" +
+                        "<h1>ทดสอบ อารามบุญ Test alarm</h1>\n" +
+                        "</body>\n" +
+                        "</html>");
+
+                aqi = WebImage.create(tempStr, 533, 740);
 
 
 
 
-                            DownloadedContent jpg = saveImage("png", aqi);
-                            DownloadedContent previewImg = createTempFile("png"); //
+                DownloadedContent jpg = saveImage("png", aqi);
+                DownloadedContent previewImg = createTempFile("png"); //
 
-                            system(
-                                    "convert",
-                                    "-resize", "240x",
-                                    jpg.path.toString(),
-                                    previewImg.path.toString());
+                system(
+                        "convert",
+                        "-resize", "240x",
+                        jpg.path.toString(),
+                        previewImg.path.toString());
                             oilPriceImg = new ImageMessage(jpg.getUri(), jpg.getUri());
 
 
