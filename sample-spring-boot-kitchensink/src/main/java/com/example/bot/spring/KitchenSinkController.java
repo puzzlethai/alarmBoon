@@ -619,7 +619,7 @@ public class KitchenSinkController {
                         "</body>\n" +
                         "</html>");
 
-                aqi = WebImage.create(tempStr, 533, 740);
+                aqi = WebImage.create(tempStr.toString(), 533, 740);
 
 
 
