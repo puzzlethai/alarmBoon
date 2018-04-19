@@ -35,10 +35,7 @@ public abstract class WebImage
             //pane.putClientProperty(JEditorPane.HONOR_DISPLAY_PROPERTIES, Boolean.TRUE);
             //pane.setFont(fontT);
             pane.setContentType("text/html; charset=UTF-8"); //new
-            byte[] utf8 = src.getBytes("UTF-8");
-            String htmlUTF8 = new String(utf8, "UTF-8");
-            pane.setText(htmlUTF8);
-            //pane.setText(src);
+            pane.setText(src);
             image = new BufferedImage
                     (width, height, BufferedImage.TYPE_INT_RGB);
             Graphics g = image.createGraphics();

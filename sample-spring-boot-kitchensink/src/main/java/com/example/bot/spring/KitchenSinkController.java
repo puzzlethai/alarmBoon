@@ -608,7 +608,7 @@ public class KitchenSinkController {
                 BufferedImage aqi = null;
 
                 ImageMessage oilPriceImg = null;
-                StringBuilder tempStr = new StringBuilder("<!DOCTYPE html>\n" +
+/*                StringBuilder tempStr = new StringBuilder("<!DOCTYPE html>\n" +
                         "<html lang=\"en\">\n" +
                         "<head>\n" +
                         "    <meta charset=\"UTF-8\">\n" +
@@ -619,7 +619,17 @@ public class KitchenSinkController {
                         "</body>\n" +
                         "</html>");
 
-                String html = tempStr.toString();
+                String html = tempStr.toString();*/
+                String html = "<!DOCTYPE html>\n" +
+                        "<html lang=\"en\">\n" +
+                        "<head>\n" +
+                        "    <meta charset=\"UTF-8\">\n" +
+                        "    <title>Test alarmboon</title>\n" +
+                        "</head>\n" +
+                        "<body>\n" +
+                        "<h1>ทดสอบ อารามบุญ Test alarm</h1>\n" +
+                        "</body>\n" +
+                        "</html>";
                 byte[] utf8 = html.getBytes("UTF-8");
                 String htmlUTF8 = new String(utf8, "UTF-8");
 
