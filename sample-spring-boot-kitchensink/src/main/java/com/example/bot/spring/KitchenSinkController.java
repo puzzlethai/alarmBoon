@@ -19,6 +19,7 @@ package com.example.bot.spring;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 // import java.text.SimpleDateFormat; //Just Add
@@ -630,8 +631,8 @@ public class KitchenSinkController {
                         "<h1>ทดสอบ อารามบุญ Test alarm</h1>\n" +
                         "</body>\n" +
                         "</html>";
-                byte[] utf8 = html.getBytes("UTF-8");
-                String htmlUTF8 = new String(utf8, "UTF-8");
+                byte[] utf8 = html.getBytes(StandardCharsets.UTF_8);
+                String htmlUTF8 = new String(utf8, StandardCharsets.UTF_8);
 
                 aqi = WebImage.create(htmlUTF8, 533, 740);
 
