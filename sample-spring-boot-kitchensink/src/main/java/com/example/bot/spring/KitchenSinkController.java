@@ -619,11 +619,13 @@ public class KitchenSinkController {
                         "</body>\n" +
                         "</html>");
 
-                aqi = WebImage.create(tempStr.toString(), 533, 740);
+                String html = tempStr.toString();
+                byte[] utf8 = html.getBytes("UTF-8");
+                String htmlUTF8 = new String(utf8, "UTF-8");
 
+                aqi = WebImage.create(htmlUTF8, 533, 740);
 
-
-
+                
                 DownloadedContent jpg = saveImage("png", aqi);
                 DownloadedContent previewImg = createTempFile("png"); //
 
