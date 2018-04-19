@@ -625,7 +625,7 @@ public class KitchenSinkController {
 
                 aqi = WebImage.create(htmlUTF8, 533, 740);
 
-                
+
                 DownloadedContent jpg = saveImage("png", aqi);
                 DownloadedContent previewImg = createTempFile("png"); //
 
