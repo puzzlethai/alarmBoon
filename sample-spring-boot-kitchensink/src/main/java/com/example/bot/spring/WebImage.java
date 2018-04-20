@@ -41,8 +41,9 @@ public abstract class WebImage
         pane.setEditable(false);
         pane.setMargin(new Insets(0,0,0,0));
         try {
-            String fontUrl = createUri("static/THKrub.ttf");
-            FileInputStream fis = new FileInputStream( fontUrl);
+         /*   String fontUrl = createUri("static/THKrub.ttf");
+            FileInputStream fis = new FileInputStream( fontUrl);*/
+            FileInputStream fis = new FileInputStream( "THKrub.ttf");
             Font fontT = Font.createFont(Font.TRUETYPE_FONT, fis);
             //pane.setPage(src);
             //pane.putClientProperty(JEditorPane.HONOR_DISPLAY_PROPERTIES, Boolean.TRUE);
