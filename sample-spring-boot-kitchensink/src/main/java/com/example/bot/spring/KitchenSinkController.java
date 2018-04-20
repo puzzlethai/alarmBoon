@@ -624,7 +624,7 @@ public class KitchenSinkController {
                 String html = "<!DOCTYPE html>\n" +
                         "<html lang=\"en\">\n" +
                         "<head>\n" +
-                        "    <meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\">\n" +
+                        "    <meta charset=\"UTF-8\">\n" +
                         "    <title>Test alarmboon</title>\n" +
                         "</head>\n" +
                         "<body>\n" +

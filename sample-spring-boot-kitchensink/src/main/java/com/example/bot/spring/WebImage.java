@@ -1,12 +1,15 @@
 package com.example.bot.spring;
 
 //Class that Converts the web page to Image
+import lombok.extern.slf4j.Slf4j;
+
 import java.awt.*;
 import java.awt.image.*;
+import java.io.FileInputStream;
 import javax.swing.*;
 import javax.swing.text.*;
 import javax.swing.text.html.*;
-
+@Slf4j
 public abstract class WebImage
 {
     static class Kit extends HTMLEditorKit
@@ -26,6 +29,12 @@ public abstract class WebImage
         BufferedImage image = null;
         JEditorPane pane = new JEditorPane();
         Font fontT = new Font("Tahoma",Font.PLAIN,10);
+        try {
+            FileInputStream fis = new FileInputStream( "/static/buttons/TH Krub.ttf");
+            fontT = Font.createFont(Font.TRUETYPE_FONT, fis);
+        } catch (Exception e) {
+            log.info("InputStream error", e);
+        }
         Kit kit = new Kit();
         pane.setEditorKit(kit);
         pane.setEditable(false);
