@@ -28,13 +28,13 @@ public abstract class WebImage
             (String src, int width, int height) {
         BufferedImage image = null;
         JEditorPane pane = new JEditorPane();
-        Font fontT = new Font("Tahoma",Font.PLAIN,10);
-/*        try {
+        Font fontT = null; // = new Font("Tahoma",Font.PLAIN,10);
+        try {
             FileInputStream fis = new FileInputStream( "/static/buttons/TH Krub.ttf");
             fontT = Font.createFont(Font.TRUETYPE_FONT, fis);
         } catch (Exception e) {
             log.info("InputStream error", e);
-        }*/
+        }
         Kit kit = new Kit();
         pane.setEditorKit(kit);
         pane.setEditable(false);
