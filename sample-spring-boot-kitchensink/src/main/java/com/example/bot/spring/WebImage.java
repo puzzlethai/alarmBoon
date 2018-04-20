@@ -41,7 +41,7 @@ public abstract class WebImage
         pane.setEditable(false);
         pane.setMargin(new Insets(0,0,0,0));
         try {
-            String fontUrl = createUri("/static/buttons/TH Krub.ttf");
+            String fontUrl = createUri("/static/buttons/THKrub.ttf");
             FileInputStream fis = new FileInputStream( fontUrl);
             Font fontT = Font.createFont(Font.TRUETYPE_FONT, fis);
             //pane.setPage(src);
