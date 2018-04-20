@@ -28,18 +28,16 @@ public abstract class WebImage
             (String src, int width, int height) {
         BufferedImage image = null;
         JEditorPane pane = new JEditorPane();
-        Font fontT = null; // = new Font("Tahoma",Font.PLAIN,10);
-        try {
-            FileInputStream fis = new FileInputStream( "/static/buttons/TH Krub.ttf");
-            fontT = Font.createFont(Font.TRUETYPE_FONT, fis);
-        } catch (Exception e) {
-            log.info("InputStream error", e);
-        }
+         // = new Font("Tahoma",Font.PLAIN,10);
+
         Kit kit = new Kit();
         pane.setEditorKit(kit);
         pane.setEditable(false);
         pane.setMargin(new Insets(0,0,0,0));
         try {
+
+            FileInputStream fis = new FileInputStream( "/static/buttons/TH Krub.ttf");
+            Font fontT = Font.createFont(Font.TRUETYPE_FONT, fis);
             //pane.setPage(src);
             //pane.putClientProperty(JEditorPane.HONOR_DISPLAY_PROPERTIES, Boolean.TRUE);
             pane.setFont(fontT);
@@ -55,6 +53,7 @@ public abstract class WebImage
         } catch (Exception e) {
             // System.out.println(e);
             e.printStackTrace();
+            log.info("InputStream error", e);
         }
         return image;
     }
