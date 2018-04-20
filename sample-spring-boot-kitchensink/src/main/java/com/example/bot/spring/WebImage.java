@@ -29,12 +29,12 @@ public abstract class WebImage
         BufferedImage image = null;
         JEditorPane pane = new JEditorPane();
         Font fontT = new Font("Tahoma",Font.PLAIN,10);
-        try {
+/*        try {
             FileInputStream fis = new FileInputStream( "/static/buttons/TH Krub.ttf");
             fontT = Font.createFont(Font.TRUETYPE_FONT, fis);
         } catch (Exception e) {
             log.info("InputStream error", e);
-        }
+        }*/
         Kit kit = new Kit();
         pane.setEditorKit(kit);
         pane.setEditable(false);
