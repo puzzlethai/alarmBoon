@@ -25,7 +25,7 @@ public abstract class WebImage
             (String src, int width, int height) {
         BufferedImage image = null;
         JEditorPane pane = new JEditorPane();
-        //Font fontT = new Font("Ubuntu",Font.PLAIN,10);
+        Font fontT = new Font("Tahoma",Font.PLAIN,10);
         Kit kit = new Kit();
         pane.setEditorKit(kit);
         pane.setEditable(false);
@@ -33,7 +33,7 @@ public abstract class WebImage
         try {
             //pane.setPage(src);
             //pane.putClientProperty(JEditorPane.HONOR_DISPLAY_PROPERTIES, Boolean.TRUE);
-            //pane.setFont(fontT);
+            pane.setFont(fontT);
             pane.setContentType("text/html; charset=UTF-8"); //new
             pane.setText(src);
             image = new BufferedImage
