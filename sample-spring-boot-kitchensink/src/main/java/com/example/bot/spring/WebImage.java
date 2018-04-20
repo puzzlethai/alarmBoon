@@ -53,7 +53,7 @@ public abstract class WebImage
         } catch (Exception e) {
             // System.out.println(e);
             e.printStackTrace();
-            log.info("InputStream error", e);
+            //log.info("InputStream error", e);
         }
         return image;
     }
