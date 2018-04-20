@@ -1,7 +1,7 @@
 package com.example.bot.spring;
 
 //Class that Converts the web page to Image
-//import lombok.extern.slf4j.Slf4j;
+import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -11,7 +11,7 @@ import java.io.FileInputStream;
 import javax.swing.*;
 import javax.swing.text.*;
 import javax.swing.text.html.*;
-//@Slf4j
+@Slf4j
 public abstract class WebImage
 {
     static class Kit extends HTMLEditorKit
@@ -59,7 +59,7 @@ public abstract class WebImage
         } catch (Exception e) {
             // System.out.println(e);
             e.printStackTrace();
-            //log.info("InputStream error", e);
+            log.info("InputStream error", e);
         }
         return image;
     }
