@@ -30,7 +30,7 @@ public abstract class WebImage
                 .path(path).build()
                 .toUriString();
     }
-    public static BufferedImage create
+    public  BufferedImage create
             (String src, int width, int height) {
         BufferedImage image = null;
         JEditorPane pane = new JEditorPane();
@@ -41,9 +41,8 @@ public abstract class WebImage
         pane.setEditable(false);
         pane.setMargin(new Insets(0,0,0,0));
         try {
-         /*   String fontUrl = createUri("static/THKrub.ttf");
-            FileInputStream fis = new FileInputStream( fontUrl);*/
-            FileInputStream fis = new FileInputStream( "THKrub.ttf");
+            String fontUrl = createUri("/static/buttons/THKrub.ttf");
+            FileInputStream fis = new FileInputStream( fontUrl);
             Font fontT = Font.createFont(Font.TRUETYPE_FONT, fis);
             //pane.setPage(src);
             //pane.putClientProperty(JEditorPane.HONOR_DISPLAY_PROPERTIES, Boolean.TRUE);
