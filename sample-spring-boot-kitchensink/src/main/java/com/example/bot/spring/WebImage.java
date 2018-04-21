@@ -49,6 +49,8 @@ public abstract class WebImage
             ClassPathResource classPathResource = new ClassPathResource("/static/buttons/THKrub.ttf");
             InputStream inputStream = classPathResource.getInputStream();
             Font fontT = Font.createFont(Font.TRUETYPE_FONT, inputStream);
+            fontT = fontT.deriveFont ( Font.BOLD, 30f );
+
             //pane.setPage(src);
             //pane.putClientProperty(JEditorPane.HONOR_DISPLAY_PROPERTIES, Boolean.TRUE);
             pane.setFont(fontT);
