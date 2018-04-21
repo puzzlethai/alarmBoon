@@ -30,7 +30,7 @@ public abstract class WebImage
                 .path(path).build()
                 .toUriString();
     }
-    public  BufferedImage create
+    public static BufferedImage create
             (String src, int width, int height) {
         BufferedImage image = null;
         JEditorPane pane = new JEditorPane();
