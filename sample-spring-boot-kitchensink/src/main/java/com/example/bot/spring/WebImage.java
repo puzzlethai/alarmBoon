@@ -3,11 +3,13 @@ package com.example.bot.spring;
 //Class that Converts the web page to Image
 import lombok.extern.slf4j.Slf4j;
 
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.awt.*;
 import java.awt.image.*;
 import java.io.FileInputStream;
+import java.io.InputStream;
 import javax.swing.*;
 import javax.swing.text.*;
 import javax.swing.text.html.*;
@@ -41,9 +43,12 @@ public abstract class WebImage
         pane.setEditable(false);
         pane.setMargin(new Insets(0,0,0,0));
         try {
-            String fontUrl = createUri("/static/buttons/THKrub.ttf");
+/*            String fontUrl = createUri("/static/buttons/THKrub.ttf");
             FileInputStream fis = new FileInputStream( fontUrl);
-            Font fontT = Font.createFont(Font.TRUETYPE_FONT, fis);
+            Font fontT = Font.createFont(Font.TRUETYPE_FONT, fis)*/;
+            ClassPathResource classPathResource = new ClassPathResource("/static/buttons/THKrub.ttf");
+            InputStream inputStream = classPathResource.getInputStream();
+            Font fontT = Font.createFont(Font.TRUETYPE_FONT, inputStream);
             //pane.setPage(src);
             //pane.putClientProperty(JEditorPane.HONOR_DISPLAY_PROPERTIES, Boolean.TRUE);
             pane.setFont(fontT);
@@ -59,7 +64,7 @@ public abstract class WebImage
         } catch (Exception e) {
             // System.out.println(e);
             e.printStackTrace();
-            log.info("InputStream error", e);
+            log.info("InputStream error", e.getMessage());
         }
         return image;
     }
