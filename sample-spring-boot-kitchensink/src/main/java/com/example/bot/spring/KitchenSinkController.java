@@ -40,6 +40,9 @@ import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.ApplicationListener;
 import org.springframework.scheduling.annotation.Scheduled; //Just Add
 import org.springframework.stereotype.Component; // Just Add
+import org.springframework.web.context.request.RequestAttributes;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.google.common.io.ByteStreams;
@@ -97,6 +100,7 @@ import com.example.bot.spring.Customer;
 import com.example.bot.spring.CustomerRepository;
 
 import javax.imageio.ImageIO;
+import javax.servlet.http.HttpServletRequest;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Unmarshaller;
 
@@ -705,6 +709,20 @@ public class KitchenSinkController {
     }
 
     private static String createUri(String path) {
+        try {
+            RequestAttributes reqAttr = RequestContextHolder.currentRequestAttributes();
+
+            if (reqAttr instanceof ServletRequestAttributes) {
+
+                return ServletUriComponentsBuilder.fromCurrentContextPath()
+                        .path(path).build()
+                        .toUriString();
+
+            }
+        } catch (IllegalStateException e) {
+            log.info("Unable to obtain request context user via RequestContextHolder.", e);
+            RequestContextHolder.resetRequestAttributes();
+        }
         return ServletUriComponentsBuilder.fromCurrentContextPath()
                                           .path(path).build()
                                           .toUriString();
