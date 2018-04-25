@@ -626,7 +626,7 @@ public class KitchenSinkController {
 
                 String html = tempStr.toString();*/
                 String html = "<!DOCTYPE html>\n" +
-                        "<html lang=\"en\">\n" +
+                        "<html lang=\"th\">\n" +
                         "<head>\n" +
                         "    <meta charset=\"UTF-8\">\n" +
                         "    <title>Test alarmboon</title>\n" +
