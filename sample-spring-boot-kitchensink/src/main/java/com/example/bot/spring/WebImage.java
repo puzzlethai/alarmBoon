@@ -36,13 +36,15 @@ public abstract class WebImage
             (String src, int width, int height) {
         BufferedImage image = null;
         JEditorPane pane = new JEditorPane();
-         // = new Font("Tahoma",Font.PLAIN,10);
+         Font fontT = new Font("Tahoma",Font.PLAIN,20);
 
         Kit kit = new Kit();
         pane.setEditorKit(kit);
         pane.setEditable(false);
         pane.setMargin(new Insets(0,0,0,0));
         try {
+            String bodyRule2 = "@charset \"UTF-8\";";
+            ((HTMLDocument)pane.getDocument()).getStyleSheet().addRule(bodyRule2);
 /*            String fontUrl = createUri("/static/buttons/THKrub.ttf");
             FileInputStream fis = new FileInputStream( fontUrl);
             Font fontT = Font.createFont(Font.TRUETYPE_FONT, fis)*/;
@@ -55,13 +57,12 @@ public abstract class WebImage
             //pane.putClientProperty(JEditorPane.HONOR_DISPLAY_PROPERTIES, Boolean.TRUE);
 /*            Font fontT = UIManager.getFont("Label.font");
             pane.setFont(fontT);*/
-/*            String bodyRule = "body { font-family: " + fontT.getFamily() + "; " +
-                    "font-size: " + fontT.getSize() + "pt; }";*/
+            String bodyRule = "body { font-family: " + fontT.getFamily() + "; " +
+                    "font-size: " + fontT.getSize() + "pt; }";
 
-           String bodyRule = "body { font-family: Tahoma; font-size: 20pt; }";
+   /*        String bodyRule = "body { font-family: Tahoma; font-size: 20pt; }";*/
             ((HTMLDocument)pane.getDocument()).getStyleSheet().addRule(bodyRule);
-            String bodyRule2 = "@charset \"UTF-8\";";
-            ((HTMLDocument)pane.getDocument()).getStyleSheet().addRule(bodyRule2);
+
             pane.setContentType("text/html; charset=UTF-8"); //new
             pane.setText(src);
             image = new BufferedImage
