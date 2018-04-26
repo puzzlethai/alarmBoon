@@ -57,8 +57,11 @@ public abstract class WebImage
             pane.setFont(fontT);*/
 /*            String bodyRule = "body { font-family: " + fontT.getFamily() + "; " +
                     "font-size: " + fontT.getSize() + "pt; }";*/
+
            String bodyRule = "body { font-family: Loma; font-size: 20pt; }";
             ((HTMLDocument)pane.getDocument()).getStyleSheet().addRule(bodyRule);
+            String bodyRule2 = "@charset \"UTF-8\";";
+            ((HTMLDocument)pane.getDocument()).getStyleSheet().addRule(bodyRule2);
             pane.setContentType("text/html; charset=UTF-8"); //new
             pane.setText(src);
             image = new BufferedImage
