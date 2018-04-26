@@ -36,7 +36,7 @@ public abstract class WebImage
             (String src, int width, int height) {
         BufferedImage image = null;
         JEditorPane pane = new JEditorPane();
-         Font fontT = new Font("Noto Sans Thai",Font.PLAIN,20);
+         Font fontT = new Font("thai tlwg",Font.PLAIN,20);
 
         Kit kit = new Kit();
         pane.setEditorKit(kit);
