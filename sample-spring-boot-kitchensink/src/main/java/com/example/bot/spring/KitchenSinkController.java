@@ -625,10 +625,10 @@ public class KitchenSinkController {
                         "</html>");
 
                 String html = tempStr.toString();*/
-                String html = " <?xml version=\"1.0\" encoding=\"UTF-8\"?><!DOCTYPE html>\n" +
-                        "<html lang=\"th\">\n" +
+                String html = "<!DOCTYPE html>\n" +
+                        "<html lang=\"en\">\n" +
                         "<head>\n" +
-                        "    <meta charset=\"UTF-8\">\n" +
+                        "    <meta http-equiv=\"Content-type\" content=\"text/html; charset=UTF-8\">\n" +
                         "    <title>Test alarmboon</title>\n" +
                         "</head>\n" +
                         "<body>\n" +

@@ -59,7 +59,7 @@ public abstract class WebImage
             pane.setFont(fontT);*/
             String bodyRule = "body { font-family: " + fontT.getFamily() + "; " +
                     "font-size: " + fontT.getSize() + "pt; }";
-
+log.info("bodyRule : "+bodyRule);
    /*        String bodyRule = "body { font-family: Tahoma; font-size: 20pt; }";*/
             ((HTMLDocument)pane.getDocument()).getStyleSheet().addRule(bodyRule);
 
