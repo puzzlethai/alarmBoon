@@ -53,11 +53,11 @@ public abstract class WebImage
 
             //pane.setPage(src);
             //pane.putClientProperty(JEditorPane.HONOR_DISPLAY_PROPERTIES, Boolean.TRUE);
-            Font fontT = UIManager.getFont("Label.font");
-            pane.setFont(fontT);
-            String bodyRule = "body { font-family: " + fontT.getFamily() + "; " +
-                    "font-size: " + fontT.getSize() + "pt; }";
-/*            String bodyRule = "body { font-family: Lucida Sans Unicode; font-size: 20pt; }";*/
+/*            Font fontT = UIManager.getFont("Label.font");
+            pane.setFont(fontT);*/
+/*            String bodyRule = "body { font-family: " + fontT.getFamily() + "; " +
+                    "font-size: " + fontT.getSize() + "pt; }";*/
+           String bodyRule = "body { font-family: Loma; font-size: 20pt; }";
             ((HTMLDocument)pane.getDocument()).getStyleSheet().addRule(bodyRule);
             pane.setContentType("text/html; charset=UTF-8"); //new
             pane.setText(src);
