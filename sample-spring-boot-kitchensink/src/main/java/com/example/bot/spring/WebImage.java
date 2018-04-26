@@ -58,7 +58,7 @@ public abstract class WebImage
 /*            String bodyRule = "body { font-family: " + fontT.getFamily() + "; " +
                     "font-size: " + fontT.getSize() + "pt; }";*/
 
-           String bodyRule = "body { font-family: Loma; font-size: 20pt; }";
+           String bodyRule = "body { font-family: Tahoma; font-size: 20pt; }";
             ((HTMLDocument)pane.getDocument()).getStyleSheet().addRule(bodyRule);
             String bodyRule2 = "@charset \"UTF-8\";";
             ((HTMLDocument)pane.getDocument()).getStyleSheet().addRule(bodyRule2);
