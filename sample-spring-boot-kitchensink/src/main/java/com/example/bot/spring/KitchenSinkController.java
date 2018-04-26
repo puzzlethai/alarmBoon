@@ -351,8 +351,7 @@ public class KitchenSinkController {
         final byte [] bytes = {'D'};
         final InputStream inputStream = new ByteArrayInputStream(bytes);
         final InputStreamReader reader = new InputStreamReader(inputStream);
-        final String encoding = reader.getEncoding();
-        return encoding;
+        return reader.getEncoding();
     }
     private void handleTextContent(String replyToken, Event event, TextMessageContent content)
             throws Exception {
@@ -946,7 +945,7 @@ public class KitchenSinkController {
                 pushText("U989982d2db82e4ec7698facb3186e0b3", "today already send ");
             }
 
-            return;
+           // return;
         }
     }
 
