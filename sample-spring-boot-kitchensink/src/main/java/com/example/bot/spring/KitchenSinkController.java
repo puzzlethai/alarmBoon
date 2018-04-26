@@ -19,7 +19,6 @@ package com.example.bot.spring;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.net.URL;
-import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -346,13 +345,6 @@ public class KitchenSinkController {
             throw new RuntimeException(e);
         }
     }
-    private static String getEncoding()
-    {
-        final byte [] bytes = {'D'};
-        final InputStream inputStream = new ByteArrayInputStream(bytes);
-        final InputStreamReader reader = new InputStreamReader(inputStream);
-        return reader.getEncoding();
-    }
     private void handleTextContent(String replyToken, Event event, TextMessageContent content)
             throws Exception {
         String text = content.getText();
@@ -615,16 +607,7 @@ public class KitchenSinkController {
             }
             case "test2": { //6-3-61
                 // String userId = event.getSource().getUserId();
-                this.replyText(
-                        replyToken,"Default Locale:   " + Locale.getDefault());
-                this.replyText(
-                        replyToken,"Default Charset:  " + Charset.defaultCharset());
-                this.replyText(
-                        replyToken,"file.encoding;    " + System.getProperty("file.encoding"));
-                this.replyText(
-                        replyToken,"sun.jnu.encoding: " + System.getProperty("sun.jnu.encoding"));
-                this.replyText(
-                        replyToken,"Default Encoding: " + getEncoding());
+
 
 
                 BufferedImage aqi = null;
@@ -643,12 +626,12 @@ public class KitchenSinkController {
 
                 String html = tempStr.toString();*/
                 String html = "<!DOCTYPE html>\n" +
-                        "<html lang=\"en\">\n" +
+                        "<html lang=\"th\">\n" +
                         "<head>\n" +
-                        "    <meta http-equiv=\"Content-type\" content=\"text/html; charset=UTF-8\">\n" +
+                        "    <meta charset=\"UTF-8\">\n" +
                         "    <title>Test alarmboon</title>\n" +
                         "</head>\n" +
-                        "<body style =\"font-family: Dialog; font-size: 20pt\">\n" +
+                        "<body>\n" +
                         "<h1>ทดสอบ อารามบุญ Test alarm</h1>\n" +
                         "</body>\n" +
                         "</html>";
@@ -945,7 +928,7 @@ public class KitchenSinkController {
                 pushText("U989982d2db82e4ec7698facb3186e0b3", "today already send ");
             }
 
-           // return;
+            return;
         }
     }
 
