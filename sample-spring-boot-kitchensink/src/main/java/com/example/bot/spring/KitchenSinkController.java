@@ -625,7 +625,7 @@ public class KitchenSinkController {
                         "</html>");
 
                 String html = tempStr.toString();*/
-                String html = "<!DOCTYPE html>\n" +
+                String html = " <?xml version=\"1.0\" encoding=\"UTF-8\"?><!DOCTYPE html>\n" +
                         "<html lang=\"th\">\n" +
                         "<head>\n" +
                         "    <meta charset=\"UTF-8\">\n" +
