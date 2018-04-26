@@ -346,7 +346,7 @@ public class KitchenSinkController {
             throw new RuntimeException(e);
         }
     }
-    public static String getEncoding()
+    private static String getEncoding()
     {
         final byte [] bytes = {'D'};
         final InputStream inputStream = new ByteArrayInputStream(bytes);
