@@ -631,7 +631,7 @@ public class KitchenSinkController {
                         "    <meta http-equiv=\"Content-type\" content=\"text/html; charset=UTF-8\">\n" +
                         "    <title>Test alarmboon</title>\n" +
                         "</head>\n" +
-                        "<body>\n" +
+                        "<body style =\"font-family: Dialog; font-size: 20pt\">\n" +
                         "<h1>ทดสอบ อารามบุญ Test alarm</h1>\n" +
                         "</body>\n" +
                         "</html>";
