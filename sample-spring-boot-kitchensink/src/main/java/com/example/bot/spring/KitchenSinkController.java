@@ -19,6 +19,7 @@ package com.example.bot.spring;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.net.URL;
+import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -345,6 +346,14 @@ public class KitchenSinkController {
             throw new RuntimeException(e);
         }
     }
+    public static String getEncoding()
+    {
+        final byte [] bytes = {'D'};
+        final InputStream inputStream = new ByteArrayInputStream(bytes);
+        final InputStreamReader reader = new InputStreamReader(inputStream);
+        final String encoding = reader.getEncoding();
+        return encoding;
+    }
     private void handleTextContent(String replyToken, Event event, TextMessageContent content)
             throws Exception {
         String text = content.getText();
@@ -607,7 +616,16 @@ public class KitchenSinkController {
             }
             case "test2": { //6-3-61
                 // String userId = event.getSource().getUserId();
-
+                this.replyText(
+                        replyToken,"Default Locale:   " + Locale.getDefault());
+                this.replyText(
+                        replyToken,"Default Charset:  " + Charset.defaultCharset());
+                this.replyText(
+                        replyToken,"file.encoding;    " + System.getProperty("file.encoding"));
+                this.replyText(
+                        replyToken,"sun.jnu.encoding: " + System.getProperty("sun.jnu.encoding"));
+                this.replyText(
+                        replyToken,"Default Encoding: " + getEncoding());
 
 
                 BufferedImage aqi = null;
