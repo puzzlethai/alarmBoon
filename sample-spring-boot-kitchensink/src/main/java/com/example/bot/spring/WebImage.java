@@ -46,18 +46,18 @@ public abstract class WebImage
 /*            String fontUrl = createUri("/static/buttons/THKrub.ttf");
             FileInputStream fis = new FileInputStream( fontUrl);
             Font fontT = Font.createFont(Font.TRUETYPE_FONT, fis)*/;
-            ClassPathResource classPathResource = new ClassPathResource("/static/buttons/THKrub.ttf");
+/*            ClassPathResource classPathResource = new ClassPathResource("/static/buttons/THKrub.ttf");
             InputStream inputStream = classPathResource.getInputStream();
             Font fontT = Font.createFont(Font.TRUETYPE_FONT, inputStream);
-            fontT = fontT.deriveFont ( Font.PLAIN, 30f );
+            fontT = fontT.deriveFont ( Font.PLAIN, 30f );*/
 
             //pane.setPage(src);
             //pane.putClientProperty(JEditorPane.HONOR_DISPLAY_PROPERTIES, Boolean.TRUE);
-
+            Font fontT = UIManager.getFont("Label.font");
             pane.setFont(fontT);
-/*            String bodyRule = "body { font-family: " + fontT.getFamily() + "; " +
-                    "font-size: " + fontT.getSize() + "pt; }";*/
-            String bodyRule = "body { font-family: Lucida Sans Unicode; font-size: 20 pt; }";
+            String bodyRule = "body { font-family: " + fontT.getFamily() + "; " +
+                    "font-size: " + fontT.getSize() + "pt; }";
+/*            String bodyRule = "body { font-family: Lucida Sans Unicode; font-size: 20pt; }";*/
             ((HTMLDocument)pane.getDocument()).getStyleSheet().addRule(bodyRule);
             pane.setContentType("text/html; charset=UTF-8"); //new
             pane.setText(src);
