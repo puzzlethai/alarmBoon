@@ -43,8 +43,8 @@ public abstract class WebImage
         pane.setEditable(false);
         pane.setMargin(new Insets(0,0,0,0));
         try {
-            String bodyRule2 = "@charset \"UTF-8\";";
-            ((HTMLDocument)pane.getDocument()).getStyleSheet().addRule(bodyRule2);
+/*            String bodyRule2 = "@charset \"UTF-8\";";
+            ((HTMLDocument)pane.getDocument()).getStyleSheet().addRule(bodyRule2);*/
 /*            String fontUrl = createUri("/static/buttons/THKrub.ttf");
             FileInputStream fis = new FileInputStream( fontUrl);
             Font fontT = Font.createFont(Font.TRUETYPE_FONT, fis)*/;
@@ -64,7 +64,7 @@ public abstract class WebImage
             log.info("bodyRule : "+bodyRule);
             ((HTMLDocument)pane.getDocument()).getStyleSheet().addRule(bodyRule);
 
-            pane.setContentType("text/html; charset=UTF-8"); //new
+           // pane.setContentType("text/html; charset=UTF-8"); //new
             pane.setText(src);
             image = new BufferedImage
                     (width, height, BufferedImage.TYPE_INT_RGB);
