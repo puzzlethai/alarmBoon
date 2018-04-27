@@ -625,13 +625,12 @@ public class KitchenSinkController {
                         "</html>");
 
                 String html = tempStr.toString();*/
-                String html = "<!DOCTYPE html>\n" +
-                        "<html lang=\"th\">\n" +
+                String html = "<html lang=\"en\">\n" +
                         "<head>\n" +
-                        "    <meta charset=\"UTF-8\">\n" +
+                        "    <meta http-equiv=\"Content-type\" content=\"text/html; charset=UTF-8\">\n" +
                         "    <title>Test alarmboon</title>\n" +
                         "</head>\n" +
-                        "<body>\n" +
+                        "<body style =\"font-family: Lucida Sans; font-size: 10pt\">\n" +
                         "<h1>ทดสอบ อารามบุญ Test alarm</h1>\n" +
                         "</body>\n" +
                         "</html>";
