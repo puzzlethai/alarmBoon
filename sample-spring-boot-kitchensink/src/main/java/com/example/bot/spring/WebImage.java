@@ -36,7 +36,7 @@ public abstract class WebImage
             (String src, int width, int height) {
         BufferedImage image = null;
         JEditorPane pane = new JEditorPane();
-         Font fontT = new Font("Lucida Sans",Font.PLAIN,20);
+         Font fontT = new Font("sansserif",Font.PLAIN,20);
 
         Kit kit = new Kit();
         pane.setEditorKit(kit);
@@ -60,7 +60,7 @@ public abstract class WebImage
 /*            String bodyRule = "body { font-family: " + fontT.getFamily() + "; " +
                     "font-size: " + fontT.getSize() + "pt; }"; */
 
-           String bodyRule = "body { font-family:Lucida Sans; font-size: 20pt; }";
+           String bodyRule = "body { font-family:sansserif; font-size: 20pt; }"; //sansserif
             log.info("bodyRule : "+bodyRule);
             ((HTMLDocument)pane.getDocument()).getStyleSheet().addRule(bodyRule);
 
