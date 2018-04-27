@@ -58,9 +58,10 @@ public abstract class WebImage
 /*            Font fontT = UIManager.getFont("Label.font");*/
             pane.setFont(fontT);
 /*            String bodyRule = "body { font-family: " + fontT.getFamily() + "; " +
-                    "font-size: " + fontT.getSize() + "pt; }";
-log.info("bodyRule : "+bodyRule);*/
+                    "font-size: " + fontT.getSize() + "pt; }"; */
+
            String bodyRule = "body { font-family:Lucida Sans; font-size: 20pt; }";
+            log.info("bodyRule : "+bodyRule);
             ((HTMLDocument)pane.getDocument()).getStyleSheet().addRule(bodyRule);
 
             pane.setContentType("text/html; charset=UTF-8"); //new
