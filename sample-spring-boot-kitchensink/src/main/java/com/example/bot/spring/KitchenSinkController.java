@@ -739,7 +739,7 @@ public class KitchenSinkController {
         */
 
 
-        @Scheduled(initialDelay=60000, fixedRate=3600000)
+        @Scheduled(initialDelay=300000, fixedDelay=3600000)
         public void reportCurrentTime() {
 
 
