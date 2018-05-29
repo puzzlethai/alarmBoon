@@ -835,7 +835,7 @@ log.info("html : "+html);
                 }
 
             }
-            pushText("U989982d2db82e4ec7698facb3186e0b3", "In App Ready");
+           // pushText("U989982d2db82e4ec7698facb3186e0b3", "In App Ready");
             today_fm = patternFormatter.format(today);
             List<Oilchange> oilchangeDate;
             oilchangeDate = oilchangeRepository.findAll();
