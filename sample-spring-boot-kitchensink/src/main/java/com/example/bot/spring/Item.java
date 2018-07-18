@@ -21,6 +21,7 @@ public class Item {
     private String today;
 
     private String tomorrow;
+    private String yesterday;
 
     // private String designation;
     private String image;
@@ -32,11 +33,12 @@ public class Item {
     public Item() {
     }
 
-    public Item(String oilType,String today, String tomorrow, String image, String image2, String unit_th, String unit_en) {
+    public Item(String oilType,String today, String tomorrow, String yesterday, String image, String image2, String unit_th, String unit_en) {
         super();
         this.oilType = oilType;
         this.today = today;
         this.tomorrow = tomorrow;
+        this.yesterday = yesterday;
         this.image = image;
         this.image2 = image2;
         this.unit_th = unit_th;
@@ -67,6 +69,13 @@ public class Item {
         this.tomorrow = tomorrow;
     }
 
+    public String getYesterday() {
+        return yesterday;
+    }
+
+    public void setYesterday(String yesterday) {
+        this.yesterday = yesterday;
+    }
     public String getimage() {
         return image;
     }

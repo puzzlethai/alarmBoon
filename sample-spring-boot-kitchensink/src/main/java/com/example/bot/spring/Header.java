@@ -25,6 +25,9 @@ public class Header {
     @XmlElement(name = "update_date")
     private String update_date;
 
+    @XmlElement(name = "bankchak_logo")
+    private String bankchak_logo;
+
     @XmlElement(name = "price_link")
     private String price_link;
 
@@ -33,9 +36,6 @@ public class Header {
 
     @XmlElement(name = "remark_en")
     private String remark_en;
-
-    @XmlElement(name = "bankchak_logo")
-    private String bankchak_logo;
 
     @XmlElement(name = "item")
     private List<Item> items;
