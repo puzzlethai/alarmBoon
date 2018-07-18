@@ -55,7 +55,6 @@ import javax.imageio.ImageIO;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Unmarshaller;
 
-import static com.example.bot.spring.KitchenSinkController.tomorrow_fm;
 @Slf4j
 @SpringBootApplication
 // @EnableScheduling
@@ -70,6 +69,7 @@ public class KitchenSinkApplication {
     private DomainRepository domainRepository;
     @Autowired
     private OilchangeRepository oilchangeRepository;
+    public static String tomorrow_fm = "Start";
     public static String today_fm = "begin";
     public static void main(String[] args) throws IOException {
         downloadedContentDir = Files.createTempDirectory("line-bot");
