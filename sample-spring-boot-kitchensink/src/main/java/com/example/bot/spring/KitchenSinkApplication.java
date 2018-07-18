@@ -75,10 +75,15 @@ public class KitchenSinkApplication {
         downloadedContentDir = Files.createTempDirectory("line-bot");
         SpringApplication.run(KitchenSinkApplication.class, args);
     }
-    private static KitchenSinkController.DownloadedContent saveImage(String ext, BufferedImage bfimage) {
+    @Value
+    public static class DownloadedContent {
+        Path path;
+        String uri;
+    }
+    private static DownloadedContent saveImage(String ext, BufferedImage bfimage) {
 
 
-        KitchenSinkController.DownloadedContent tempFile = createTempFile(ext);
+        DownloadedContent tempFile = createTempFile(ext);
         try (OutputStream outputStream = Files.newOutputStream(tempFile.path)) {
             ByteArrayOutputStream os = new ByteArrayOutputStream();
             ImageIO.write(bfimage, ext, os);
@@ -90,11 +95,11 @@ public class KitchenSinkApplication {
             throw new UncheckedIOException(e);
         }
     }
-    private static KitchenSinkController.DownloadedContent createTempFile(String ext) {
+    private static DownloadedContent createTempFile(String ext) {
         String fileName = LocalDateTime.now().toString() + '-' + UUID.randomUUID().toString() + '.' + ext;
         Path tempFile = KitchenSinkApplication.downloadedContentDir.resolve(fileName);
         tempFile.toFile().deleteOnExit();
-        return new KitchenSinkController.DownloadedContent(tempFile, createUri("/downloaded/" + tempFile.getFileName()));
+        return new DownloadedContent(tempFile, createUri("/downloaded/" + tempFile.getFileName()));
     }
     private static String createUri(String path) {
         try {
@@ -129,11 +134,7 @@ public class KitchenSinkApplication {
             Thread.currentThread().interrupt();
         }
     }
-    @Value
-    public static class DownloadedContent {
-        Path path;
-        String uri;
-    }
+
     @Component
     public class ApplicationStartup
             implements ApplicationListener<ApplicationReadyEvent> {
@@ -265,8 +266,8 @@ public class KitchenSinkApplication {
                             pushText("U989982d2db82e4ec7698facb3186e0b3", "error with create img"+e.getMessage());
                             e.printStackTrace();
                         }
-                        KitchenSinkController.DownloadedContent jpg = saveImage("png", ire);
-                        KitchenSinkController.DownloadedContent previewImg = createTempFile("png"); //
+                        DownloadedContent jpg = saveImage("png", ire);
+                        DownloadedContent previewImg = createTempFile("png"); //
 
                         system(
                                 "convert",
