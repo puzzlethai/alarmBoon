@@ -326,7 +326,6 @@ public class KitchenSinkApplication {
                 pushText("U989982d2db82e4ec7698facb3186e0b3", "today already send ");
             }
 
-            return;
         }
     }
 
