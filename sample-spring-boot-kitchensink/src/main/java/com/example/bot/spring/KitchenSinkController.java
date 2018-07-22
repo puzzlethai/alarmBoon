@@ -25,6 +25,7 @@ import java.nio.file.Path;
 // import java.text.SimpleDateFormat; //Just Add
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.time.LocalDateTime;
@@ -773,7 +774,10 @@ log.info("html : "+html);
         }
     }
     private static DownloadedContent createTempFile(String ext) {
-        String fileName = LocalDateTime.now().toString() + '-' + UUID.randomUUID().toString() + '.' + ext;
+        LocalDateTime ldt = LocalDateTime.now();
+        ZoneId singaporeZoneId = ZoneId.of("Asia/Singapore");
+        ZonedDateTime asiaZonedDateTime = ldt.atZone(singaporeZoneId);
+        String fileName = asiaZonedDateTime.toString() + '-' + UUID.randomUUID().toString() + '.' + ext;
 
         //Path tempFile = KitchenSinkApplication.downloadedContentDir.resolve(fileName);
         try {
