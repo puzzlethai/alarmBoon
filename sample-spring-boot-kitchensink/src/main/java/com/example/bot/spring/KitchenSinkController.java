@@ -783,7 +783,7 @@ log.info("html : "+html);
         }
         Path tempFile = downloadedDir.resolve(fileName);
         tempFile.toFile().deleteOnExit();
-        return new DownloadedContent(tempFile, createUri("/downloaded/" + tempFile.getFileName()));
+        return new DownloadedContent(tempFile, "https://alarmboon.herokuapp.com/downloaded/" + tempFile.getFileName());
     }
 
     @Value
