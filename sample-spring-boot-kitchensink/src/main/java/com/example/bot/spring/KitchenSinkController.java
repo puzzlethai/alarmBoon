@@ -773,7 +773,7 @@ log.info("html : "+html);
         }
     }
     private static DownloadedContent createTempFile(String ext) {
-        ZoneId singaporeZoneId = ZoneId.of("Asia/Singapore");
+/*        ZoneId singaporeZoneId = ZoneId.of("Asia/Singapore");
         String fileName = LocalDateTime.now(singaporeZoneId ).toString() + '-' + UUID.randomUUID().toString() + '.' + ext;
 
         //Path tempFile = KitchenSinkApplication.downloadedContentDir.resolve(fileName);
@@ -784,13 +784,21 @@ log.info("html : "+html);
         }
         Path tempFile = downloadedDir.resolve(fileName);
         tempFile.toFile().deleteOnExit();
-        return new DownloadedContent(tempFile, "https://alarmboon.herokuapp.com/downloaded/" + tempFile.getFileName());
+        return new DownloadedContent(tempFile, "https://alarmboon.herokuapp.com/downloaded/" + tempFile.getFileName());*/
+        String fileName = LocalDateTime.now().toString() + '-' + UUID.randomUUID().toString() + '.' + ext;
+        Path tempFile = KitchenSinkApplication.downloadedContentDir.resolve(fileName);
+        tempFile.toFile().deleteOnExit();
+        String tempUri = createUri(new StringBuilder().append("/downloaded/").append(tempFile.getFileName()).toString());
+
+        return new DownloadedContent(tempFile, tempUri);
+
     }
 
     @Value
     public static class DownloadedContent {
         Path path;
         String uri;
+
     }
 
     @Component
