@@ -784,13 +784,13 @@ log.info("html : "+html);
         }
         Path tempFile = downloadedDir.resolve(fileName);
         tempFile.toFile().deleteOnExit();
-        return new DownloadedContent(tempFile, "https://alarmboon.herokuapp.com/downloaded/" + tempFile.getFileName());*/
+        return new DownloadedContent(tempFile, "https://alarmboon.herokuapp.com/tmp/line-bot/" + tempFile.getFileName());*/
         String fileName = LocalDateTime.now().toString() + '-' + UUID.randomUUID().toString() + '.' + ext;
         Path tempFile = KitchenSinkApplication.downloadedContentDir.resolve(fileName);
         tempFile.toFile().deleteOnExit();
-        String tempUri = createUri(new StringBuilder().append("/downloaded/").append(tempFile.getFileName()).toString());
 
-        return new DownloadedContent(tempFile, tempUri);
+
+        return new DownloadedContent(tempFile, "https://alarmboon.herokuapp.com/tmp/line-bot/" + tempFile.getFileName());
 
     }
 
