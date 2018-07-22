@@ -107,6 +107,7 @@ import javax.xml.bind.Unmarshaller;
 @Slf4j
 @LineMessageHandler
 public class KitchenSinkController {
+    static Path downloadedDir;
     private static String tomorrow_fm = "Start";
     private static String today_fm = "begin";
     @Autowired
@@ -772,12 +773,7 @@ log.info("html : "+html);
     }
     private static DownloadedContent createTempFile(String ext) {
         String fileName = LocalDateTime.now().toString() + '-' + UUID.randomUUID().toString() + '.' + ext;
-        Path downloadedDir = null;
-        try {
-            downloadedDir = Files.createTempDirectory("line-bot");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+
         //Path tempFile = KitchenSinkApplication.downloadedContentDir.resolve(fileName);
         Path tempFile = downloadedDir.resolve(fileName);
         tempFile.toFile().deleteOnExit();
