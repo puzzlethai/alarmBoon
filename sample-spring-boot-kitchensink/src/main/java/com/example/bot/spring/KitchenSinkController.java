@@ -538,7 +538,7 @@ public class KitchenSinkController {
                                         "-resize", "240x",
                                         jpg.path.toString(),
                                         previewImg.path.toString());
-                            oilPriceImg = new ImageMessage(jpg.getUri(), jpg.getUri());
+                            oilPriceImg = new ImageMessage(jpg.getUri(), previewImg.uri);
                             try {
                                 List<Customer> customers = customerRepository.findAll();
                                 Set<String> setUserId = new HashSet<String>();
@@ -652,7 +652,7 @@ log.info("html : "+html);
                         "-resize", "240x",
                         jpg.path.toString(),
                         previewImg.path.toString());
-                            oilPriceImg = new ImageMessage(jpg.getUri(), jpg.getUri());
+                            oilPriceImg = new ImageMessage(jpg.getUri(), previewImg.uri);
 
 
 
@@ -891,7 +891,7 @@ log.info("html : "+html);
                                 jpg.path.toString(),
                                 previewImg.path.toString());
                         pushText("U989982d2db82e4ec7698facb3186e0b3", "หลัง System");
-                        oilPriceImg = new ImageMessage(jpg.getUri(), jpg.getUri());
+                        oilPriceImg = new ImageMessage(jpg.getUri(), previewImg.uri);
                         pushText("U989982d2db82e4ec7698facb3186e0b3", "หลัง newImage");
                         try {
                             List<Customer> customers = customerRepository.findAll();
