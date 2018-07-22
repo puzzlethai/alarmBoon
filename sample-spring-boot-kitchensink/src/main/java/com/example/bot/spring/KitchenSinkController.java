@@ -861,23 +861,28 @@ log.info("html : "+html);
                         pushText("U989982d2db82e4ec7698facb3186e0b3", "ราคาน้ำมันเท่าเดิม");
                     } else {
                         try {
+                            pushText("U989982d2db82e4ec7698facb3186e0b3", "ก่อน WebImage");
                             ire = WebImage.create(oilprice.showHTML(), 533, 740);
-
+                            pushText("U989982d2db82e4ec7698facb3186e0b3", "หลัง WebImage");
 
 
                         } catch (Exception e) {
                             pushText("U989982d2db82e4ec7698facb3186e0b3", "error with create img"+e.getMessage());
                             e.printStackTrace();
                         }
+                        pushText("U989982d2db82e4ec7698facb3186e0b3", "ก่อน SaveImage");
                         DownloadedContent jpg = saveImage("png", ire);
+                        pushText("U989982d2db82e4ec7698facb3186e0b3", "หลัง SaveImage");
                         DownloadedContent previewImg = createTempFile("png"); //
-
+                        pushText("U989982d2db82e4ec7698facb3186e0b3", "หลัง creatTempFIle");
                         system(
                                 "convert",
                                 "-resize", "240x",
                                 jpg.path.toString(),
                                 previewImg.path.toString());
+                        pushText("U989982d2db82e4ec7698facb3186e0b3", "หลัง System");
                         oilPriceImg = new ImageMessage(jpg.getUri(), jpg.getUri());
+                        pushText("U989982d2db82e4ec7698facb3186e0b3", "หลัง newImage");
                         try {
                             List<Customer> customers = customerRepository.findAll();
                             Set<String> setUserId = new HashSet<String>();
