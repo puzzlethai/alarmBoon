@@ -474,6 +474,7 @@ public class KitchenSinkController {
             }
             case "image_carousel": {
                 String imageUrl = createUri("/static/buttons/1040.jpg");
+                this.pushText("U989982d2db82e4ec7698facb3186e0b3", imageUrl);
                 ImageCarouselTemplate imageCarouselTemplate = new ImageCarouselTemplate(
                         Arrays.asList(
                                 new ImageCarouselColumn(imageUrl,
