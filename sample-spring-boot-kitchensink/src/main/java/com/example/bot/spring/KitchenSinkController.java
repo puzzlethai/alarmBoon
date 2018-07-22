@@ -772,7 +772,14 @@ log.info("html : "+html);
     }
     private static DownloadedContent createTempFile(String ext) {
         String fileName = LocalDateTime.now().toString() + '-' + UUID.randomUUID().toString() + '.' + ext;
-        Path tempFile = KitchenSinkApplication.downloadedContentDir.resolve(fileName);
+        Path downloadedContentDir = null;
+        try {
+            downloadedContentDir = Files.createTempDirectory("line-bot");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        //Path tempFile = KitchenSinkApplication.downloadedContentDir.resolve(fileName);
+        Path tempFile = downloadedContentDir.resolve(fileName);
         tempFile.toFile().deleteOnExit();
         return new DownloadedContent(tempFile, createUri("/downloaded/" + tempFile.getFileName()));
     }
