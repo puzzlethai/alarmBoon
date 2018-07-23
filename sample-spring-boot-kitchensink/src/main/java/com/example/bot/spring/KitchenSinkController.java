@@ -773,6 +773,11 @@ log.info("html : "+html);
     }
     private static DownloadedContent createTempFile(String ext) {
         String fileName = LocalDateTime.now().toString() + '-' + UUID.randomUUID().toString() + '.' + ext;
+        try {
+            KitchenSinkApplication.downloadedContentDir = Files.createTempDirectory("line-bot");
+        } catch (IOException e) {
+            log.info("Ozone : ",e);
+        }
         Path tempFile = KitchenSinkApplication.downloadedContentDir.resolve(fileName);
         tempFile.toFile().deleteOnExit();
         return new DownloadedContent(tempFile, createUri("/downloaded/" + tempFile.getFileName()));
