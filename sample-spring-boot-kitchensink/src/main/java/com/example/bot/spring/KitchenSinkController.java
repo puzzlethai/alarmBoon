@@ -23,7 +23,6 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 // import java.text.SimpleDateFormat; //Just Add
-import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
@@ -473,7 +472,7 @@ public class KitchenSinkController {
                 break;
             }
             case "image_carousel": {
-                String imageUrl = createUri("/static/static/THKrub.ttf");
+                String imageUrl = createUri("/static/buttons/1040.jpg");
                 ImageCarouselTemplate imageCarouselTemplate = new ImageCarouselTemplate(
                         Arrays.asList(
                                 new ImageCarouselColumn(imageUrl,
@@ -517,7 +516,7 @@ public class KitchenSinkController {
                         Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
 
                         Header oilprice = (Header) unmarshaller.unmarshal(inputStream);
-                        if (!oilprice.isSame()) {
+                        if (oilprice.isSame()) {
                             this.pushText("U989982d2db82e4ec7698facb3186e0b3", "ราคาน้ำมันเท่าเดิม");
                         } else {
                             try {
@@ -531,13 +530,12 @@ public class KitchenSinkController {
                             }
                             DownloadedContent jpg = saveImage("png", ire);
                             DownloadedContent previewImg = createTempFile("png"); //
-                            this.pushText("U989982d2db82e4ec7698facb3186e0b3", jpg.path.toString());
+
                                 system(
                                         "convert",
                                         "-resize", "240x",
                                         jpg.path.toString(),
                                         previewImg.path.toString());
-                            this.pushText("U989982d2db82e4ec7698facb3186e0b3", jpg.getUri());
                             oilPriceImg = new ImageMessage(jpg.getUri(), jpg.getUri());
                             try {
                                 List<Customer> customers = customerRepository.findAll();
@@ -779,22 +777,6 @@ log.info("html : "+html);
         return new DownloadedContent(tempFile, createUri("/downloaded/" + tempFile.getFileName()));
     }
 
-    private static DownloadedContent  saveOilPriceFile(String ext, BufferedImage bfimage) {
-        String fileName = "/static/buttons/oilPriceFull.png";
-        Path tempPath = Paths.get(fileName);
-        Path tempFile = tempPath.resolve(tempPath);
-        try (OutputStream outputStream = Files.newOutputStream(tempFile)) {
-            ByteArrayOutputStream os = new ByteArrayOutputStream();
-            ImageIO.write(bfimage, ext, os);
-            InputStream is = new ByteArrayInputStream(os.toByteArray());
-            ByteStreams.copy(is, outputStream);
-            log.info("Saved {}: {}", ext, tempFile);
-            return new DownloadedContent(tempFile, createUri("/static/buttons/oilPriceFull.png"));
-        } catch (IOException e) {
-            throw new UncheckedIOException(e);
-        }
-    }
-
     @Value
     public static class DownloadedContent {
         Path path;
@@ -887,16 +869,15 @@ log.info("html : "+html);
                             pushText("U989982d2db82e4ec7698facb3186e0b3", "error with create img"+e.getMessage());
                             e.printStackTrace();
                         }
+                        DownloadedContent jpg = saveImage("png", ire);
+                        DownloadedContent previewImg = createTempFile("png"); //
 
-                        DownloadedContent jpg = saveOilPriceFile("png", ire);
-
-/*                        system(
+                        system(
                                 "convert",
                                 "-resize", "240x",
                                 jpg.path.toString(),
-                                previewImg.path.toString());*/
+                                previewImg.path.toString());
                         oilPriceImg = new ImageMessage(jpg.getUri(), jpg.getUri());
-
                         try {
                             List<Customer> customers = customerRepository.findAll();
                             Set<String> setUserId = new HashSet<String>();
