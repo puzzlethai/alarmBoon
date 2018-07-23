@@ -530,12 +530,13 @@ public class KitchenSinkController {
                             }
                             DownloadedContent jpg = saveImage("png", ire);
                             DownloadedContent previewImg = createTempFile("png"); //
-
+                            this.pushText("U989982d2db82e4ec7698facb3186e0b3", jpg.path.toString());
                                 system(
                                         "convert",
                                         "-resize", "240x",
                                         jpg.path.toString(),
                                         previewImg.path.toString());
+                            this.pushText("U989982d2db82e4ec7698facb3186e0b3", jpg.getUri());
                             oilPriceImg = new ImageMessage(jpg.getUri(), jpg.getUri());
                             try {
                                 List<Customer> customers = customerRepository.findAll();
