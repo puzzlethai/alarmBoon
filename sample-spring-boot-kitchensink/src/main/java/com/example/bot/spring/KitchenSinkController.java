@@ -23,6 +23,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 // import java.text.SimpleDateFormat; //Just Add
+import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
@@ -773,16 +774,31 @@ log.info("html : "+html);
     }
     private static DownloadedContent createTempFile(String ext) {
         String fileName = LocalDateTime.now().toString() + '-' + UUID.randomUUID().toString() + '.' + ext;
-        try {
-            KitchenSinkApplication.downloadedContentDir = Files.createTempDirectory("line-bot");
-        } catch (IOException e) {
-            log.info("Ozone : ",e);
-        }
         Path tempFile = KitchenSinkApplication.downloadedContentDir.resolve(fileName);
         tempFile.toFile().deleteOnExit();
         return new DownloadedContent(tempFile, createUri("/downloaded/" + tempFile.getFileName()));
     }
 
+    private static DownloadedContent  saveOilPriceFile(String ext, BufferedImage bfimage) {
+        String fileName = "/static/buttons/oilPriceFull.png";
+        Path tempFile = Paths.get(fileName);
+        try (OutputStream outputStream = Files.newOutputStream(tempFile)) {
+            ByteArrayOutputStream os = new ByteArrayOutputStream();
+            ImageIO.write(bfimage, ext, os);
+            InputStream is = new ByteArrayInputStream(os.toByteArray());
+            ByteStreams.copy(is, outputStream);
+            log.info("Saved {}: {}", ext, tempFile);
+            return new DownloadedContent(tempFile, createUri(fileName));
+        } catch (IOException e) {
+            throw new UncheckedIOException(e);
+        }
+    }
+    private static DownloadedContent createOilPricePvFile() {
+        String fileName = "/static/buttons/oilPricePre.png";
+        Path tempFile = Paths.get(fileName);
+        tempFile.toFile().deleteOnExit();
+        return new DownloadedContent(tempFile, createUri(fileName));
+    }
     @Value
     public static class DownloadedContent {
         Path path;
@@ -875,8 +891,9 @@ log.info("html : "+html);
                             pushText("U989982d2db82e4ec7698facb3186e0b3", "error with create img"+e.getMessage());
                             e.printStackTrace();
                         }
-                        DownloadedContent jpg = saveImage("png", ire);
-                        DownloadedContent previewImg = createTempFile("png"); //
+
+                        DownloadedContent jpg = saveOilPriceFile("png", ire);
+                        DownloadedContent previewImg = createOilPricePvFile(); //
 
                         system(
                                 "convert",
@@ -884,6 +901,7 @@ log.info("html : "+html);
                                 jpg.path.toString(),
                                 previewImg.path.toString());
                         oilPriceImg = new ImageMessage(jpg.getUri(), jpg.getUri());
+
                         try {
                             List<Customer> customers = customerRepository.findAll();
                             Set<String> setUserId = new HashSet<String>();
