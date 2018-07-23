@@ -789,7 +789,7 @@ log.info("html : "+html);
             InputStream is = new ByteArrayInputStream(os.toByteArray());
             ByteStreams.copy(is, outputStream);
             log.info("Saved {}: {}", ext, tempFile);
-            return new DownloadedContent(tempFile, createUri(fileName));
+            return new DownloadedContent(tempFile, createUri("/static/buttons/oilPriceFull.png"));
         } catch (IOException e) {
             throw new UncheckedIOException(e);
         }
