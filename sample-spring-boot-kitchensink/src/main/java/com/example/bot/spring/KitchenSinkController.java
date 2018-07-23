@@ -781,7 +781,8 @@ log.info("html : "+html);
 
     private static DownloadedContent  saveOilPriceFile(String ext, BufferedImage bfimage) {
         String fileName = "/static/buttons/oilPriceFull.png";
-        Path tempFile = Paths.get(fileName);
+        Path tempPath = Paths.get(fileName);
+        Path tempFile = tempPath.resolve(tempPath);
         try (OutputStream outputStream = Files.newOutputStream(tempFile)) {
             ByteArrayOutputStream os = new ByteArrayOutputStream();
             ImageIO.write(bfimage, ext, os);
@@ -795,7 +796,8 @@ log.info("html : "+html);
     }
     private static DownloadedContent createOilPricePvFile() {
         String fileName = "/static/buttons/oilPricePre.png";
-        Path tempFile = Paths.get(fileName);
+        Path tempPath = Paths.get(fileName);
+        Path tempFile = tempPath.resolve(tempPath);
         tempFile.toFile().deleteOnExit();
         return new DownloadedContent(tempFile, createUri(fileName));
     }
