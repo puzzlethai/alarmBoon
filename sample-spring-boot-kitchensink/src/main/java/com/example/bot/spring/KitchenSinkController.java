@@ -473,7 +473,7 @@ public class KitchenSinkController {
                 break;
             }
             case "image_carousel": {
-                String imageUrl = createUri("/static/buttons/1040.jpg");
+                String imageUrl = createUri("/static/static/THKrub.ttf");
                 ImageCarouselTemplate imageCarouselTemplate = new ImageCarouselTemplate(
                         Arrays.asList(
                                 new ImageCarouselColumn(imageUrl,
@@ -794,13 +794,7 @@ log.info("html : "+html);
             throw new UncheckedIOException(e);
         }
     }
-    private static DownloadedContent createOilPricePvFile() {
-        String fileName = "/static/buttons/oilPricePre.png";
-        Path tempPath = Paths.get(fileName);
-        Path tempFile = tempPath.resolve(tempPath);
-        tempFile.toFile().deleteOnExit();
-        return new DownloadedContent(tempFile, createUri(fileName));
-    }
+
     @Value
     public static class DownloadedContent {
         Path path;
@@ -895,13 +889,12 @@ log.info("html : "+html);
                         }
 
                         DownloadedContent jpg = saveOilPriceFile("png", ire);
-                        DownloadedContent previewImg = createOilPricePvFile(); //
 
-                        system(
+/*                        system(
                                 "convert",
                                 "-resize", "240x",
                                 jpg.path.toString(),
-                                previewImg.path.toString());
+                                previewImg.path.toString());*/
                         oilPriceImg = new ImageMessage(jpg.getUri(), jpg.getUri());
 
                         try {
