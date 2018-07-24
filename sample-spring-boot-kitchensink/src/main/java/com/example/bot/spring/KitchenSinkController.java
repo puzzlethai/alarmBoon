@@ -861,7 +861,7 @@ log.info("html : "+html);
                         //DownloadedContent jpg = saveImage("png", ire);
                         //DownloadedContent previewImg = createTempFile("png"); //
 
-                        File outputfile = new File("oilPriceFull.png");
+                        File outputfile = new File("classpath:/static/oilPriceFull.png");
                         pushText("U989982d2db82e4ec7698facb3186e0b3", "Path : "+outputfile.getAbsolutePath());
                         ImageIO.write(ire, "png", outputfile);
 
@@ -885,10 +885,10 @@ log.info("html : "+html);
                                 "-resize", "240x",
                                 jpg.path.toString(),
                                 previewImg.path.toString());*/
-                        //oilPriceImg = new ImageMessage(jpg.getUri(), jpg.getUri());
+                        //oilPriceImg = new ImageMessage(jpg.getUri(), jpg.getUri()); */
                         oilPriceImg = new ImageMessage("https://alarmboon.herokuapp.com/oilPriceFull.png", "https://alarmboon.herokuapp.com/oilPriceFull.png");
 
-                        try {
+/*                        try {
                             List<Customer> customers = customerRepository.findAll();
                             Set<String> setUserId = new HashSet<String>();
                             if (customers.size() < 150) { // only one multicast
@@ -916,7 +916,11 @@ log.info("html : "+html);
                                     multipushImage(setUserId, oilPriceImg);
                                     setUserId.clear();
                                 }
-                            }
+                            }*/
+                            try {
+                                Set<String> setUserId = new HashSet<String>();
+                                setUserId.add("U989982d2db82e4ec7698facb3186e0b3");
+                                multipushImage(setUserId, oilPriceImg);
 
                         } catch (Exception e) {
                             pushText("U989982d2db82e4ec7698facb3186e0b3", "error with customer DB");
