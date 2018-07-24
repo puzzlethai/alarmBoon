@@ -872,8 +872,9 @@ log.info("html : "+html);
                         }
                         //DownloadedContent jpg = saveImage("png", ire);
                         //DownloadedContent previewImg = createTempFile("png"); //
-
-                        try (OutputStream outputStream = Files.newOutputStream(Paths.get("static/buttons/oilPriceFull.png"))) {
+                        Path tempFile = Paths.get( "static/buttons/oilPriceFull.png");
+                        DownloadedContent jpg = new DownloadedContent(tempFile,"https://alarmboon.herokuapp.com/buttons/oilPriceFull.png" );
+                        try (OutputStream outputStream = Files.newOutputStream(jpg.path)) {
                             ByteArrayOutputStream os = new ByteArrayOutputStream();
                             ImageIO.write(ire, "png", os);
                             InputStream is = new ByteArrayInputStream(os.toByteArray());
