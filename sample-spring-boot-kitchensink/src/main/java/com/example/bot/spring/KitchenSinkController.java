@@ -19,11 +19,9 @@ package com.example.bot.spring;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.net.URL;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 // import java.text.SimpleDateFormat; //Just Add
-import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
@@ -39,7 +37,6 @@ import com.linecorp.bot.model.message.template.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.ApplicationListener;
-import org.springframework.scheduling.annotation.Scheduled; //Just Add
 import org.springframework.stereotype.Component; // Just Add
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -73,7 +70,6 @@ import com.linecorp.bot.model.event.source.Source;
 import com.linecorp.bot.model.message.AudioMessage;
 import com.linecorp.bot.model.message.ImageMessage;
 import com.linecorp.bot.model.message.ImagemapMessage;
-import com.linecorp.bot.model.message.LocationMessage;
 import com.linecorp.bot.model.message.Message;
 import com.linecorp.bot.model.message.StickerMessage;
 import com.linecorp.bot.model.message.TemplateMessage;
@@ -91,17 +87,9 @@ import lombok.NonNull;
 import lombok.Value;
 import lombok.extern.slf4j.Slf4j;
 
-import org.slf4j.Logger;       // Just Add
-import org.slf4j.LoggerFactory; // Just Add
-
 // TestMongoDB
-import com.example.bot.spring.Domain;
-import com.example.bot.spring.DomainRepository;
-import com.example.bot.spring.Customer;
-import com.example.bot.spring.CustomerRepository;
 
 import javax.imageio.ImageIO;
-import javax.servlet.http.HttpServletRequest;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Unmarshaller;
 
@@ -873,7 +861,7 @@ log.info("html : "+html);
                         //DownloadedContent jpg = saveImage("png", ire);
                         //DownloadedContent previewImg = createTempFile("png"); //
 
-                        File outputfile = new File("oilPriceFull.png");
+                        File outputfile = new File("static/oilPriceFull.png");
                         ImageIO.write(ire, "png", outputfile);
 
 
