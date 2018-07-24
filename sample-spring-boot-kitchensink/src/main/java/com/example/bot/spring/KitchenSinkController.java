@@ -873,6 +873,7 @@ log.info("html : "+html);
                         //DownloadedContent jpg = saveImage("png", ire);
                         //DownloadedContent previewImg = createTempFile("png"); //
                         Path tempFile = Paths.get( "oilPriceFull.png");
+                        pushText("U989982d2db82e4ec7698facb3186e0b3", "Path : "+tempFile.toString());
                         DownloadedContent jpg = new DownloadedContent(tempFile,"https://alarmboon.herokuapp.com/oilPriceFull.png" );
                         try (OutputStream outputStream = Files.newOutputStream(jpg.path)) {
                             ByteArrayOutputStream os = new ByteArrayOutputStream();
