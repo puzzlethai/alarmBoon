@@ -872,8 +872,8 @@ log.info("html : "+html);
                         }*/
                         //DownloadedContent jpg = saveImage("png", ire);
                         //DownloadedContent previewImg = createTempFile("png"); //
-                        Path tempFile = Paths.get( "/buttons/oilPriceFull.png");
-                        DownloadedContent jpg = new DownloadedContent(tempFile,"https://alarmboon.herokuapp.com/buttons/oilPriceFull.png" );
+                        Path tempFile = Paths.get( "oilPriceFull.png");
+                        DownloadedContent jpg = new DownloadedContent(tempFile,"https://alarmboon.herokuapp.com/oilPriceFull.png" );
                         try (OutputStream outputStream = Files.newOutputStream(jpg.path)) {
                             ByteArrayOutputStream os = new ByteArrayOutputStream();
                             ImageIO.write(ire, "png", os);
@@ -891,7 +891,7 @@ log.info("html : "+html);
                                 jpg.path.toString(),
                                 previewImg.path.toString());*/
                         //oilPriceImg = new ImageMessage(jpg.getUri(), jpg.getUri());
-                        oilPriceImg = new ImageMessage("https://alarmboon.herokuapp.com/buttons/oilPriceFull.png", "https://alarmboon.herokuapp.com/buttons/oilPriceFull.png");
+                        oilPriceImg = new ImageMessage("https://alarmboon.herokuapp.com/oilPriceFull.png", "https://alarmboon.herokuapp.com/oilPriceFull.png");
 
                         try {
                             List<Customer> customers = customerRepository.findAll();
