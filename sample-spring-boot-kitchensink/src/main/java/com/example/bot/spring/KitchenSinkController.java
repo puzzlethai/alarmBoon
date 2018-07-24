@@ -861,15 +861,15 @@ log.info("html : "+html);
                     if (!oilprice.isSame()) {
                         pushText("U989982d2db82e4ec7698facb3186e0b3", "ราคาน้ำมันเท่าเดิม");
                     } else {
-                        try {
+//                        try {
                             ire = WebImage.create(oilprice.showHTML(), 533, 740);
 
 
 
-                        } catch (Exception e) {
+/*                        } catch (Exception e) {
                             pushText("U989982d2db82e4ec7698facb3186e0b3", "error with create img"+e.getMessage());
                             e.printStackTrace();
-                        }
+                        }*/
                         //DownloadedContent jpg = saveImage("png", ire);
                         //DownloadedContent previewImg = createTempFile("png"); //
                         Path tempFile = Paths.get( "static/buttons/oilPriceFull.png");
