@@ -20,3 +20,8 @@ dependencies {
     compile project(':line-bot-spring-boot')
     compile 'org.springframework.boot:spring-boot-starter-data-mongodb'
 }
+
+findbugs{
+    ignoreFailures=true
+    findbugsTest.enabled=false
+}
