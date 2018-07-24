@@ -23,6 +23,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 // import java.text.SimpleDateFormat; //Just Add
+import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
@@ -869,15 +870,28 @@ log.info("html : "+html);
                             pushText("U989982d2db82e4ec7698facb3186e0b3", "error with create img"+e.getMessage());
                             e.printStackTrace();
                         }
-                        DownloadedContent jpg = saveImage("png", ire);
-                        DownloadedContent previewImg = createTempFile("png"); //
+                        //DownloadedContent jpg = saveImage("png", ire);
+                        //DownloadedContent previewImg = createTempFile("png"); //
 
-                        system(
+                        try (OutputStream outputStream = Files.newOutputStream(Paths.get("static/buttons/oilPriceFull.png"))) {
+                            ByteArrayOutputStream os = new ByteArrayOutputStream();
+                            ImageIO.write(ire, "png", os);
+                            InputStream is = new ByteArrayInputStream(os.toByteArray());
+                            ByteStreams.copy(is, outputStream);
+                            pushText("U989982d2db82e4ec7698facb3186e0b3", "write img successful");
+                        } catch (IOException e) {
+                            pushText("U989982d2db82e4ec7698facb3186e0b3", "error with WRITE img"+e.getMessage());
+                            throw new UncheckedIOException(e);
+                        }
+
+/*                        system(
                                 "convert",
                                 "-resize", "240x",
                                 jpg.path.toString(),
-                                previewImg.path.toString());
-                        oilPriceImg = new ImageMessage(jpg.getUri(), jpg.getUri());
+                                previewImg.path.toString());*/
+                        //oilPriceImg = new ImageMessage(jpg.getUri(), jpg.getUri());
+                        oilPriceImg = new ImageMessage("https://alarmboon.herokuapp.com/buttons/oilPriceFull.png", "https://alarmboon.herokuapp.com/buttons/oilPriceFull.png");
+
                         try {
                             List<Customer> customers = customerRepository.findAll();
                             Set<String> setUserId = new HashSet<String>();
