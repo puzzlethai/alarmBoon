@@ -22,6 +22,7 @@ import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 // import java.text.SimpleDateFormat; //Just Add
+import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
@@ -876,9 +877,9 @@ log.info("html : "+html);
                         //ImageIO.write(ire, "png", outputfile);
 
 
-                        //Path tempFile = outputfile.toPath();
-                        pushText("U989982d2db82e4ec7698facb3186e0b3", "Path : "+outputfile.getAbsolutePath());
-                        DownloadedContent jpg = new DownloadedContent(outputfile.getAbsolutePath(),"https://alarmboon.herokuapp.com/oilPriceFull.png" );
+                        Path tempFile = Paths.get(outputfile.getAbsolutePath());
+                        pushText("U989982d2db82e4ec7698facb3186e0b3", "Path : "+tempFile.toString());
+                        DownloadedContent jpg = new DownloadedContent(tempFile,"https://alarmboon.herokuapp.com/oilPriceFull.png" );
                         try (OutputStream outputStream = Files.newOutputStream(jpg.path,WRITE)) {
                             ByteArrayOutputStream os = new ByteArrayOutputStream();
                             ImageIO.write(ire, "png", os);
