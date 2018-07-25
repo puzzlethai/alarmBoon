@@ -869,17 +869,17 @@ log.info("html : "+html);
                         //DownloadedContent previewImg = createTempFile("png"); //
                         ApplicationContext appContext =
                                 new ClassPathXmlApplicationContext();
-
+/*
                         Resource resource =
                                 appContext.getResource("file:sample-spring-boot-kitchensink/src/main/resources/static/oilPriceFull.png");
-                        File outputfile = resource.getFile();
-                        pushText("U989982d2db82e4ec7698facb3186e0b3", "Path : "+outputfile.getAbsolutePath());
+                        File outputfile = resource.getFile();*/
+                        Path tempPath = Paths.get("/app/sample-spring-boot-kitchensink/src/main/resources/static/ozone.png");
+                        pushText("U989982d2db82e4ec7698facb3186e0b3", "Path : "+tempPath.toString());
                         //ImageIO.write(ire, "png", outputfile);
+                        tempPath.toFile().createNewFile();
 
-
-                        Path tempFile = Paths.get(outputfile.getAbsolutePath());
-                        pushText("U989982d2db82e4ec7698facb3186e0b3", "Path : "+tempFile.toString());
-                        DownloadedContent jpg = new DownloadedContent(tempFile,"https://alarmboon.herokuapp.com/oilPriceFull.png" );
+                        pushText("U989982d2db82e4ec7698facb3186e0b3", "Path : "+tempPath.toString());
+                        DownloadedContent jpg = new DownloadedContent(tempPath,tempPath.toUri() );
                         try (OutputStream outputStream = Files.newOutputStream(jpg.path,WRITE)) {
                             ByteArrayOutputStream os = new ByteArrayOutputStream();
                             ImageIO.write(ire, "png", os);
@@ -896,7 +896,7 @@ log.info("html : "+html);
                                 "-resize", "240x",
                                 jpg.path.toString(),
                                 previewImg.path.toString());*/
-                        oilPriceImg = new ImageMessage(jpg.getUri(), jpg.getUri()); 
+                        oilPriceImg = new ImageMessage(jpg.getUri(), jpg.getUri());
                        // oilPriceImg = new ImageMessage("https://alarmboon.herokuapp.com/oilPriceFull.png", "https://alarmboon.herokuapp.com/oilPriceFull.png");
 
 /*                        try {
