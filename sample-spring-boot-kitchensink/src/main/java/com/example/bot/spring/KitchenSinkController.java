@@ -869,13 +869,12 @@ log.info("html : "+html);
 
                         Resource resource =
                                 appContext.getResource("file:sample-spring-boot-kitchensink/src/main/resources/static/oilPriceFull.png");
-                        // Resource resource= new ClassPathResource("static/oilPriceFull.png");
                         File outputfile = resource.getFile();
                         pushText("U989982d2db82e4ec7698facb3186e0b3", "Path : "+outputfile.getAbsolutePath());
-                        ImageIO.write(ire, "png", outputfile);
+                        //ImageIO.write(ire, "png", outputfile);
 
 
-/*                        Path tempFile = Paths.get( "oilPriceFull.png");
+                        Path tempFile = outputfile.toPath();
                         pushText("U989982d2db82e4ec7698facb3186e0b3", "Path : "+tempFile.toString());
                         DownloadedContent jpg = new DownloadedContent(tempFile,"https://alarmboon.herokuapp.com/oilPriceFull.png" );
                         try (OutputStream outputStream = Files.newOutputStream(jpg.path)) {
@@ -887,7 +886,7 @@ log.info("html : "+html);
                         } catch (IOException e) {
                             pushText("U989982d2db82e4ec7698facb3186e0b3", "error with WRITE img"+e.getMessage());
                             throw new UncheckedIOException(e);
-                        }*/
+                        }
 
 /*                        system(
                                 "convert",
