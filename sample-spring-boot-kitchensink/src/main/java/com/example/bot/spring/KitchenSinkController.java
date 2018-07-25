@@ -896,8 +896,8 @@ log.info("html : "+html);
                                 "-resize", "240x",
                                 jpg.path.toString(),
                                 previewImg.path.toString());*/
-                        //oilPriceImg = new ImageMessage(jpg.getUri(), jpg.getUri()); */
-                        oilPriceImg = new ImageMessage("https://alarmboon.herokuapp.com/oilPriceFull.png", "https://alarmboon.herokuapp.com/oilPriceFull.png");
+                        oilPriceImg = new ImageMessage(jpg.getUri(), jpg.getUri()); 
+                       // oilPriceImg = new ImageMessage("https://alarmboon.herokuapp.com/oilPriceFull.png", "https://alarmboon.herokuapp.com/oilPriceFull.png");
 
 /*                        try {
                             List<Customer> customers = customerRepository.findAll();
