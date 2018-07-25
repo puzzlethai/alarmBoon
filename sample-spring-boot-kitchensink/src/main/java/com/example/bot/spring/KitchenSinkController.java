@@ -861,7 +861,7 @@ log.info("html : "+html);
                         //DownloadedContent jpg = saveImage("png", ire);
                         //DownloadedContent previewImg = createTempFile("png"); //
 
-                        File outputfile = new File("src/main/resources/static/oilPriceFull.png");
+                        File outputfile = new File("file:///oilPriceFull.png");
                         pushText("U989982d2db82e4ec7698facb3186e0b3", "Path : "+outputfile.getAbsolutePath());
                         ImageIO.write(ire, "png", outputfile);
 
