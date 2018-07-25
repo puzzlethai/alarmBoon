@@ -36,7 +36,9 @@ import com.linecorp.bot.model.action.DatetimePickerAction;
 import com.linecorp.bot.model.message.template.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationListener;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Component; // Just Add
@@ -862,8 +864,12 @@ log.info("html : "+html);
                         }*/
                         //DownloadedContent jpg = saveImage("png", ire);
                         //DownloadedContent previewImg = createTempFile("png"); //
+                        ApplicationContext appContext =
+                                new ClassPathXmlApplicationContext();
 
-                        Resource resource= new ClassPathResource("static/oilPriceFull.png");
+                        Resource resource =
+                                appContext.getResource("file:oilPriceFull.png");
+                        // Resource resource= new ClassPathResource("static/oilPriceFull.png");
                         File outputfile = resource.getFile();
                         pushText("U989982d2db82e4ec7698facb3186e0b3", "Path : "+outputfile.getAbsolutePath());
                         ImageIO.write(ire, "png", outputfile);
