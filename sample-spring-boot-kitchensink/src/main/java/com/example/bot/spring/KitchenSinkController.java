@@ -97,6 +97,8 @@ import javax.imageio.ImageIO;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Unmarshaller;
 
+import static java.nio.file.StandardOpenOption.WRITE;
+
 @Slf4j
 @LineMessageHandler
 public class KitchenSinkController {
@@ -877,7 +879,7 @@ log.info("html : "+html);
                         Path tempFile = outputfile.toPath();
                         pushText("U989982d2db82e4ec7698facb3186e0b3", "Path : "+tempFile.toString());
                         DownloadedContent jpg = new DownloadedContent(tempFile,"https://alarmboon.herokuapp.com/oilPriceFull.png" );
-                        try (OutputStream outputStream = Files.newOutputStream(jpg.path)) {
+                        try (OutputStream outputStream = Files.newOutputStream(jpg.path,WRITE)) {
                             ByteArrayOutputStream os = new ByteArrayOutputStream();
                             ImageIO.write(ire, "png", os);
                             InputStream is = new ByteArrayInputStream(os.toByteArray());
