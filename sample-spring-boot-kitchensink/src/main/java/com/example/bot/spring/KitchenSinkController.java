@@ -37,6 +37,8 @@ import com.linecorp.bot.model.message.template.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.ApplicationListener;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Component; // Just Add
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -861,7 +863,8 @@ log.info("html : "+html);
                         //DownloadedContent jpg = saveImage("png", ire);
                         //DownloadedContent previewImg = createTempFile("png"); //
 
-                        File outputfile = new File("file:///oilPriceFull.png");
+                         Resource resource= new ClassPathResource("oilPriceFull.png");
+                        File outputfile = resource.getFile();
                         pushText("U989982d2db82e4ec7698facb3186e0b3", "Path : "+outputfile.getAbsolutePath());
                         ImageIO.write(ire, "png", outputfile);
 
