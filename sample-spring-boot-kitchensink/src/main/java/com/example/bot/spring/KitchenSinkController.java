@@ -868,7 +868,7 @@ log.info("html : "+html);
                                 new ClassPathXmlApplicationContext();
 
                         Resource resource =
-                                appContext.getResource("file:/sample-spring-boot-kitchensink/src/main/resources/static/oilPriceFull.png");
+                                appContext.getResource("file:sample-spring-boot-kitchensink/src/main/resources/static/oilPriceFull.png");
                         // Resource resource= new ClassPathResource("static/oilPriceFull.png");
                         File outputfile = resource.getFile();
                         pushText("U989982d2db82e4ec7698facb3186e0b3", "Path : "+outputfile.getAbsolutePath());
