@@ -879,7 +879,7 @@ log.info("html : "+html);
                         tempPath.toFile().createNewFile();
 
                         pushText("U989982d2db82e4ec7698facb3186e0b3", "Path : "+tempPath.toString());
-                        DownloadedContent jpg = new DownloadedContent(tempPath,tempPath.toUri() );
+                        DownloadedContent jpg = new DownloadedContent(tempPath,"https://alarmboon.herokuapp.com/ozone.png" );
                         try (OutputStream outputStream = Files.newOutputStream(jpg.path,WRITE)) {
                             ByteArrayOutputStream os = new ByteArrayOutputStream();
                             ImageIO.write(ire, "png", os);
