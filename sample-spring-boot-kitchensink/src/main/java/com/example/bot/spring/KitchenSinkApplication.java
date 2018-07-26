@@ -27,10 +27,9 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @SpringBootApplication
 @EnableScheduling
 public class KitchenSinkApplication {
-    static Path downloadedContentDir;
+
 
     public static void main(String[] args) throws IOException {
-        downloadedContentDir = Files.createTempDirectory("line-bot");
         SpringApplication.run(KitchenSinkApplication.class, args);
     }
 

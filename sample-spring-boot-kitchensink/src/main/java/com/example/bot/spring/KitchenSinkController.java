@@ -97,9 +97,22 @@ import javax.imageio.ImageIO;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Unmarshaller;
 
+import static java.nio.file.Files.createTempDirectory;
+
+
 @Slf4j
 @LineMessageHandler
 public class KitchenSinkController {
+    static Path downloadedContentDir;
+
+    static {
+        try {
+            downloadedContentDir = createTempDirectory("line-bot");
+        } catch (IOException e) {
+            log.info("TempDirectory Error: {}", e.getMessage());;
+        }
+    }
+
     private static String tomorrow_fm = "Start";
     private static String today_fm = "begin";
     @Autowired
@@ -678,7 +691,7 @@ public class KitchenSinkController {
     }
     private static DownloadedContent createTempFile(String ext) {
         String fileName = LocalDateTime.now().toString() + '-' + UUID.randomUUID().toString() + '.' + ext;
-        Path tempFile = KitchenSinkApplication.downloadedContentDir.resolve(fileName);
+        Path tempFile = downloadedContentDir.resolve(fileName);
         tempFile.toFile().deleteOnExit();
         return new DownloadedContent(tempFile, createUri("/downloaded/" + tempFile.getFileName()));
     }
