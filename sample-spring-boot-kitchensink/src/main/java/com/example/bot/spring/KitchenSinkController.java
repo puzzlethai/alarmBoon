@@ -510,7 +510,7 @@ public class KitchenSinkController {
                         Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
 
                         Header oilprice = (Header) unmarshaller.unmarshal(inputStream);
-                        if (oilprice.isSame()) {
+                        if (!oilprice.isSame()) {
                             this.pushText("U989982d2db82e4ec7698facb3186e0b3", "ราคาน้ำมันเท่าเดิม");
                         } else {
                             try {
@@ -829,7 +829,7 @@ public class KitchenSinkController {
                     Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
 
                     Header oilprice = (Header) unmarshaller.unmarshal(inputStream);
-                    if (oilprice.isSame()) {
+                    if (!oilprice.isSame()) {
                         pushText("U989982d2db82e4ec7698facb3186e0b3", "ราคาน้ำมันเท่าเดิม");
                     } else {
                         try {
