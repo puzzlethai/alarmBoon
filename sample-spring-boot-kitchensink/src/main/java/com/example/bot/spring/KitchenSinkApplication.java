@@ -25,13 +25,15 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
 @SpringBootApplication
-@EnableScheduling
+// @EnableScheduling
 public class KitchenSinkApplication {
     static Path downloadedContentDir;
 
     public static void main(String[] args) throws IOException {
         downloadedContentDir = Files.createTempDirectory("line-bot");
         SpringApplication.run(KitchenSinkApplication.class, args);
+        KitchenSinkController test = new KitchenSinkController();
+        test.reportCurrentTime();
     }
 
 }

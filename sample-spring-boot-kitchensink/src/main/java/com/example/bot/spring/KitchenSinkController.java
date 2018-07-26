@@ -572,67 +572,8 @@ public class KitchenSinkController {
         Path path;
         String uri;
     }
-    @Component
-    public class ScheduledTasks {
-
-        private final Logger log = LoggerFactory.getLogger(ScheduledTasks.class);
-
-       // private final SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
-
-        private void pushT(@NonNull String userId, @NonNull Message message) {
-            pushT(userId, Collections.singletonList(message));
-        }
-        /*
-        private void multipushT(@NonNull String userId, @NonNull Message message) {
-            multipushT((Set<String>) Collections.singletonList(userId), Collections.singletonList(message));
-        }
-        */
-        private void pushT(@NonNull String userId, @NonNull List<Message> messages) {
-            try {
-                BotApiResponse apiResponse = lineMessagingClient
-                        .pushMessage(new PushMessage(userId, messages))
-                        .get();
-                log.info("Sent messages: {}", apiResponse);
-            } catch (InterruptedException | ExecutionException e) {
-                throw new RuntimeException(e);
-            }
-        }
-        private void pushText(@NonNull String userId, @NonNull String message)  {
-            if (userId.isEmpty()) {
-                throw new IllegalArgumentException("userId must not be empty");
-            }
-            if (message.length() > 1000) {
-                message = message.substring(0, 1000 - 2) + "……";
-            }
-            this.pushT(userId, new TextMessage(message));
-
-        }
-        private void multipushT(@NonNull Set<String> userId, @NonNull Message messages) {
-            try {
-                BotApiResponse apiResponse = lineMessagingClient
-                        .multicast(new Multicast(userId,messages))
-                        .get();
-                log.info("Sent messages: {}", apiResponse);
-            } catch (InterruptedException | ExecutionException e) {
-                throw new RuntimeException(e);
-            }
-        }
-
-        /*
-        private void multipushText(@NonNull String userId, @NonNull String message)  {
-            if (userId.isEmpty()) {
-                throw new IllegalArgumentException("userId must not be empty");
-            }
-            if (message.length() > 1000) {
-                message = message.substring(0, 1000 - 2) + "……";
-            }
-            this.multipushT(userId, new TextMessage(message));
-
-        }
-        */
 
 
-        @Scheduled(initialDelay=60000, fixedRate=3600000)
         public void reportCurrentTime() {
 
 
@@ -641,43 +582,8 @@ public class KitchenSinkController {
             DateTimeFormatter patternFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
             tomorrow_fm = patternFormatter.format(tomorrow);
-            Domain monkDay;
-            monkDay = domainRepository.findByDomain(tomorrow_fm);
 
-            if (monkDay != null){ // tomorrow is monkDay
-                if (!monkDay.isDisplayAds()) { // not notify monkday yet
-                    List<Customer> customers = customerRepository.findAll();
-                    Set<String> setUserId = new HashSet<String>();
-                    if (customers.size() < 150) { // only one multicast
-                        for (Customer customer : customers) {
-                            if (customer.getUserId() != null)
-                                setUserId.add(customer.getUserId());
-                        }
-                        multipushT(setUserId,new TextMessage("พรุ่งนี้วันพระ"));
 
-                    } else { // more than one muticast
-                        int i = 0;
-                        for (Customer customer : customers) {
-                            i=i+1;
-                            if (customer.getUserId() != null)
-                                setUserId.add(customer.getUserId());
-                            if (i%150 == 0){
-                                multipushT(setUserId,new TextMessage("พรุ่งนี้วันพระ"));
-                                // don't forget little delay
-                                i=0;
-                                setUserId.clear();
-
-                            }
-                        }
-                        if (setUserId.size()!=0){  // last batch of userID
-                            multipushT(setUserId,new TextMessage("พรุ่งนี้วันพระ"));
-                            setUserId.clear();
-                        }
-                    }
-                    domainRepository.updateDomain(monkDay.getDomain(), true);
-                }
-
-            }
 
             BufferedImage ire;
 
@@ -707,99 +613,21 @@ public class KitchenSinkController {
                             jpg.path.toString(),
                             previewImg.path.toString());
                     List<Customer> customers = customerRepository.findAll();
-                    Set<String> setUserId = new HashSet<String>();
-                    if (customers.size() < 150) { // only one multicast
-                        for (Customer customer : customers) {
-                            if (customer.getUserId() != null)
-                                setUserId.add(customer.getUserId());
-                        }
+                    try {
+                        Set<String> setUserId = new HashSet<String>();
+                        setUserId.add("U989982d2db82e4ec7698facb3186e0b3");
                         multipushImage(setUserId, oilPriceImg);
 
-                    } else { // more than one muticast
-                        int i = 0;
-                        for (Customer customer : customers) {
-                            i = i + 1;
-                            if (customer.getUserId() != null)
-                                setUserId.add(customer.getUserId());
-                            if (i % 150 == 0) {
-                                multipushImage(setUserId, oilPriceImg);
-                                // don't forget little delay
-                                i = 0;
-                                setUserId.clear();
-
-                            }
-                        }
-                        if (setUserId.size() != 0) {  // last batch of userID
-                            multipushImage(setUserId, oilPriceImg);
-                            setUserId.clear();
-                        }
+                    } catch (Exception e) {
+                        pushText("U989982d2db82e4ec7698facb3186e0b3", "error with customer DB");
+                        e.printStackTrace();
                     }
-
                 }
                 } catch(Exception e){
                     e.printStackTrace();
                 }
 
-/*            BufferedImage ire;
 
-            InputStream inputStream = null;
-            try {
-                inputStream = new URL("https://crmmobile.bangchak.co.th/webservice/oil_price.aspx").openStream();
-            } catch (IOException e){
-                e.printStackTrace();
-            }
-            try {
-                JAXBContext jaxbContext = JAXBContext.newInstance(Header.class);
-                Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
-
-                Header oilprice = (Header) unmarshaller.unmarshal(inputStream);
-
-                ire = WebImage.create(oilprice.showHTML(), 533, 740);
-
-
-                DownloadedContent jpg = saveImage("png", ire);
-                DownloadedContent previewImg = createTempFile("png");
-                system(
-                        "convert",
-                        "-resize", "240x",
-                        jpg.path.toString(),
-                        previewImg.path.toString());
-                List<Customer> customers = customerRepository.findAll();
-                Set<String> setUserId = new HashSet<String>();
-                if (customers.size() < 150) { // only one multicast
-                    for (Customer customer : customers) {
-                        if (customer.getUserId() != null)
-                            setUserId.add(customer.getUserId());
-                    }
-                    multipushT(setUserId,new ImageMessage(jpg.getUri(), jpg.getUri()));
-
-                } else { // more than one muticast
-                    int i = 0;
-                    for (Customer customer : customers) {
-                        i=i+1;
-                        if (customer.getUserId() != null)
-                            setUserId.add(customer.getUserId());
-                        if (i%150 == 0){
-                            multipushT(setUserId,new TextMessage("พรุ่งนี้วันพระ"));
-                            // don't forget little delay
-                            i=0;
-                            setUserId.clear();
-
-                        }
-                    }
-                    if (setUserId.size()!=0){  // last batch of userID
-                        multipushT(setUserId,new TextMessage("พรุ่งนี้วันพระ"));
-                        setUserId.clear();
-                    }
-                }
-
-
-                //pushT("U989982d2db82e4ec7698facb3186e0b3",  // U989982d2db82e4ec7698facb3186e0b3 ME
-                //new ImageMessage(jpg.getUri(), jpg.getUri())); // U99aeab757346322b4bbf035ade474678 BEE
-
-            } catch (Exception e) {
-                e.printStackTrace();
-            }*/
         }
-    }
+
 }
