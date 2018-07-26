@@ -488,7 +488,7 @@ public class KitchenSinkController {
                         Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
 
                         Header oilprice = (Header) unmarshaller.unmarshal(inputStream);
-                        if (oilprice.isSame()) {
+                        if (!oilprice.isSame()) {
                             this.pushText("U989982d2db82e4ec7698facb3186e0b3", "ราคาน้ำมันเท่าเดิม");
                         } else {
                             try {
@@ -501,7 +501,7 @@ public class KitchenSinkController {
                                 e.printStackTrace();
                             }
                             DownloadedContent jpg = saveImage("png", ire);
-                            DownloadedContent previewImg = createTempFile("png"); // String imageUrl = createUri("/static/buttons/tt.png");
+                            DownloadedContent previewImg = createTempFile("png"); // String imageUrl = createUri("/static/buttons/ttt.png");
 
                                 system(
                                         "convert",
@@ -796,7 +796,7 @@ public class KitchenSinkController {
 
                 InputStream inputStream = null;
                 ImageMessage oilPriceImg = null;
-                String imageUrl = createUri("/static/buttons/tt.png");
+                String imageUrl = createUri("/static/buttons/ttt.png");
                 try {
                     inputStream = new URL("https://crmmobile.bangchak.co.th/webservice/oil_price.aspx").openStream();
                 } catch (IOException e) {
@@ -809,7 +809,7 @@ public class KitchenSinkController {
 
                     Header oilprice = (Header) unmarshaller.unmarshal(inputStream);
                     this.pushText("U989982d2db82e4ec7698facb3186e0b3", "unmarshall work");
-                    if (oilprice.isSame()) {
+                    if (!oilprice.isSame()) {
                         this.pushText("U989982d2db82e4ec7698facb3186e0b3", "ราคาน้ำมันเท่าเดิม");
                     } else {
                         try {
@@ -817,7 +817,7 @@ public class KitchenSinkController {
 
                             try {
                                 this.pushText("U989982d2db82e4ec7698facb3186e0b3", "Url = "+imageUrl);
-                                ImageIO.write(ire,"png", new File(imageUrl)); // static/buttons/tt.png
+                                ImageIO.write(ire,"png", new File(imageUrl)); // static/buttons/ttt.png
                             } catch (IOException i) {
                                 i.printStackTrace();
                                 this.pushText("U989982d2db82e4ec7698facb3186e0b3", "IO write "+i.getMessage());
@@ -830,7 +830,7 @@ public class KitchenSinkController {
                         }
                         //DownloadedContent jpg = saveImage("png", ire);
                         this.pushText("U989982d2db82e4ec7698facb3186e0b3", "saveImage work");
-                       // DownloadedContent previewImg = createTempFile("png"); // String imageUrl = createUri("/static/buttons/tt.png");
+                       // DownloadedContent previewImg = createTempFile("png"); // String imageUrl = createUri("/static/buttons/ttt.png");
 
 /*                                system(
                                         "convert",
@@ -842,7 +842,7 @@ public class KitchenSinkController {
                         //oilPriceImg = new ImageMessage(jpg.getUri(), jpg.getUri());
                         oilPriceImg = new ImageMessage(imageUrl, imageUrl);
                         this.pushText("U989982d2db82e4ec7698facb3186e0b3", "ImageMessage work");
-                        try {
+/*                        try {
                             List<Customer> customers = customerRepository.findAll();
                             Set<String> setUserId = new HashSet<String>();
                             if (customers.size() < 150) { // only one multicast
@@ -875,7 +875,17 @@ public class KitchenSinkController {
                         } catch (Exception e) {
                             this.pushText("U989982d2db82e4ec7698facb3186e0b3", "error with customer DB"+e.getMessage());
                             e.printStackTrace();
+                        }*/
+                        try {
+                            Set<String> setUserId = new HashSet<String>();
+                            setUserId.add("U989982d2db82e4ec7698facb3186e0b3");
+                            multipushImage(setUserId, oilPriceImg);
+
+                        } catch (Exception e) {
+                            pushText("U989982d2db82e4ec7698facb3186e0b3", "error with customer DB");
+                            e.printStackTrace();
                         }
+
                         this.pushText("U989982d2db82e4ec7698facb3186e0b3", "ราคาน้ำมันเปลี่ยน");
 
                         oilchangeRepository.delete(oilchangeDate.get(0));
