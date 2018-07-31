@@ -101,12 +101,16 @@ import javax.xml.bind.Unmarshaller;
 @LineMessageHandler
 public class KitchenSinkController {
     private static String tomorrow_fm = "Start";
+    private static String today_fm = "begin";
     @Autowired
     private LineMessagingClient lineMessagingClient;
     @Autowired
     private DomainRepository domainRepository;
     @Autowired
     private CustomerRepository customerRepository;
+    @Autowired
+    private OilchangeRepository oilchangeRepository;
+
 
     @EventMapping
     public void handleTextMessageEvent(MessageEvent<TextMessageContent> event) throws Exception {
@@ -625,18 +629,7 @@ public class KitchenSinkController {
             }
         }
 
-        /*
-        private void multipushText(@NonNull String userId, @NonNull String message)  {
-            if (userId.isEmpty()) {
-                throw new IllegalArgumentException("userId must not be empty");
-            }
-            if (message.length() > 1000) {
-                message = message.substring(0, 1000 - 2) + "……";
-            }
-            this.multipushT(userId, new TextMessage(message));
 
-        }
-        */
 
 
         @Scheduled(initialDelay=30000, fixedRate=3600000)
@@ -685,7 +678,12 @@ public class KitchenSinkController {
                 }
 
             }
+            today_fm = patternFormatter.format(today);
+            List<Oilchange> oilchangeDate;
+            oilchangeDate = oilchangeRepository.findAll();
+            String lastChangeDate = oilchangeDate.get(0).getOilchange();
 
+            if (!today_fm.equals(lastChangeDate)) {
             BufferedImage ire;
 
             InputStream inputStream = null;
@@ -715,82 +713,55 @@ public class KitchenSinkController {
                             previewImg.path.toString());
 
                     try {
+                        List<Customer> customers = customerRepository.findAll();
                         Set<String> setUserId = new HashSet<String>();
-                        setUserId.add("U989982d2db82e4ec7698facb3186e0b3");
-                        multipushImage(setUserId, oilPriceImg);
-
-                    } catch (Exception e) {
+                        if (customers.size() < 150) { // only one multicast
+                            for (Customer customer : customers) {
+                                if (customer.getUserId() != null)
+                                    setUserId.add(customer.getUserId());
+                            }
+                            multipushImage(setUserId, oilPriceImg);
+                        } else { // more than one muticast
+                            int i = 0;
+                            for (Customer customer : customers) {
+                                i = i + 1;
+                                if (customer.getUserId() != null)
+                                    setUserId.add(customer.getUserId());
+                                if (i % 150 == 0) {
+                                    multipushImage(setUserId, oilPriceImg);
+                                    // don't forget little delay
+                                    i = 0;
+                                    setUserId.clear();
+                                }
+                            }
+                            if (setUserId.size() != 0) {  // last batch of userID
+                                multipushImage(setUserId, oilPriceImg);
+                                setUserId.clear();
+                            }
+                        }
+                    }catch (Exception e) {
                         pushText("U989982d2db82e4ec7698facb3186e0b3", "error with customer DB");
                         e.printStackTrace();
                     }
+                    pushText("U989982d2db82e4ec7698facb3186e0b3", "ราคาน้ำมันเปลี่ยน");
 
+                    oilchangeRepository.delete(oilchangeDate.get(0));
 
-                }
+                    Oilchange newOilChange = new Oilchange();
+                    newOilChange.setOilchange(today_fm);
+                    oilchangeRepository.save(newOilChange);
+                    pushText("U989982d2db82e4ec7698facb3186e0b3", "change DB with " + today_fm);
+
+                }  //  end oilprice is not same
                 } catch(Exception e){
                     e.printStackTrace();
-                pushText("U989982d2db82e4ec7698facb3186e0b3", "error ");
+                pushText("U989982d2db82e4ec7698facb3186e0b3", "outer error : "+e.getMessage());
                 }
 
-/*            BufferedImage ire;
 
-            InputStream inputStream = null;
-            try {
-                inputStream = new URL("https://crmmobile.bangchak.co.th/webservice/oil_price.aspx").openStream();
-            } catch (IOException e){
-                e.printStackTrace();
+            } else {  // today send already
+                pushText("U989982d2db82e4ec7698facb3186e0b3", "today already send ");
             }
-            try {
-                JAXBContext jaxbContext = JAXBContext.newInstance(Header.class);
-                Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
-
-                Header oilprice = (Header) unmarshaller.unmarshal(inputStream);
-
-                ire = WebImage.create(oilprice.showHTML(), 533, 740);
-
-
-                DownloadedContent jpg = saveImage("png", ire);
-                DownloadedContent previewImg = createTempFile("png");
-                system(
-                        "convert",
-                        "-resize", "240x",
-                        jpg.path.toString(),
-                        previewImg.path.toString());
-                List<Customer> customers = customerRepository.findAll();
-                Set<String> setUserId = new HashSet<String>();
-                if (customers.size() < 150) { // only one multicast
-                    for (Customer customer : customers) {
-                        if (customer.getUserId() != null)
-                            setUserId.add(customer.getUserId());
-                    }
-                    multipushT(setUserId,new ImageMessage(jpg.getUri(), jpg.getUri()));
-
-                } else { // more than one muticast
-                    int i = 0;
-                    for (Customer customer : customers) {
-                        i=i+1;
-                        if (customer.getUserId() != null)
-                            setUserId.add(customer.getUserId());
-                        if (i%150 == 0){
-                            multipushT(setUserId,new TextMessage("พรุ่งนี้วันพระ"));
-                            // don't forget little delay
-                            i=0;
-                            setUserId.clear();
-
-                        }
-                    }
-                    if (setUserId.size()!=0){  // last batch of userID
-                        multipushT(setUserId,new TextMessage("พรุ่งนี้วันพระ"));
-                        setUserId.clear();
-                    }
-                }
-
-
-                //pushT("U989982d2db82e4ec7698facb3186e0b3",  // U989982d2db82e4ec7698facb3186e0b3 ME
-                //new ImageMessage(jpg.getUri(), jpg.getUri())); // U99aeab757346322b4bbf035ade474678 BEE
-
-            } catch (Exception e) {
-                e.printStackTrace();
-            }*/
         }
     }
 }
