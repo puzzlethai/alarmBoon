@@ -708,11 +708,11 @@ public class KitchenSinkController {
                     DownloadedContent jpg = saveOilImage("png", ire);
                     DownloadedContent previewImg = createOilFile("png"); //
                     ImageMessage oilPriceImg = new ImageMessage(jpg.getUri(), previewImg.getUri());
-/*                    system(
+                    system(
                             "convert",
                             "-resize", "240x",
                             jpg.path.toString(),
-                            previewImg.path.toString());*/
+                            previewImg.path.toString());
 
                     try {
                         Set<String> setUserId = new HashSet<String>();
