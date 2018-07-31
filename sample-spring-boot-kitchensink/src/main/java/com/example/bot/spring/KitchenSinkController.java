@@ -545,10 +545,23 @@ public class KitchenSinkController {
             throw new UncheckedIOException(e);
         }
     }
-    private static DownloadedContent saveImage(String ext, BufferedImage bfimage) {
+
+    private static DownloadedContent createOilFile(String ext) {
+        String fileName = LocalDateTime.now().toString() + '-' + UUID.randomUUID().toString() + '.' + ext;
+        Path tempFile = KitchenSinkApplication.downloadedContentDir.resolve(fileName);
+        tempFile.toFile().deleteOnExit();
+        return new DownloadedContent(tempFile, "https://alarmboon.herokuapp.com/downloaded/" + tempFile.getFileName());
+    }
+    private static DownloadedContent createTempFile(String ext) {
+        String fileName = LocalDateTime.now().toString() + '-' + UUID.randomUUID().toString() + '.' + ext;
+        Path tempFile = KitchenSinkApplication.downloadedContentDir.resolve(fileName);
+        tempFile.toFile().deleteOnExit();
+        return new DownloadedContent(tempFile, createUri("/downloaded/" + tempFile.getFileName()));
+    }
+    private static DownloadedContent saveOilImage(String ext, BufferedImage bfimage) {
 
 
-        DownloadedContent tempFile = createTempFile(ext);
+        DownloadedContent tempFile = createOilFile(ext);
         try (OutputStream outputStream = Files.newOutputStream(tempFile.path)) {
             ByteArrayOutputStream os = new ByteArrayOutputStream();
             ImageIO.write(bfimage, ext, os);
@@ -559,12 +572,6 @@ public class KitchenSinkController {
         } catch (IOException e) {
             throw new UncheckedIOException(e);
         }
-    }
-    private static DownloadedContent createTempFile(String ext) {
-        String fileName = LocalDateTime.now().toString() + '-' + UUID.randomUUID().toString() + '.' + ext;
-        Path tempFile = KitchenSinkApplication.downloadedContentDir.resolve(fileName);
-        tempFile.toFile().deleteOnExit();
-        return new DownloadedContent(tempFile, createUri("/downloaded/" + tempFile.getFileName()));
     }
 
     @Value
@@ -632,7 +639,7 @@ public class KitchenSinkController {
         */
 
 
-        @Scheduled(initialDelay=600000, fixedRate=3600000)
+        @Scheduled(initialDelay=30000, fixedRate=3600000)
         public void reportCurrentTime() {
 
 
@@ -698,46 +705,30 @@ public class KitchenSinkController {
                     ire = WebImage.create(oilprice.showHTML(), 533, 740);
 
 
-                    DownloadedContent jpg = saveImage("png", ire);
-                    DownloadedContent previewImg = createTempFile("png"); //
-                    ImageMessage oilPriceImg = new ImageMessage(jpg.getUri(), jpg.getUri());
-                    system(
+                    DownloadedContent jpg = saveOilImage("png", ire);
+                    DownloadedContent previewImg = createOilFile("png"); //
+                    ImageMessage oilPriceImg = new ImageMessage(jpg.getUri(), previewImg.getUri());
+/*                    system(
                             "convert",
                             "-resize", "240x",
                             jpg.path.toString(),
-                            previewImg.path.toString());
-                    List<Customer> customers = customerRepository.findAll();
-                    Set<String> setUserId = new HashSet<String>();
-                    if (customers.size() < 150) { // only one multicast
-                        for (Customer customer : customers) {
-                            if (customer.getUserId() != null)
-                                setUserId.add(customer.getUserId());
-                        }
+                            previewImg.path.toString());*/
+
+                    try {
+                        Set<String> setUserId = new HashSet<String>();
+                        setUserId.add("U989982d2db82e4ec7698facb3186e0b3");
                         multipushImage(setUserId, oilPriceImg);
 
-                    } else { // more than one muticast
-                        int i = 0;
-                        for (Customer customer : customers) {
-                            i = i + 1;
-                            if (customer.getUserId() != null)
-                                setUserId.add(customer.getUserId());
-                            if (i % 150 == 0) {
-                                multipushImage(setUserId, oilPriceImg);
-                                // don't forget little delay
-                                i = 0;
-                                setUserId.clear();
-
-                            }
-                        }
-                        if (setUserId.size() != 0) {  // last batch of userID
-                            multipushImage(setUserId, oilPriceImg);
-                            setUserId.clear();
-                        }
+                    } catch (Exception e) {
+                        pushText("U989982d2db82e4ec7698facb3186e0b3", "error with customer DB");
+                        e.printStackTrace();
                     }
+
 
                 }
                 } catch(Exception e){
                     e.printStackTrace();
+                pushText("U989982d2db82e4ec7698facb3186e0b3", "error ");
                 }
 
 /*            BufferedImage ire;
