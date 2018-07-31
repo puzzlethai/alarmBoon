@@ -643,7 +643,7 @@ public class KitchenSinkController {
                         multipushImage(setUserId, oilPriceImg);
 
                     } catch (Exception e) {
-                        pushText("U989982d2db82e4ec7698facb3186e0b3", "error with customer DB");
+                        //pushText("U989982d2db82e4ec7698facb3186e0b3", "error with customer DB");
                         e.printStackTrace();
                     }
                 }
