@@ -92,6 +92,7 @@ import com.example.bot.spring.Domain;
 import com.example.bot.spring.DomainRepository;
 import com.example.bot.spring.Customer;
 import com.example.bot.spring.CustomerRepository;
+import org.springframework.web.util.UriTemplate;
 
 import javax.imageio.ImageIO;
 import javax.xml.bind.JAXBContext;
@@ -545,7 +546,7 @@ public class KitchenSinkController {
             throw new UncheckedIOException(e);
         }
     }
-    private static DownloadedContent saveImage(String ext, BufferedImage bfimage) {
+/*    private static DownloadedContent saveImage(String ext, BufferedImage bfimage) {
 
 
         DownloadedContent tempFile = createTempFile(ext);
@@ -559,12 +560,35 @@ public class KitchenSinkController {
         } catch (IOException e) {
             throw new UncheckedIOException(e);
         }
+    }*/
+    private static DownloadedContent saveOilImage(String ext, BufferedImage bfimage) {
+
+
+        DownloadedContent tempFile = createOilFile(ext);
+        try (OutputStream outputStream = Files.newOutputStream(tempFile.path)) {
+            ByteArrayOutputStream os = new ByteArrayOutputStream();
+            ImageIO.write(bfimage, ext, os);
+            InputStream is = new ByteArrayInputStream(os.toByteArray());
+            ByteStreams.copy(is, outputStream);
+            log.info("Saved {}: {}", ext, tempFile);
+            return tempFile;
+        } catch (IOException e) {
+            throw new UncheckedIOException(e);
+        }
     }
+
     private static DownloadedContent createTempFile(String ext) {
         String fileName = LocalDateTime.now().toString() + '-' + UUID.randomUUID().toString() + '.' + ext;
         Path tempFile = KitchenSinkApplication.downloadedContentDir.resolve(fileName);
         tempFile.toFile().deleteOnExit();
         return new DownloadedContent(tempFile, createUri("/downloaded/" + tempFile.getFileName()));
+    }
+
+    private static DownloadedContent createOilFile(String ext) {
+        String fileName = LocalDateTime.now().toString() + '-' + UUID.randomUUID().toString() + '.' + ext;
+        Path tempFile = KitchenSinkApplication.downloadedContentDir.resolve(fileName);
+        tempFile.toFile().deleteOnExit();
+        return new DownloadedContent(tempFile, "https://alarmboon.herokuapp.com/downloaded/" + tempFile.getFileName());
     }
 
     @Value
@@ -604,8 +628,8 @@ public class KitchenSinkController {
                     ire = WebImage.create(oilprice.showHTML(), 533, 740);
 
 
-                    DownloadedContent jpg = saveImage("png", ire);
-                    DownloadedContent previewImg = createTempFile("png"); //
+                    DownloadedContent jpg = saveOilImage("png", ire);
+                    DownloadedContent previewImg = createOilFile("png"); //
                     ImageMessage oilPriceImg = new ImageMessage(jpg.getUri(), jpg.getUri());
                     system(
                             "convert",
