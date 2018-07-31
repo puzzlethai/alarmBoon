@@ -631,12 +631,12 @@ public class KitchenSinkController {
                     DownloadedContent jpg = saveOilImage("png", ire);
                     DownloadedContent previewImg = createOilFile("png"); //
                     ImageMessage oilPriceImg = new ImageMessage(jpg.getUri(), jpg.getUri());
-                    system(
+/*                    system(
                             "convert",
                             "-resize", "240x",
                             jpg.path.toString(),
                             previewImg.path.toString());
-                    List<Customer> customers = customerRepository.findAll();
+                    List<Customer> customers = customerRepository.findAll();*/
                     try {
                         Set<String> setUserId = new HashSet<String>();
                         setUserId.add("U989982d2db82e4ec7698facb3186e0b3");
