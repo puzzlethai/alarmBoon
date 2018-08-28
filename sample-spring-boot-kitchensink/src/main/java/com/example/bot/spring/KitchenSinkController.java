@@ -705,7 +705,7 @@ public class KitchenSinkController {
 
                     DownloadedContent jpg = saveOilImage("png", ire);
                     DownloadedContent previewImg = createOilFile("png"); //
-                    ImageMessage oilPriceImg = new ImageMessage(jpg.getUri(), previewImg.getUri());
+                    ImageMessage oilPriceImg = new ImageMessage(jpg.getUri(), jpg.getUri());
                     system(
                             "convert",
                             "-resize", "240x",
